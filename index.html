@@ -302,7 +302,8 @@ var P = { // Google Maps search queries
   manzamo:"Cape Manzamo Okinawa",
   rycom:"Aeon Mall Okinawa Rycom",
   amvillage:"American Village Chatan Okinawa",
-  dmm:"DMM Kariyushi Aquarium Okinawa"
+  dmm:"DMM Kariyushi Aquarium Okinawa",
+  ufuya:"https://www.google.com/maps/search/?api=1&query=%E7%99%BE%E5%B9%B4%E5%8F%A4%E5%AE%B6+%E5%A4%A7%E5%AE%B6+Ufuya+Nago+Okinawa"
 };
 
 var HOTELS = {
@@ -361,7 +362,8 @@ var DAYS = [
       {h:"潛水 / 浮潛 · 青之洞窟", p:"潛水聖地，封閉的海蝕洞，陽光折射入海底反射出耀眼的夢幻藍光，水質清澈，魚群極多。", travel:["🚗 大概30分鐘車程"], maps:[["青之洞窟",P.bluecave]]},
       {h:"Busena Marine Park 海中展望塔", maps:[["Busena Marine Park",P.busena]]},
       {h:"Junglia Okinawa 主題公園", maps:[["Junglia Okinawa",P.junglia]]}
-    ]}
+    ]},
+    {h:"午餐 · 百年古家 大家 (Ufuya)", p:"位於名護。", tags:["🍽️ 午餐"], maps:[["百年古家 大家",P.ufuya]]}
    ]},
  { date:"2026-11-28", w:"六", title:"萬座毛 · 購物 · 美國村", hotel:"collective",
    stops:[
@@ -387,13 +389,14 @@ var CHECKLIST_DEFAULT = [
   {id:"fireworks", text:"美國村星期六煙花"},
   {id:"ryuka", text:"琉華菜苑訂位"},
   {id:"bluecave", text:"青之洞窟車程"},
-  {id:"rentcar", text:"租車還車時間"}
+  {id:"rentcar", text:"租車還車時間"},
+  {id:"ufuya", text:"百年古家 大家 午餐訂位"}
 ];
 
 /* ================= HELPERS ================= */
 var PIN = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>';
 function esc(s){return String(s).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];});}
-function mapUrl(q){return "https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(q);}
+function mapUrl(q){return q.indexOf("https://")===0?q:"https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(q);}
 function mapLink(label,q){return '<a class="map" target="_blank" rel="noopener" href="'+esc(mapUrl(q))+'">'+PIN+esc(label)+'</a>';}
 function $(s,r){return (r||document).querySelector(s);}
 function toast(msg){var t=$("#toast");t.textContent=msg;t.classList.add("show");clearTimeout(toast._t);toast._t=setTimeout(function(){t.classList.remove("show");},1800);}
@@ -515,7 +518,11 @@ function renderHotels(){
 var CK="okinawa2026.checklist.v1", NK="okinawa2026.notes.v1";
 function loadChecklist(){
   var s=store(CK);
-  if(!s||!Array.isArray(s.items)){s={items:CHECKLIST_DEFAULT.map(function(x){return {id:x.id,text:x.text,done:false};})};}
+  if(!s||!Array.isArray(s.items)){s={items:[],known:[]};}
+  // lists saved before "known" existed already contained the original 5 defaults
+  if(!Array.isArray(s.known)) s.known=["shuri","fireworks","ryuka","bluecave","rentcar"];
+  // append any newly added default items without resurrecting deleted ones
+  CHECKLIST_DEFAULT.forEach(function(x){if(s.known.indexOf(x.id)<0){s.items.push({id:x.id,text:x.text,done:false});s.known.push(x.id);}});
   return s;
 }
 var CL=loadChecklist();
