@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-HK">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0b5470">
+<meta name="description" content="沖繩之旅 2026 · 11/23 – 11/29 行程、酒店及清單">
+<title>沖繩之旅 2026 · Okinawa Trip</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ocean-900:#06344a;
+  --ocean-700:#0b5470;
+  --ocean-500:#0f7fa0;
+  --teal-500:#14b8a6;
+  --teal-400:#2dd4bf;
+  --teal-100:#ccfbf1;
+  --teal-50:#effcfa;
+  --sand-50:#fbf8f2;
+  --sand-100:#f5eee1;
+  --coral:#ff7a6b;
+  --rose:#e8617a;
+  --rose-50:#fff1f3;
+  --gold:#d4a24c;
+  --ink:#16323f;
+  --muted:#5f7682;
+  --line:#dbe8ec;
+  --card:#ffffff;
+  --radius:18px;
+  --shadow:0 6px 24px rgba(6,52,74,.08),0 1px 3px rgba(6,52,74,.06);
+  --font:"Noto Sans TC","PingFang HK","PingFang TC","Microsoft JhengHei","Noto Sans CJK TC",system-ui,sans-serif;
+  --font-num:"Poppins","Noto Sans TC",system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;font-family:var(--font);color:var(--ink);background:var(--sand-50);line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+button{font:inherit;color:inherit}
+.wrap{max-width:720px;margin:0 auto;padding:0 16px}
+
+/* ---------- Hero ---------- */
+.hero{position:relative;color:#fff;overflow:hidden;
+  background:
+    radial-gradient(120% 80% at 90% 0%,rgba(45,212,191,.55) 0%,transparent 55%),
+    radial-gradient(90% 70% at 0% 100%,rgba(15,127,160,.9) 0%,transparent 60%),
+    linear-gradient(160deg,#0b5470 0%,#0f7fa0 45%,#14b8a6 100%);
+  padding:calc(env(safe-area-inset-top) + 22px) 0 70px}
+.hero::before{content:"";position:absolute;right:-60px;top:-60px;width:220px;height:220px;border-radius:50%;
+  background:radial-gradient(circle,rgba(255,236,179,.55),rgba(255,236,179,0) 70%)}
+.hero-top{display:flex;justify-content:space-between;align-items:center;gap:12px;position:relative}
+.eyebrow{font-family:var(--font-num);letter-spacing:.18em;font-size:12px;font-weight:600;text-transform:uppercase;opacity:.9}
+.share-btn{border:1px solid rgba(255,255,255,.45);background:rgba(255,255,255,.14);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+  color:#fff;border-radius:999px;padding:6px 12px;font-size:13px;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
+.share-btn:active{transform:scale(.97)}
+.hero h1{position:relative;margin:14px 0 4px;font-size:34px;line-height:1.2;font-weight:900;letter-spacing:.02em}
+.hero h1 small{display:block;font-family:var(--font-num);font-size:15px;font-weight:500;letter-spacing:.06em;opacity:.9;margin-top:4px}
+.hero-meta{position:relative;display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.pill{display:inline-flex;align-items:center;gap:6px;font-size:13px;padding:5px 11px;border-radius:999px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28)}
+.wave{position:absolute;left:0;right:0;bottom:-1px;width:100%;height:56px;display:block}
+
+/* ---------- Status card (countdown / today) ---------- */
+.status{position:relative;margin-top:-52px;z-index:2}
+.status-card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:16px 16px 14px;border:1px solid rgba(20,184,166,.18)}
+.status-label{font-size:13px;color:var(--muted);display:flex;align-items:center;gap:6px}
+.status-title{font-weight:700;font-size:16px;margin:2px 0 10px}
+.cd{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.cd div{background:linear-gradient(180deg,var(--teal-50),#fff);border:1px solid var(--teal-100);border-radius:14px;text-align:center;padding:8px 0 6px}
+.cd b{display:block;font-family:var(--font-num);font-size:26px;font-weight:700;color:var(--ocean-700);line-height:1.1;font-variant-numeric:tabular-nums}
+.cd span{font-size:12px;color:var(--muted)}
+.status-foot{font-size:12px;color:var(--muted);margin-top:10px}
+.today-cta{display:inline-flex;align-items:center;gap:6px;margin-top:4px;background:var(--teal-500);color:#fff;border:0;border-radius:999px;padding:8px 14px;font-weight:700;cursor:pointer;text-decoration:none;font-size:14px}
+
+/* ---------- Tabs ---------- */
+.tabs-bar{position:sticky;top:0;z-index:20;background:rgba(251,248,242,.88);backdrop-filter:saturate(1.4) blur(10px);-webkit-backdrop-filter:saturate(1.4) blur(10px);
+  border-bottom:1px solid transparent;transition:border-color .2s;margin-top:14px}
+.tabs-bar.scrolled{border-bottom-color:var(--line)}
+.tabs{display:flex;gap:6px;padding:10px 0;margin:0;list-style:none}
+.tab{flex:1;border:0;background:#fff;border-radius:12px;padding:9px 6px;font-weight:700;font-size:15px;color:var(--muted);cursor:pointer;
+  box-shadow:0 1px 2px rgba(6,52,74,.06);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;gap:6px;white-space:nowrap}
+.tab[aria-selected="true"]{background:var(--ocean-700);color:#fff;border-color:var(--ocean-700);box-shadow:0 4px 12px rgba(11,84,112,.25)}
+.day-strip{display:flex;gap:8px;overflow-x:auto;padding:0 0 10px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.day-strip::-webkit-scrollbar{display:none}
+.chip{flex:0 0 auto;text-decoration:none;display:flex;flex-direction:column;align-items:center;min-width:52px;padding:5px 8px;border-radius:12px;
+  background:#fff;border:1px solid var(--line);font-size:11px;color:var(--muted);line-height:1.3}
+.chip b{font-family:var(--font-num);font-size:15px;color:var(--ink)}
+.chip.wed{border-color:#f7c6cf;background:var(--rose-50)}
+.chip.wed b{color:var(--rose)}
+.chip.today{background:var(--teal-500);border-color:var(--teal-500);color:#fff}
+.chip.today b{color:#fff}
+
+.panel{padding-top:6px;padding-bottom:40px}
+.panel[hidden]{display:none}
+
+/* ---------- Day cards ---------- */
+.day{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);margin:14px 0 18px;overflow:hidden;border:1px solid rgba(6,52,74,.05);scroll-margin-top:118px;position:relative}
+.day-head{display:flex;gap:14px;align-items:center;padding:16px 16px 12px;border-bottom:1px dashed var(--line)}
+.date-badge{flex:0 0 auto;width:60px;height:64px;border-radius:14px;background:linear-gradient(160deg,var(--ocean-700),var(--teal-500));color:#fff;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1.1}
+.date-badge .m{font-size:11px;opacity:.9;font-family:var(--font-num);letter-spacing:.08em}
+.date-badge .d{font-family:var(--font-num);font-size:26px;font-weight:700}
+.date-badge .w{font-size:11px;opacity:.95}
+.day-title{flex:1;min-width:0}
+.day-title .n{font-family:var(--font-num);font-size:12px;color:var(--teal-500);font-weight:600;letter-spacing:.12em}
+.day-title h2{margin:0;font-size:19px;line-height:1.35}
+.day-title .hotel{margin-top:4px;font-size:13px;color:var(--muted);display:flex;align-items:center;gap:5px;flex-wrap:wrap}
+.day-title .hotel a{color:var(--ocean-500);text-decoration:none;font-weight:500}
+.today-flag{position:absolute;top:12px;right:12px;background:var(--teal-500);color:#fff;font-size:12px;font-weight:700;padding:3px 10px;border-radius:999px;display:none}
+.day.is-today{border:2px solid var(--teal-400);box-shadow:0 0 0 5px rgba(45,212,191,.18),var(--shadow)}
+.day.is-today .today-flag{display:block}
+
+/* Wedding */
+.day.wedding{border:1px solid #f6cbd3;background:linear-gradient(180deg,#fff6f7 0%,#fff 180px)}
+.day.wedding .date-badge{background:linear-gradient(160deg,var(--rose),var(--gold))}
+.day.wedding .day-title .n{color:var(--rose)}
+.wedding-banner{margin:12px 16px 0;padding:10px 14px;border-radius:14px;background:linear-gradient(120deg,#ffe4e8,#fff3dc);color:#8a3345;font-weight:700;
+  display:flex;align-items:center;gap:10px;font-size:15px}
+.wedding-banner .rings{font-size:22px}
+.wedding-banner small{display:block;font-weight:500;font-size:12px;color:#a65a69}
+
+/* Timeline */
+.tl{list-style:none;margin:0;padding:12px 16px 6px 16px}
+.stop{position:relative;padding:0 0 16px 26px}
+.stop::before{content:"";position:absolute;left:6px;top:8px;bottom:-8px;width:2px;background:linear-gradient(var(--teal-100),var(--line))}
+.stop:last-child::before{display:none}
+.stop::after{content:"";position:absolute;left:0;top:5px;width:14px;height:14px;border-radius:50%;background:#fff;border:3px solid var(--teal-500);box-sizing:border-box}
+.stop.key::after{background:var(--teal-500)}
+.stop.heart::after{border-color:var(--rose);background:var(--rose)}
+.stop.opt::after{border-style:dashed;border-color:var(--muted)}
+.time{font-family:var(--font-num);font-weight:600;font-size:13px;color:var(--ocean-500);letter-spacing:.02em}
+.stop.heart .time{color:var(--rose)}
+.stop h3{margin:1px 0 2px;font-size:16px;line-height:1.45;font-weight:700}
+.stop p{margin:2px 0 0;font-size:14px;color:#3b5664}
+.meta{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.travel{display:inline-flex;align-items:center;gap:4px;font-size:12px;background:var(--sand-100);color:#6b5a3e;padding:2px 9px;border-radius:999px}
+.tag{display:inline-flex;align-items:center;gap:4px;font-size:12px;padding:2px 9px;border-radius:999px;background:var(--teal-50);color:var(--ocean-700);border:1px solid var(--teal-100)}
+.tag.opt{background:#f3f5f7;color:var(--muted);border-color:#e3e8ec}
+.tag.fire{background:#fff4e6;color:#b45309;border-color:#fde2bd}
+.map{display:inline-flex;align-items:center;gap:4px;font-size:12.5px;font-weight:500;text-decoration:none;color:var(--ocean-500);
+  background:#fff;border:1px solid #cfe6ee;padding:3px 10px 3px 8px;border-radius:999px;transition:background .15s}
+.map:hover,.map:active{background:var(--teal-50)}
+.map svg{width:13px;height:13px;flex:0 0 auto}
+.addr{font-size:12.5px;color:var(--muted);margin-top:3px}
+.optgroup{margin:4px 0 0;padding:10px 12px;border:1px dashed #cfdbe0;border-radius:14px;background:#fbfdfd}
+.optgroup .optlist{list-style:none;margin:6px 0 0;padding:0;display:grid;gap:10px}
+.optgroup .optlist li{padding-left:0}
+.optgroup h4{margin:0;font-size:15px}
+
+/* Tips */
+.tips{padding:0 16px 16px;display:grid;gap:8px}
+.tip{display:flex;gap:10px;padding:10px 12px;border-radius:14px;font-size:14px;line-height:1.55}
+.tip .ic{font-size:18px;line-height:1.3;flex:0 0 auto}
+.tip b{display:block;font-size:13px;margin-bottom:1px}
+.tip.info{background:var(--teal-50);color:#0d4f5c;border:1px solid var(--teal-100)}
+.tip.suggest{background:#fff8e8;color:#6b4b10;border:1px solid #f6e2b3}
+.tip.warn{background:#fff1ee;color:#8a2f1f;border:1px solid #fbd0c6}
+.tip ol{margin:4px 0 0;padding-left:20px}
+.tip ol li{margin:1px 0}
+
+/* ---------- Hotels ---------- */
+.section-h{display:flex;align-items:baseline;justify-content:space-between;margin:14px 2px 6px}
+.section-h h2{margin:0;font-size:20px}
+.section-h span{font-size:13px;color:var(--muted)}
+.nights{display:grid;grid-template-columns:repeat(6,1fr);gap:4px;margin:10px 0 16px}
+.nights div{height:8px;border-radius:4px}
+.nights-legend{display:flex;flex-wrap:wrap;gap:10px;font-size:12px;color:var(--muted);margin:-8px 0 8px}
+.nights-legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:4px;vertical-align:-1px}
+.hotel-card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);margin:12px 0;overflow:hidden;display:flex;border:1px solid rgba(6,52,74,.05)}
+.hotel-card .stripe{flex:0 0 8px}
+.hotel-card .body{padding:14px 16px;flex:1;min-width:0}
+.hotel-card .when{font-family:var(--font-num);font-size:12px;letter-spacing:.06em;color:var(--muted);font-weight:500}
+.hotel-card h3{margin:2px 0 2px;font-size:18px;line-height:1.35}
+.hotel-card .loc{font-size:13px;color:var(--muted)}
+.hotel-card .row{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:10px;flex-wrap:wrap}
+.nightcount{font-family:var(--font-num);font-weight:700;color:var(--ocean-700);font-size:14px;background:var(--teal-50);padding:3px 10px;border-radius:999px;border:1px solid var(--teal-100)}
+.hotel-card .dates{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.hotel-card .dates span{font-size:12px;padding:2px 8px;border-radius:8px;background:var(--sand-100);color:#6b5a3e}
+.hotel-card .dates span.wed{background:var(--rose-50);color:var(--rose)}
+.flights{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:14px 16px;margin:18px 0 12px;display:grid;gap:10px}
+.flight{display:flex;align-items:center;gap:12px}
+.flight .fi{width:38px;height:38px;border-radius:12px;background:var(--teal-50);display:flex;align-items:center;justify-content:center;font-size:18px;flex:0 0 auto}
+.flight b{display:block;font-size:15px}
+.flight span{font-size:13px;color:var(--muted)}
+
+/* ---------- Notes / checklist ---------- */
+.card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:14px 16px;margin:12px 0}
+.progress{height:8px;background:var(--sand-100);border-radius:999px;overflow:hidden;margin:8px 0 4px}
+.progress i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--teal-500),var(--ocean-500));border-radius:999px;transition:width .3s}
+.check-list{list-style:none;margin:6px 0 0;padding:0}
+.check-item{display:flex;align-items:flex-start;gap:10px;padding:10px 2px;border-bottom:1px solid #eef3f5}
+.check-item:last-child{border-bottom:0}
+.check-item input{appearance:none;-webkit-appearance:none;flex:0 0 auto;width:22px;height:22px;border-radius:7px;border:2px solid #b8cfd7;margin:1px 0 0;cursor:pointer;display:grid;place-content:center;background:#fff}
+.check-item input:checked{background:var(--teal-500);border-color:var(--teal-500)}
+.check-item input:checked::after{content:"";width:6px;height:11px;border:solid #fff;border-width:0 2.5px 2.5px 0;transform:rotate(45deg) translate(-1px,-1px)}
+.check-item label{flex:1;font-size:15px;cursor:pointer}
+.check-item.done label{color:#9ab0b8;text-decoration:line-through}
+.check-item .del{border:0;background:none;color:#b3c4ca;font-size:18px;cursor:pointer;padding:0 4px;line-height:1}
+.check-item .del:hover{color:var(--coral)}
+.add-row{display:flex;gap:8px;margin-top:10px}
+.add-row input{flex:1;min-width:0;border:1px solid var(--line);border-radius:12px;padding:10px 12px;font:inherit;font-size:16px;background:var(--sand-50)}
+.add-row input:focus,textarea:focus{outline:2px solid var(--teal-400);outline-offset:1px;border-color:transparent}
+.btn{border:0;border-radius:12px;padding:10px 14px;font-weight:700;background:var(--ocean-700);color:#fff;cursor:pointer;white-space:nowrap}
+.btn.ghost{background:transparent;color:var(--muted);border:1px solid var(--line);font-weight:500;font-size:13px;padding:6px 12px}
+textarea{width:100%;min-height:140px;border:1px solid var(--line);border-radius:12px;padding:10px 12px;font:inherit;font-size:16px;background:var(--sand-50);resize:vertical}
+.saved{font-size:12px;color:var(--teal-500);min-height:18px;margin-top:4px}
+.card h3{margin:0;font-size:17px}
+.card .sub{font-size:13px;color:var(--muted)}
+
+footer{text-align:center;font-size:12px;color:#9ab0b8;padding:10px 16px 36px}
+.toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom));transform:translate(-50%,20px);background:var(--ocean-900);color:#fff;padding:10px 16px;border-radius:999px;font-size:14px;opacity:0;pointer-events:none;transition:.25s;z-index:50}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+
+@media (min-width:640px){
+  .hero{padding-top:40px;padding-bottom:84px}
+  .hero h1{font-size:44px}
+  .day-title h2{font-size:21px}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+@media print{.tabs-bar,.share-btn,.status{display:none}.panel[hidden]{display:block}.day{break-inside:avoid;box-shadow:none}}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="hero-top">
+      <span class="eyebrow">Okinawa · 2026</span>
+      <button class="share-btn" id="shareBtn" type="button" aria-label="分享行程">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12v7a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-7"/><path d="M16 6l-4-4-4 4"/><path d="M12 2v14"/></svg>
+        分享
+      </button>
+    </div>
+    <h1>沖繩之旅 🌺<small>Okinawa Trip · 11/23 – 11/29</small></h1>
+    <div class="hero-meta">
+      <span class="pill">🗓️ 7日6夜</span>
+      <span class="pill">✈️ 香港 ⇄ 那霸</span>
+      <span class="pill">💍 11/25 婚禮</span>
+    </div>
+  </div>
+  <svg class="wave" viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true">
+    <path fill="rgba(251,248,242,.45)" d="M0,64 C240,112 480,16 720,48 C960,80 1200,112 1440,56 L1440,120 L0,120 Z"/>
+    <path fill="#fbf8f2" d="M0,88 C200,56 420,112 720,84 C1000,58 1220,100 1440,82 L1440,120 L0,120 Z"/>
+  </svg>
+</header>
+
+<main>
+  <div class="wrap status">
+    <div class="status-card" id="statusCard" aria-live="polite"></div>
+  </div>
+
+  <nav class="tabs-bar" id="tabsBar" aria-label="主選單">
+    <div class="wrap">
+      <div class="tabs" role="tablist">
+        <button class="tab" role="tab" id="tab-itinerary" aria-controls="panel-itinerary" aria-selected="true" data-tab="itinerary" type="button">🗺️ 行程</button>
+        <button class="tab" role="tab" id="tab-hotels" aria-controls="panel-hotels" aria-selected="false" data-tab="hotels" type="button">🏨 酒店</button>
+        <button class="tab" role="tab" id="tab-notes" aria-controls="panel-notes" aria-selected="false" data-tab="notes" type="button">✅ 清單</button>
+      </div>
+      <div class="day-strip" id="dayStrip" role="group" aria-label="跳到某一日"></div>
+    </div>
+  </nav>
+
+  <div class="panel wrap" id="panel-itinerary" role="tabpanel" aria-labelledby="tab-itinerary"></div>
+  <div class="panel wrap" id="panel-hotels" role="tabpanel" aria-labelledby="tab-hotels" hidden></div>
+  <div class="panel wrap" id="panel-notes" role="tabpanel" aria-labelledby="tab-notes" hidden></div>
+</main>
+
+<footer>祝旅途愉快 · Have a lovely trip 🌊<br>地圖連結會開啟 Google Maps 搜尋</footer>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+(function(){
+"use strict";
+
+/* ================= DATA ================= */
+var ARRIVAL = new Date("2026-11-23T15:25:00+09:00"); // 那霸到達 (JST) = 香港時間 14:25
+var TRIP_START = "2026-11-23", TRIP_END = "2026-11-29";
+
+var P = { // Google Maps search queries
+  airport:"Naha Airport Okinawa",
+  collective:"Hotel Collective Naha Okinawa",
+  kokusai:"Kokusai-dori Naha Okinawa",
+  senaga:"Senaga Island Okinawa",
+  tsuboya:"Tsuboya Pottery Museum Naha Okinawa",
+  tsuboyaSt:"壺屋やちむん通り Naha Okinawa",
+  makishi:"First Makishi Public Market Naha Okinawa",
+  naminoue:"Naminoue Shrine Naha Okinawa",
+  shuri:"Shuri Castle Okinawa",
+  hoshinoya:"Hoshinoya Okinawa Yomitan",
+  lazor:"Lazor Garden Alivila Okinawa",
+  banta:"Banta Cafe Okinawa",
+  churaumi:"Okinawa Churaumi Aquarium",
+  oceanblue:"Ocean Blue Cafe Churaumi Aquarium",
+  kouri:"Kouri Island Okinawa",
+  kouriBridge:"Kouri Bridge Okinawa",
+  kouriTower:"Kouri Ocean Tower Okinawa",
+  ritz:"The Ritz-Carlton Okinawa Nago",
+  ryuka:"琉華菜苑 ザ・ブセナテラス 1808 Kise, Nago, Okinawa 905-0026, Japan",
+  bluecave:"青の洞窟 Blue Cave Okinawa",
+  busena:"Busena Marine Park Okinawa",
+  junglia:"Junglia Okinawa",
+  manzamo:"Cape Manzamo Okinawa",
+  rycom:"Aeon Mall Okinawa Rycom",
+  amvillage:"American Village Chatan Okinawa",
+  dmm:"DMM Kariyushi Aquarium Okinawa"
+};
+
+var HOTELS = {
+  collective:{name:"Hotel Collective", short:"Collective", zh:"那霸市區", q:P.collective, color:"#0f7fa0"},
+  hoshinoya:{name:"Hoshinoya 星野度假村", short:"Hoshinoya", zh:"讀谷村", q:P.hoshinoya, color:"#14b8a6"},
+  ritz:{name:"The Ritz-Carlton Okinawa", short:"Ritz-Carlton", zh:"名護", q:P.ritz, color:"#d4a24c"}
+};
+
+/* stop: t=time, h=title (html ok), p=desc, maps=[[label,query]], travel=[text], tags, cls */
+var DAYS = [
+ { date:"2026-11-23", w:"一", title:"抵達那霸 · 國際通", hotel:"collective",
+   stops:[
+    {t:"15:25", h:"到達沖繩那霸國際機場", cls:"key", maps:[["那霸機場",P.airport]], tags:["✈️ 抵達"]},
+    {h:"前往那霸市區酒店 Hotel Collective", travel:["🚗 約12分鐘車程"], maps:[["Hotel Collective",P.collective]]},
+    {h:"Check in 後自由活動", p:"酒店外便是國際通商店街，應有盡有。", maps:[["國際通 Kokusai-dori",P.kokusai]]},
+    {t:"19:00", h:"晚餐", p:"國際通內或附近。"},
+    {h:"可考慮去瀨長島 Senaga Island 看夜景", p:"一望那霸夜景。", cls:"opt", tags:["opt:可選"], maps:[["瀨長島 Senaga Island",P.senaga]]}
+   ]},
+ { date:"2026-11-24", w:"二", title:"那霸文化散策 → 讀谷", hotel:"hoshinoya",
+   stops:[
+    {h:"壺屋通 · 壺屋燒物博物館 Tsuboya Pottery Museum", p:"陶器文化之國歷史。", travel:["🚶 酒店步行10分鐘"], maps:[["壺屋燒物博物館",P.tsuboya],["壺屋通",P.tsuboyaSt]]},
+    {h:"國際通 Kokusai-dori", maps:[["國際通",P.kokusai]]},
+    {h:"第一牧志公設市場 Makishi Market", p:"沖繩美食。午餐？可食小食，市場可能未必啱食正餐。", tags:["🍢 午餐？"], maps:[["第一牧志公設市場",P.makishi]]},
+    {h:"波上宮 Naminoue Shrine", p:"祈福打卡。", travel:["🚗 10分鐘車程"], maps:[["波上宮",P.naminoue]]},
+    {h:"首里城 Shuri Castle", p:"琉球王國歷史，11/23 重開，可能多人。", travel:["🚗 20分鐘車程"], cls:"key", maps:[["首里城",P.shuri]]},
+    {h:"前往位於讀谷村的酒店 · 星野度假村 Hoshinoya", travel:["🚗 約50分鐘車程"], maps:[["Hoshinoya 星野",P.hoshinoya]]},
+    {h:"晚餐"}
+   ],
+   tips:[
+    {k:"suggest", ic:"💡", b:"小建議（原定行程不變，僅供參考）",
+     html:"可考慮早上先去首里城，避開人潮，之後順序：<ol><li>首里城 Shuri Castle（早上）</li><li>壺屋 / 第一牧志公設市場（午餐）</li><li>波上宮 Naminoue Shrine</li><li>由那霸揸車前往星野度假村 Hoshinoya</li></ol>"}
+   ]},
+ { date:"2026-11-25", w:"三", title:"婚禮日 💍", hotel:"hoshinoya", wedding:true,
+   stops:[
+    {t:"早上", h:"自由活動", p:"可享受酒店設施。", maps:[["Hoshinoya 星野",P.hoshinoya]]},
+    {t:"11:30 – 11:50", h:"賓客到達教堂 Lazor Garden Alivila", travel:["🚶 酒店步行到教堂大概10–15分鐘"], cls:"key", maps:[["Lazor Garden Alivila",P.lazor]]},
+    {t:"12:00", h:"婚禮儀式", cls:"heart", tags:["💒 Wedding"]},
+    {t:"14:00 – 16:00", h:"午餐", cls:"heart"}
+   ],
+   tips:[
+    {k:"info", ic:"☕", b:"Banta Cafe", html:"酒店旁有 Banta Cafe，景觀非常好，空閒時可去去飲咖啡。 <a class=\"map\" target=\"_blank\" rel=\"noopener\" href=\"{{banta}}\">"+"{{pin}}Banta Cafe</a>"}
+   ]},
+ { date:"2026-11-26", w:"四", title:"美麗海水族館 · 古宇利島", hotel:"ritz",
+   stops:[
+    {h:"美麗海水族館 Churaumi Aquarium", travel:["🚗 約1小時15分鐘車程"], cls:"key", maps:[["美麗海水族館",P.churaumi]]},
+    {h:"午餐 · Ocean Blue Café", p:"可於水族館內最大的水箱旁與海洋生物共進午餐，不過無法預約，最好分開坐。", tags:["🐋 水箱旁用餐"], maps:[["Ocean Blue Café",P.oceanblue]]},
+    {h:"古宇利島（海上大橋）", travel:["🚗 約30分鐘車程"], maps:[["古宇利島",P.kouri],["古宇利大橋",P.kouriBridge]]},
+    {h:"古宇利海洋塔 Kouri Ocean Tower", maps:[["古宇利海洋塔",P.kouriTower]]},
+    {h:"前往位於名護的酒店 · Ritz-Carlton", travel:["🚗 約40分鐘車程"], maps:[["The Ritz-Carlton Okinawa",P.ritz]]},
+    {t:"晚餐", h:"琉華菜苑 · ザ・ブセナテラス", addr:"1808 Kise, Nago, Okinawa 905-0026, Japan", cls:"key", tags:["🍽️ 晚餐"], maps:[["琉華菜苑",P.ryuka]]}
+   ]},
+ { date:"2026-11-27", w:"五", title:"Ritz-Carlton 悠閒日", hotel:"ritz",
+   stops:[
+    {h:"享受酒店設施 · Ritz-Carlton", cls:"key", maps:[["The Ritz-Carlton Okinawa",P.ritz]]},
+    {optgroup:true, h:"有興趣人士可：", items:[
+      {h:"潛水 / 浮潛 · 青之洞窟", p:"潛水聖地，封閉的海蝕洞，陽光折射入海底反射出耀眼的夢幻藍光，水質清澈，魚群極多。", travel:["🚗 大概30分鐘車程"], maps:[["青之洞窟",P.bluecave]]},
+      {h:"Busena Marine Park 海中展望塔", maps:[["Busena Marine Park",P.busena]]},
+      {h:"Junglia Okinawa 主題公園", maps:[["Junglia Okinawa",P.junglia]]}
+    ]}
+   ]},
+ { date:"2026-11-28", w:"六", title:"萬座毛 · 購物 · 美國村", hotel:"collective",
+   stops:[
+    {h:"萬座毛 Cape Manzamo", p:"象鼻石，純打卡。", travel:["🚗 約20分鐘車程"], maps:[["萬座毛",P.manzamo]]},
+    {h:"前往 Aeon Rycom Mall 購物中心", travel:["🚗 約30分鐘車程"], maps:[["Aeon Rycom Mall",P.rycom]]},
+    {h:"午餐"},
+    {h:"前往美國村", p:"日落及入夜後燈飾。", travel:["🚗 約10分鐘車程"], cls:"key", maps:[["美國村",P.amvillage]]},
+    {h:"晚餐 · 美國村內", p:"每週六晚上8點有煙花表演。", tags:["fire:🎆 20:00 煙花（逢星期六）"]},
+    {h:"前往那霸市區酒店 · Hotel Collective", travel:["🚗 約25分鐘車程"], maps:[["Hotel Collective",P.collective]]}
+   ]},
+ { date:"2026-11-29", w:"日", title:"DMM水族館 · 回程", hotel:null,
+   stops:[
+    {h:"DMM水族館 + 商場", maps:[["DMM水族館",P.dmm]]},
+    {t:"16:25", h:"回程香港", cls:"key", tags:["✈️ 航班 16:25"], maps:[["那霸機場",P.airport]]}
+   ],
+   tips:[
+    {k:"warn", ic:"⏰", b:"回程提提你", html:"航班 16:25，建議約 <b style=\"display:inline\">14:25</b> 前到達機場，並預留額外時間還租車。"}
+   ]}
+];
+
+var CHECKLIST_DEFAULT = [
+  {id:"shuri", text:"首里城重開日子及入場安排"},
+  {id:"fireworks", text:"美國村星期六煙花"},
+  {id:"ryuka", text:"琉華菜苑訂位"},
+  {id:"bluecave", text:"青之洞窟車程"},
+  {id:"rentcar", text:"租車還車時間"}
+];
+
+/* ================= HELPERS ================= */
+var PIN = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>';
+function esc(s){return String(s).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];});}
+function mapUrl(q){return "https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(q);}
+function mapLink(label,q){return '<a class="map" target="_blank" rel="noopener" href="'+esc(mapUrl(q))+'">'+PIN+esc(label)+'</a>';}
+function $(s,r){return (r||document).querySelector(s);}
+function toast(msg){var t=$("#toast");t.textContent=msg;t.classList.add("show");clearTimeout(toast._t);toast._t=setTimeout(function(){t.classList.remove("show");},1800);}
+function md(d){var p=d.split("-");return (+p[1])+"/"+(+p[2]);}
+function store(k,v){try{if(v===undefined){return JSON.parse(localStorage.getItem(k));}localStorage.setItem(k,JSON.stringify(v));}catch(e){return null;}}
+
+// "today" in Okinawa time (Asia/Tokyo). ?today=YYYY-MM-DD overrides for preview.
+function todayJST(){
+  var o=new URLSearchParams(location.search).get("today");
+  if(o && /^\d{4}-\d{2}-\d{2}$/.test(o)) return o;
+  try{return new Intl.DateTimeFormat("en-CA",{timeZone:"Asia/Tokyo",year:"numeric",month:"2-digit",day:"2-digit"}).format(new Date());}
+  catch(e){var d=new Date(Date.now()+9*3600e3);return d.toISOString().slice(0,10);}
+}
+var TODAY = todayJST();
+var inTrip = TODAY>=TRIP_START && TODAY<=TRIP_END;
+
+/* ================= RENDER: ITINERARY ================= */
+function renderStop(s){
+  var cls = "stop"+(s.cls?" "+s.cls:"");
+  var h = '<li class="'+cls+'">';
+  if(s.t) h+='<div class="time">'+esc(s.t)+'</div>';
+  h+='<h3>'+esc(s.h)+'</h3>';
+  if(s.p) h+='<p>'+esc(s.p)+'</p>';
+  if(s.addr) h+='<div class="addr">📍 '+esc(s.addr)+'</div>';
+  var meta='';
+  (s.travel||[]).forEach(function(x){meta+='<span class="travel">'+esc(x)+'</span>';});
+  (s.tags||[]).forEach(function(x){
+    if(x.indexOf("opt:")===0) meta+='<span class="tag opt">'+esc(x.slice(4))+'</span>';
+    else if(x.indexOf("fire:")===0) meta+='<span class="tag fire">'+esc(x.slice(5))+'</span>';
+    else meta+='<span class="tag">'+esc(x)+'</span>';
+  });
+  (s.maps||[]).forEach(function(m){meta+=mapLink(m[0],m[1]);});
+  if(meta) h+='<div class="meta">'+meta+'</div>';
+  return h+'</li>';
+}
+function renderOptGroup(s){
+  var h='<li class="stop opt"><div class="optgroup"><h4>✨ '+esc(s.h)+'</h4><ul class="optlist">';
+  s.items.forEach(function(it){
+    var meta='';
+    (it.travel||[]).forEach(function(x){meta+='<span class="travel">'+esc(x)+'</span>';});
+    (it.maps||[]).forEach(function(m){meta+=mapLink(m[0],m[1]);});
+    h+='<li><h3>'+esc(it.h)+'</h3>'+(it.p?'<p>'+esc(it.p)+'</p>':'')+(meta?'<div class="meta">'+meta+'</div>':'')+'</li>';
+  });
+  return h+'</ul></div></li>';
+}
+function renderItinerary(){
+  var out='', strip='';
+  DAYS.forEach(function(d,i){
+    var id="day-"+md(d.date).replace("/","-");
+    var isToday = d.date===TODAY;
+    var classes="day"+(d.wedding?" wedding":"")+(isToday?" is-today":"");
+    var hotel = d.hotel?HOTELS[d.hotel]:null;
+    var hotelHtml = hotel
+      ? '🛏️ 今晚入住：<a target="_blank" rel="noopener" href="'+esc(mapUrl(hotel.q))+'">'+esc(hotel.name)+'</a>（'+esc(hotel.zh)+'）'
+      : '✈️ 回程日 · 無需住宿';
+    out+='<article class="'+classes+'" id="'+id+'">';
+    out+='<span class="today-flag">📍 今日</span>';
+    out+='<div class="day-head"><div class="date-badge"><span class="m">NOV</span><span class="d">'+(+d.date.slice(8))+'</span><span class="w">星期'+d.w+'</span></div>';
+    out+='<div class="day-title"><div class="n">DAY '+(i+1)+' · '+md(d.date)+'（'+d.w+'）</div><h2>'+esc(d.title)+'</h2><div class="hotel">'+hotelHtml+'</div></div></div>';
+    if(d.wedding) out+='<div class="wedding-banner"><span class="rings">💍</span><div>婚禮日 Wedding Day<small>12:00 婚禮儀式 · Lazor Garden Alivila</small></div></div>';
+    out+='<ol class="tl">';
+    d.stops.forEach(function(s){out+= s.optgroup?renderOptGroup(s):renderStop(s);});
+    out+='</ol>';
+    if(d.tips&&d.tips.length){
+      out+='<div class="tips">';
+      d.tips.forEach(function(t){
+        var html=t.html.replace("{{banta}}",esc(mapUrl(P.banta))).replace("{{pin}}",PIN);
+        out+='<div class="tip '+t.k+'"><span class="ic" aria-hidden="true">'+t.ic+'</span><div><b>'+esc(t.b)+'</b>'+html+'</div></div>';
+      });
+      out+='</div>';
+    }
+    out+='</article>';
+    strip+='<a class="chip'+(d.wedding?" wed":"")+(isToday?" today":"")+'" href="#'+id+'" data-day="'+id+'"><b>'+md(d.date)+'</b>'+(d.wedding?"💍 ":"")+'週'+d.w+'</a>';
+  });
+  $("#panel-itinerary").innerHTML=out;
+  $("#dayStrip").innerHTML=strip;
+}
+
+/* ================= RENDER: HOTELS ================= */
+function renderHotels(){
+  // group consecutive nights
+  var groups=[];
+  DAYS.forEach(function(d){
+    if(!d.hotel) return;
+    var last=groups[groups.length-1];
+    if(last && last.key===d.hotel){last.nights.push(d);}
+    else groups.push({key:d.hotel,nights:[d]});
+  });
+  var total=DAYS.filter(function(d){return d.hotel;}).length;
+  var h='<div class="section-h"><h2>酒店安排</h2><span>共 '+total+' 晚</span></div>';
+  h+='<div class="nights" aria-hidden="true">';
+  DAYS.forEach(function(d){if(d.hotel) h+='<div style="background:'+HOTELS[d.hotel].color+'"></div>';});
+  h+='</div><div class="nights-legend">';
+  Object.keys(HOTELS).forEach(function(k){h+='<span><i style="background:'+HOTELS[k].color+'"></i>'+esc(HOTELS[k].short)+'</span>';});
+  h+='</div>';
+  var n=0;
+  groups.forEach(function(g){
+    var ho=HOTELS[g.key], first=g.nights[0], lastN=g.nights[g.nights.length-1];
+    var idx=DAYS.indexOf(lastN), out=DAYS[idx+1];
+    var nums=g.nights.map(function(){n++;return n;});
+    h+='<div class="hotel-card"><div class="stripe" style="background:'+ho.color+'"></div><div class="body">';
+    h+='<div class="when">第 '+nums.join("、")+' 晚 · '+md(first.date)+'（'+first.w+'） → '+md(out.date)+'（'+out.w+'）</div>';
+    h+='<h3>'+esc(ho.name)+'</h3><div class="loc">📍 '+esc(ho.zh)+'</div>';
+    h+='<div class="dates">';
+    g.nights.forEach(function(d){h+='<span'+(d.wedding?' class="wed"':'')+'>'+md(d.date)+' 晚'+(d.wedding?' 💍':'')+'</span>';});
+    h+='</div>';
+    h+='<div class="row"><span class="nightcount">'+g.nights.length+' 晚</span>'+mapLink("Google Maps",ho.q)+'</div>';
+    h+='</div></div>';
+  });
+  h+='<div class="section-h" style="margin-top:22px"><h2>航班時間</h2><span>當地時間</span></div>';
+  h+='<div class="flights">';
+  h+='<div class="flight"><div class="fi">🛬</div><div><b>11/23（一）15:25 到達那霸</b><span>沖繩那霸國際機場 · 香港時間 14:25</span></div></div>';
+  h+='<div class="flight"><div class="fi">🛫</div><div><b>11/29（日）16:25 回程香港</b><span>建議約 14:25 前到達機場，預留時間還租車</span></div></div>';
+  h+='</div>';
+  $("#panel-hotels").innerHTML=h;
+}
+
+/* ================= RENDER: NOTES / CHECKLIST ================= */
+var CK="okinawa2026.checklist.v1", NK="okinawa2026.notes.v1";
+function loadChecklist(){
+  var s=store(CK);
+  if(!s||!Array.isArray(s.items)){s={items:CHECKLIST_DEFAULT.map(function(x){return {id:x.id,text:x.text,done:false};})};}
+  return s;
+}
+var CL=loadChecklist();
+function saveChecklist(){store(CK,CL);}
+function renderNotes(){
+  var h='<div class="section-h"><h2>待確認清單</h2><span id="ckCount"></span></div>';
+  h+='<div class="card"><div class="sub">剔咗會自動儲存喺呢部裝置（localStorage）</div><div class="progress"><i id="ckBar"></i></div><ul class="check-list" id="ckList"></ul>';
+  h+='<form class="add-row" id="ckForm" autocomplete="off"><input id="ckInput" type="text" placeholder="新增項目…" aria-label="新增清單項目" maxlength="120"><button class="btn" type="submit">新增</button></form></div>';
+  h+='<div class="section-h" style="margin-top:22px"><h2>備註</h2><span>自動儲存</span></div>';
+  h+='<div class="card"><textarea id="notesText" placeholder="例如：訂位編號、租車資料、想買嘅手信…" aria-label="備註"></textarea><div class="saved" id="savedMsg"></div></div>';
+  h+='<div style="text-align:center;margin-top:10px"><button class="btn ghost" type="button" id="ckReset">重設清單至預設</button></div>';
+  $("#panel-notes").innerHTML=h;
+  drawChecklist();
+  var ta=$("#notesText"); ta.value=store(NK)||"";
+  var tmr; ta.addEventListener("input",function(){clearTimeout(tmr);tmr=setTimeout(function(){store(NK,ta.value);$("#savedMsg").textContent="✓ 已儲存";setTimeout(function(){$("#savedMsg").textContent="";},1200);},400);});
+  $("#ckForm").addEventListener("submit",function(e){e.preventDefault();var v=$("#ckInput").value.trim();if(!v)return;CL.items.push({id:"c"+Date.now(),text:v,done:false});saveChecklist();$("#ckInput").value="";drawChecklist();});
+  $("#ckReset").addEventListener("click",function(){if(confirm("確定重設清單？（自訂項目會被刪除）")){localStorage.removeItem(CK);CL=loadChecklist();drawChecklist();toast("已重設清單");}});
+}
+function drawChecklist(){
+  var ul=$("#ckList"), h='';
+  CL.items.forEach(function(it,i){
+    h+='<li class="check-item'+(it.done?" done":"")+'"><input type="checkbox" id="ck'+i+'" data-i="'+i+'"'+(it.done?" checked":"")+'><label for="ck'+i+'">'+esc(it.text)+'</label><button class="del" type="button" data-del="'+i+'" aria-label="刪除">×</button></li>';
+  });
+  ul.innerHTML=h;
+  var done=CL.items.filter(function(x){return x.done;}).length, tot=CL.items.length;
+  $("#ckCount").textContent=done+" / "+tot+" 已完成";
+  $("#ckBar").style.width=(tot?done/tot*100:0)+"%";
+}
+document.addEventListener("change",function(e){
+  var i=e.target.getAttribute&&e.target.getAttribute("data-i");
+  if(i!==null&&i!==undefined&&CL.items[+i]){CL.items[+i].done=e.target.checked;saveChecklist();drawChecklist();}
+});
+document.addEventListener("click",function(e){
+  var b=e.target.closest&&e.target.closest("[data-del]");
+  if(b){CL.items.splice(+b.getAttribute("data-del"),1);saveChecklist();drawChecklist();}
+});
+
+/* ================= STATUS: COUNTDOWN / TODAY ================= */
+function pad(n){return (n<10?"0":"")+n;}
+function renderStatus(){
+  var el=$("#statusCard");
+  if(inTrip){
+    var idx=DAYS.findIndex(function(d){return d.date===TODAY;}), d=DAYS[idx];
+    var id="day-"+md(d.date).replace("/","-");
+    el.innerHTML='<div class="status-label">📍 旅程進行中 · 沖繩時間</div><div class="status-title">今日係 Day '+(idx+1)+' · '+md(d.date)+'（'+d.w+'） '+esc(d.title)+'</div>'+
+      '<a class="today-cta" href="#'+id+'" data-day="'+id+'">睇今日行程 →</a>';
+    return;
+  }
+  if(TODAY>TRIP_END){
+    el.innerHTML='<div class="status-label">🌺 旅程已完成</div><div class="status-title">希望沖繩之旅留低好多美好回憶！</div>';
+    return;
+  }
+  el.innerHTML='<div class="status-label">⏳ 距離出發</div><div class="status-title">11/23（一）15:25 到達那霸</div>'+
+    '<div class="cd"><div><b id="cdD">–</b><span>日</span></div><div><b id="cdH">–</b><span>小時</span></div><div><b id="cdM">–</b><span>分鐘</span></div><div><b id="cdS">–</b><span>秒</span></div></div>'+
+    '<div class="status-foot">沖繩時間 15:25 ＝ 香港時間 14:25</div>';
+  function tick(){
+    var ms=ARRIVAL-new Date();
+    if(ms<=0){$("#cdD").textContent="0";$("#cdH").textContent=$("#cdM").textContent=$("#cdS").textContent="00";return;}
+    var s=Math.floor(ms/1000);
+    $("#cdD").textContent=Math.floor(s/86400);
+    $("#cdH").textContent=pad(Math.floor(s%86400/3600));
+    $("#cdM").textContent=pad(Math.floor(s%3600/60));
+    $("#cdS").textContent=pad(s%60);
+  }
+  tick(); setInterval(tick,1000);
+}
+
+/* ================= TABS & NAV ================= */
+var TABS=["itinerary","hotels","notes"];
+function showTab(name,noScroll){
+  if(TABS.indexOf(name)<0) name="itinerary";
+  TABS.forEach(function(t){
+    $("#tab-"+t).setAttribute("aria-selected",t===name?"true":"false");
+    $("#panel-"+t).hidden = t!==name;
+  });
+  $("#dayStrip").style.display = name==="itinerary"?"":"none";
+  if(!noScroll){
+    var bar=$("#tabsBar"); var top=bar.getBoundingClientRect().top+window.scrollY;
+    if(window.scrollY>top) window.scrollTo({top:top,behavior:"auto"});
+  }
+}
+function scrollToDay(id){
+  showTab("itinerary",true);
+  var el=document.getElementById(id); if(!el) return;
+  el.scrollIntoView({behavior:"smooth",block:"start"});
+}
+document.addEventListener("click",function(e){
+  var t=e.target.closest&&e.target.closest("[data-tab]");
+  if(t){showTab(t.getAttribute("data-tab"));history.replaceState(null,"","#"+t.getAttribute("data-tab"));return;}
+  var dl=e.target.closest&&e.target.closest("[data-day]");
+  if(dl){e.preventDefault();scrollToDay(dl.getAttribute("data-day"));}
+});
+// keyboard arrows on tablist
+$(".tabs").addEventListener("keydown",function(e){
+  if(e.key!=="ArrowRight"&&e.key!=="ArrowLeft") return;
+  var cur=TABS.findIndex(function(t){return $("#tab-"+t).getAttribute("aria-selected")==="true";});
+  var nx=(cur+(e.key==="ArrowRight"?1:-1)+TABS.length)%TABS.length;
+  showTab(TABS[nx]); $("#tab-"+TABS[nx]).focus();
+});
+window.addEventListener("scroll",function(){
+  var bar=$("#tabsBar"); bar.classList.toggle("scrolled",bar.getBoundingClientRect().top<=0);
+},{passive:true});
+
+$("#shareBtn").addEventListener("click",function(){
+  var url=location.href.split("#")[0];
+  if(navigator.share){navigator.share({title:"沖繩之旅 2026",text:"11/23 – 11/29 沖繩行程",url:url}).catch(function(){});}
+  else if(navigator.clipboard){navigator.clipboard.writeText(url).then(function(){toast("已複製連結");},function(){toast(url);});}
+  else toast(url);
+});
+
+/* ================= INIT ================= */
+renderItinerary(); renderHotels(); renderNotes(); renderStatus();
+var hash=location.hash.replace("#","");
+if(TABS.indexOf(hash)>=0) showTab(hash,true);
+else if(hash.indexOf("day-")===0) setTimeout(function(){scrollToDay(hash);},60);
+else if(inTrip){
+  var tid="day-"+md(TODAY).replace("/","-");
+  setTimeout(function(){
+    scrollToDay(tid);
+    var chip=document.querySelector('.chip[data-day="'+tid+'"]'); if(chip) chip.scrollIntoView({inline:"center",block:"nearest"});
+  },350);
+}
+})();
+</script>
+</body>
+</html>
