@@ -241,7 +241,7 @@ footer{text-align:center;font-size:12px;color:#9ab0b8;padding:10px 16px 36px}
 
 /* ---------- Map tab ---------- */
 .tab{font-size:14px;padding:9px 4px}
-#overviewMap{height:280px;border-radius:var(--radius);border:1px solid rgba(6,52,74,.08);box-shadow:var(--shadow);margin:8px 0 14px;z-index:1;background:#dbe8ec}
+#overviewMap{height:260px;border-radius:var(--radius);border:1px solid rgba(6,52,74,.08);box-shadow:var(--shadow);margin:0 0 6px;z-index:1;background:#dbe8ec}
 .map-legend{display:flex;flex-wrap:wrap;gap:8px 12px;font-size:12px;color:var(--muted);margin:0 2px 12px}
 .map-legend span{display:inline-flex;align-items:center;gap:5px}
 .map-legend i{width:12px;height:12px;border-radius:50%;display:inline-block;flex:0 0 auto}
@@ -253,10 +253,11 @@ footer{text-align:center;font-size:12px;color:#9ab0b8;padding:10px 16px 36px}
 .route-day-h .date-badge .d{font-size:22px}
 .route-cap{font-size:13px;color:var(--muted);margin-top:2px}
 .route-stops{list-style:none;margin:0;padding:10px 14px 6px}
-.route-stops li{display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid #eef3f5}
+.route-stops li{display:flex;gap:10px;align-items:flex-start;padding:10px 8px;border-bottom:1px solid #eef3f5;cursor:pointer;border-radius:12px;transition:background .15s,box-shadow .15s}
 .route-stops li:last-child{border-bottom:0}
+.route-stops li:active,.route-stops li.active{background:var(--teal-50);box-shadow:inset 0 0 0 2px var(--teal-400)}
 .route-stops .badge{flex:0 0 auto;width:26px;height:26px;border-radius:50%;background:var(--ocean-700);color:#fff;font-family:var(--font-num);font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;line-height:1}
-.route-stops .badge.hotel{background:var(--gold);border-radius:8px;font-size:11px}
+.route-stops .badge.hotel{background:var(--gold);border-radius:8px;font-size:12px}
 .route-stops .badge.opt{background:transparent;color:var(--muted);border:2px dashed #94a3b8;font-size:12px}
 .route-stops .badge.a{background:#16a34a;border:0;color:#fff}
 .route-stops .badge.b{background:#0f7fa0;border:0;color:#fff}
@@ -269,12 +270,19 @@ footer{text-align:center;font-size:12px;color:#9ab0b8;padding:10px 16px 36px}
 .gmaps-btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;margin:4px 14px 14px;padding:10px 14px;border-radius:12px;background:var(--ocean-700);color:#fff;text-decoration:none;font-weight:700;font-size:14px;border:0}
 .gmaps-btn:active{transform:scale(.98)}
 .leaflet-container{font-family:var(--font)}
-.pin-num{background:var(--ocean-700);color:#fff;border-radius:50%;width:24px;height:24px;display:flex;align-items:center;justify-content:center;font-family:var(--font-num);font-size:12px;font-weight:700;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.25)}
-.pin-hotel{background:var(--gold);border-radius:6px;width:24px;height:24px;display:flex;align-items:center;justify-content:center;font-size:12px;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.25)}
-.pin-opt{background:#fff;color:var(--muted);border:2px dashed #64748b;border-radius:50%;width:24px;height:24px;display:flex;align-items:center;justify-content:center;font-family:var(--font-num);font-size:11px;font-weight:700;box-shadow:0 1px 4px rgba(0,0,0,.15)}
-.pin-opt.a{color:#16a34a;border-color:#16a34a}
-.pin-opt.b{color:#0f7fa0;border-color:#0f7fa0}
-.pin-opt.c{color:#c98a1b;border-color:#c98a1b}
+.map-sticky{position:sticky;top:52px;z-index:12;background:rgba(251,248,242,.96);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);padding:0 0 8px;margin:0 -2px}
+.map-day-chips{display:flex;gap:6px;overflow-x:auto;padding:0 2px 8px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.map-day-chips::-webkit-scrollbar{display:none}
+.map-day-chips button{flex:0 0 auto;border:1px solid var(--line);background:#fff;border-radius:999px;padding:6px 11px;font-size:12.5px;font-weight:700;color:var(--muted);cursor:pointer;font-family:var(--font-num),var(--font)}
+.map-day-chips button[aria-pressed="true"]{background:var(--ocean-700);color:#fff;border-color:var(--ocean-700)}
+.pin{background:var(--ocean-700);color:#fff;border-radius:50%;width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-family:var(--font-num);font-size:13px;font-weight:700;border:2px solid #fff;box-shadow:0 1px 5px rgba(0,0,0,.28);line-height:1;transition:transform .15s,box-shadow .15s}
+.pin.hotel{background:var(--gold);border-radius:8px}
+.pin.opt{background:#fff;color:var(--muted);border:2px dashed #64748b;box-shadow:0 1px 4px rgba(0,0,0,.15)}
+.pin.opt.a{color:#16a34a;border-color:#16a34a}
+.pin.opt.b{color:#0f7fa0;border-color:#0f7fa0}
+.pin.opt.c{color:#c98a1b;border-color:#c98a1b}
+.pin.active{transform:scale(1.4);box-shadow:0 0 0 4px rgba(20,184,166,.5),0 2px 10px rgba(0,0,0,.35);z-index:500}
+.leaflet-marker-icon.pin-wrap{background:transparent!important;border:0!important}
 
 @media print{.tabs-bar,.share-btn,.status{display:none}.panel[hidden]{display:block}.day{break-inside:avoid;box-shadow:none}}
 </style>
@@ -761,11 +769,11 @@ function renderStatus(){
 }
 
 
+
 /* ================= RENDER: MAP ================= */
-var mapObj=null, mapInited=false;
-function ll(id){var p=PLACES[id]; return p?[p.lat,p.lng]:null;}
+var mapObj=null, mapInited=false, mapMarkers={}, mapActiveDay=0, mapActiveKey=null, mapLayerGroup=null;
+
 function dirsUrl(stopIds){
-  // Google Maps Directions: origin / destination / waypoints (lat,lng)
   var pts=stopIds.map(function(id){var p=PLACES[id];return p? (p.lat+","+p.lng):null;}).filter(Boolean);
   if(pts.length<2){
     var p=PLACES[stopIds[0]]; return p?mapUrl(p.q):"#";
@@ -779,34 +787,63 @@ function stopLabel(s){
   if(s.label) return s.label;
   return PLACES[s.id]?PLACES[s.id].name:s.id;
 }
+function stopKey(di,si){return "d"+di+"-s"+si;}
+/** Number stops in visit order; A/B/C stay lettered (not in 1..n). Hotels keep a sequence number on a gold pin. */
+function numberDayStops(day){
+  var n=0, out=[];
+  day.stops.forEach(function(s,si){
+    var kind=s.kind||"stop";
+    var label, pinCls="pin";
+    if(kind==="opt" && s.optLetter){
+      label=s.optLetter;
+      pinCls="pin opt "+s.optLetter;
+    } else {
+      n++;
+      label=String(n);
+      if(kind==="hotel") pinCls="pin hotel";
+      else if(kind==="opt") pinCls="pin opt";
+      else pinCls="pin";
+    }
+    out.push({s:s, si:si, label:label, pinCls:pinCls, kind:kind});
+  });
+  return out;
+}
+function listBadgeClass(item){
+  var kind=item.kind;
+  if(kind==="opt" && item.s.optLetter) return "badge opt "+item.s.optLetter;
+  if(kind==="hotel") return "badge hotel";
+  if(kind==="opt") return "badge opt";
+  return "badge";
+}
+
 function renderMap(){
-  var h='<div class="section-h"><h2>路線地圖</h2><span>11/23 – 11/29</span></div>';
-  h+='<div id="overviewMap" role="img" aria-label="沖繩行程總覽地圖"></div>';
-  h+='<div class="map-legend"><span><i style="background:#0b5470"></i>行程停靠</span><span><i class="hotel" style="background:#d4a24c"></i>當晚酒店</span><span><i class="opt"></i>可選／三選一</span></div>';
+  var h='<div class="section-h"><h2>路線地圖</h2><span>點列表可對焦地圖</span></div>';
+  h+='<div class="map-sticky">';
+  h+='<div class="map-day-chips" id="mapDayChips" role="toolbar" aria-label="選擇行程日">';
   MAP_DAYS.forEach(function(d,i){
-    var n=0;
-    h+='<article class="route-day" id="map-day-'+(i+1)+'">';
+    h+='<button type="button" data-map-day="'+i+'" aria-pressed="'+(i===0?"true":"false")+'">'+md(d.date)+'</button>';
+  });
+  h+='</div>';
+  h+='<div id="overviewMap" role="img" aria-label="沖繩行程路線地圖"></div>';
+  h+='<div class="map-legend"><span><i style="background:#0b5470"></i>停靠編號</span><span><i class="hotel" style="background:#d4a24c"></i>當晚酒店</span><span><i class="opt"></i>可選／三選一</span></div>';
+  h+='</div>';
+  MAP_DAYS.forEach(function(d,i){
+    var items=numberDayStops(d);
+    h+='<article class="route-day" id="map-day-'+(i+1)+'" data-day-idx="'+i+'">';
     h+='<div class="route-day-h"><div class="date-badge"><span class="m">NOV</span><span class="d">'+(+d.date.slice(8))+'</span><span class="w">星期'+d.w+'</span></div>';
     h+='<div class="day-title"><div class="n">DAY '+(i+1)+' · '+md(d.date)+'（'+d.w+'）</div><h2>'+esc(d.title)+'</h2><div class="route-cap">'+esc(d.cap)+'</div></div></div>';
     h+='<ul class="route-stops">';
     var dirIds=[];
-    d.stops.forEach(function(s){
-      var kind=s.kind||"stop";
-      var isOpt=kind==="opt";
-      var isHotel=kind==="hotel";
-      if(!isOpt) dirIds.push(s.id);
-      var badgeCls="badge"+(isHotel?" hotel":"")+(isOpt?" opt":"")+(s.optLetter?" "+s.optLetter:"");
-      var badgeTxt;
-      if(isOpt&&s.optLetter) badgeTxt=s.optLetter;
-      else if(isOpt) badgeTxt="選";
-      else if(isHotel) badgeTxt="宿";
-      else {n++; badgeTxt=String(n);}
-      h+='<li class="'+(isOpt?"opt-stop":"")+'"><span class="'+badgeCls+'">'+esc(badgeTxt)+'</span><div class="info"><b>'+esc(stopLabel(s))+'</b>';
+    items.forEach(function(it){
+      var s=it.s;
+      if(it.kind!=="opt") dirIds.push(s.id);
+      var key=stopKey(i, it.si);
+      h+='<li class="'+(it.kind==="opt"?"opt-stop":"")+'" data-stop-key="'+key+'" data-map-focus="'+key+'" tabindex="0" role="button" aria-label="喺地圖顯示 '+esc(stopLabel(s))+'">';
+      h+='<span class="'+listBadgeClass(it)+'">'+esc(it.label)+'</span><div class="info"><b>'+esc(stopLabel(s))+'</b>';
       var p=PLACES[s.id];
       if(p) h+='<span>'+p.lat.toFixed(5)+', '+p.lng.toFixed(5)+' · </span>'+mapLink("Maps",p.q);
       h+='</div></li>';
     });
-    // For 11/27: directions use Ufuya→Ritz only for shared; also offer per-option links
     var btnIds=dirIds.length>=2?dirIds:d.stops.filter(function(s){return s.kind!=="opt";}).map(function(s){return s.id;});
     if(btnIds.length>=2){
       h+='</ul><a class="gmaps-btn" target="_blank" rel="noopener" href="'+esc(dirsUrl(btnIds))+'">🚗 Google Maps 本日路線</a>';
@@ -823,38 +860,137 @@ function renderMap(){
     h+='</article>';
   });
   $("#panel-map").innerHTML=h;
+  mapInited=false; mapObj=null; mapMarkers={}; mapActiveKey=null; mapLayerGroup=null;
 }
+
+function pinIcon(label, pinCls, active){
+  return L.divIcon({
+    className:"pin-wrap",
+    html:'<div class="'+pinCls+(active?" active":"")+'">'+esc(label)+'</div>',
+    iconSize:[28,28],
+    iconAnchor:[14,14],
+    popupAnchor:[0,-16]
+  });
+}
+
+function clearMapHighlights(){
+  mapActiveKey=null;
+  document.querySelectorAll(".route-stops li.active").forEach(function(el){el.classList.remove("active");});
+  Object.keys(mapMarkers).forEach(function(k){
+    var m=mapMarkers[k];
+    if(m && m.marker) m.marker.setIcon(pinIcon(m.label, m.pinCls, false));
+  });
+}
+
+function focusStop(key, fromMap){
+  if(!mapInited) initLeafletMap();
+  var parts=key.match(/^d(\d+)-s(\d+)$/);
+  if(!parts) return;
+  var di=+parts[1];
+  if(di!==mapActiveDay) setMapDay(di, true);
+  var ent=mapMarkers[key];
+  if(!ent) return;
+  clearMapHighlights();
+  mapActiveKey=key;
+  ent.marker.setIcon(pinIcon(ent.label, ent.pinCls, true));
+  ent.marker.setZIndexOffset(1000);
+  ent.marker.openPopup();
+  mapObj.setView(ent.latlng, Math.max(mapObj.getZoom(), 13), {animate:true});
+  var row=document.querySelector('.route-stops li[data-stop-key="'+key+'"]');
+  if(row){
+    row.classList.add("active");
+    if(!fromMap){
+      // keep sticky map visible; gently bring row into view below map
+      row.scrollIntoView({behavior:"smooth", block:"nearest"});
+    } else {
+      row.scrollIntoView({behavior:"smooth", block:"nearest"});
+    }
+  }
+}
+
+function setMapDay(di, keepFocus){
+  mapActiveDay=di;
+  document.querySelectorAll("#mapDayChips [data-map-day]").forEach(function(btn){
+    btn.setAttribute("aria-pressed", String(+btn.getAttribute("data-map-day")===di));
+  });
+  if(!mapInited){ initLeafletMap(); return; }
+  rebuildDayMarkers(keepFocus);
+  var art=document.getElementById("map-day-"+(di+1));
+  if(art && !keepFocus) art.scrollIntoView({behavior:"smooth", block:"nearest"});
+}
+
+function rebuildDayMarkers(keepFocus){
+  if(!mapObj) return;
+  if(mapLayerGroup){ mapLayerGroup.clearLayers(); } else { mapLayerGroup=L.layerGroup().addTo(mapObj); }
+  mapMarkers={};
+  var d=MAP_DAYS[mapActiveDay];
+  if(!d) return;
+  var items=numberDayStops(d);
+  var bounds=[];
+  items.forEach(function(it){
+    var p=PLACES[it.s.id]; if(!p) return;
+    var key=stopKey(mapActiveDay, it.si);
+    var latlng=[p.lat, p.lng];
+    var popup="<b>"+esc(it.label)+". "+esc(stopLabel(it.s))+"</b><br><span style=\"color:#5f7682;font-size:12px\">"+esc(p.name)+"</span>";
+    var marker=L.marker(latlng,{icon:pinIcon(it.label, it.pinCls, false), riseOnHover:true});
+    marker.bindPopup(popup);
+    marker.on("click", function(){ focusStop(key, true); });
+    mapLayerGroup.addLayer(marker);
+    mapMarkers[key]={marker:marker, label:it.label, pinCls:it.pinCls, latlng:latlng, placeId:it.s.id};
+    bounds.push(latlng);
+  });
+  if(bounds.length){
+    mapObj.fitBounds(bounds,{padding:[36,36], maxZoom:14});
+  }
+  if(keepFocus && mapActiveKey && mapMarkers[mapActiveKey]){
+    var ent=mapMarkers[mapActiveKey];
+    ent.marker.setIcon(pinIcon(ent.label, ent.pinCls, true));
+    ent.marker.openPopup();
+  } else {
+    mapActiveKey=null;
+    document.querySelectorAll(".route-stops li.active").forEach(function(el){el.classList.remove("active");});
+  }
+}
+
 function initLeafletMap(){
-  if(mapInited||typeof L==="undefined") return;
+  if(typeof L==="undefined") return;
   var el=$("#overviewMap"); if(!el) return;
+  if(mapInited && mapObj){
+    setTimeout(function(){mapObj.invalidateSize(); rebuildDayMarkers(!!mapActiveKey);}, 40);
+    return;
+  }
   mapInited=true;
-  mapObj=L.map(el,{scrollWheelZoom:false,attributionControl:true});
+  mapObj=L.map(el,{scrollWheelZoom:false, attributionControl:true, zoomControl:true});
   L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{
     maxZoom:18, attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a>'
   }).addTo(mapObj);
-  var bounds=[];
-  // unique pins for overview (prefer first occurrence; mark hotels/opts)
-  var seen={};
-  MAP_DAYS.forEach(function(d){
-    d.stops.forEach(function(s){
-      var p=PLACES[s.id]; if(!p) return;
-      var key=s.id+(s.optLetter||"")+(s.kind||"");
-      if(seen[s.id] && s.kind!=="opt") return;
-      if(s.kind==="opt") key=s.id+"-opt";
-      if(seen[key]) return; seen[key]=1;
-      var cls="pin-num", txt="•";
-      if(s.kind==="hotel"){cls="pin-hotel"; txt="宿";}
-      else if(s.kind==="opt"){cls="pin-opt"+(s.optLetter?" "+s.optLetter:""); txt=s.optLetter||"?";}
-      else {txt="";}
-      var icon=L.divIcon({className:"", html:'<div class="'+cls+'">'+(txt||"")+'</div>', iconSize:[24,24], iconAnchor:[12,12]});
-      var m=L.marker([p.lat,p.lng],{icon:icon}).addTo(mapObj);
-      m.bindPopup("<b>"+esc(stopLabel(s))+"</b><br>"+esc(p.name));
-      bounds.push([p.lat,p.lng]);
-    });
-  });
-  if(bounds.length) mapObj.fitBounds(bounds,{padding:[28,28]});
-  setTimeout(function(){mapObj.invalidateSize();},80);
+  mapLayerGroup=L.layerGroup().addTo(mapObj);
+  rebuildDayMarkers(false);
+  setTimeout(function(){mapObj.invalidateSize();}, 80);
 }
+
+// Map tab interactions (chips, list rows)
+document.addEventListener("click", function(e){
+  var chip=e.target.closest && e.target.closest("#mapDayChips [data-map-day]");
+  if(chip){
+    setMapDay(+chip.getAttribute("data-map-day"), false);
+    return;
+  }
+  // Don't steal clicks on external map / directions links
+  if(e.target.closest && e.target.closest("a.map, a.gmaps-btn")) return;
+  var row=e.target.closest && e.target.closest("#panel-map [data-map-focus]");
+  if(row){
+    e.preventDefault();
+    focusStop(row.getAttribute("data-map-focus"), false);
+  }
+});
+document.addEventListener("keydown", function(e){
+  if(e.key!=="Enter" && e.key!==" ") return;
+  var row=e.target.closest && e.target.closest("#panel-map [data-map-focus]");
+  if(!row) return;
+  e.preventDefault();
+  focusStop(row.getAttribute("data-map-focus"), false);
+});
 
 /* ================= TABS & NAV ================= */
 var TABS=["itinerary","map","hotels","notes"];
