@@ -798,6 +798,7 @@ function renderMap(){
       var badgeCls="badge"+(isHotel?" hotel":"")+(isOpt?" opt":"")+(s.optLetter?" "+s.optLetter:"");
       var badgeTxt;
       if(isOpt&&s.optLetter) badgeTxt=s.optLetter;
+      else if(isOpt) badgeTxt="選";
       else if(isHotel) badgeTxt="宿";
       else {n++; badgeTxt=String(n);}
       h+='<li class="'+(isOpt?"opt-stop":"")+'"><span class="'+badgeCls+'">'+esc(badgeTxt)+'</span><div class="info"><b>'+esc(stopLabel(s))+'</b>';
