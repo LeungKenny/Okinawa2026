@@ -9,8 +9,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
+<script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
 <style>
 :root{
   --ocean-900:#06344a;
@@ -241,7 +241,7 @@ footer{text-align:center;font-size:12px;color:#9ab0b8;padding:10px 16px 36px}
 
 /* ---------- Map tab ---------- */
 .tab{font-size:14px;padding:9px 4px}
-#overviewMap{height:260px;border-radius:var(--radius);border:1px solid rgba(6,52,74,.08);box-shadow:var(--shadow);margin:0 0 6px;z-index:1;background:#dbe8ec}
+#overviewMap{height:240px;width:100%;border-radius:var(--radius);border:1px solid rgba(6,52,74,.08);box-shadow:var(--shadow);margin:0 0 6px;z-index:1;background:#dbe8ec;touch-action:pan-x pan-y}
 .map-legend{display:flex;flex-wrap:wrap;gap:8px 12px;font-size:12px;color:var(--muted);margin:0 2px 12px}
 .map-legend span{display:inline-flex;align-items:center;gap:5px}
 .map-legend i{width:12px;height:12px;border-radius:50%;display:inline-block;flex:0 0 auto}
@@ -270,19 +270,22 @@ footer{text-align:center;font-size:12px;color:#9ab0b8;padding:10px 16px 36px}
 .gmaps-btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;margin:4px 14px 14px;padding:10px 14px;border-radius:12px;background:var(--ocean-700);color:#fff;text-decoration:none;font-weight:700;font-size:14px;border:0}
 .gmaps-btn:active{transform:scale(.98)}
 .leaflet-container{font-family:var(--font)}
-.map-sticky{position:sticky;top:52px;z-index:12;background:rgba(251,248,242,.96);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);padding:0 0 8px;margin:0 -2px}
-.map-day-chips{display:flex;gap:6px;overflow-x:auto;padding:0 2px 8px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+/* Day chips stick under tabs; map itself is NOT sticky so it cannot cover list taps */
+.map-toolbar{position:sticky;top:52px;z-index:12;background:rgba(251,248,242,.97);padding:0 0 6px;margin:0 -2px}
+.map-day-chips{display:flex;gap:6px;overflow-x:auto;padding:4px 2px 6px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
 .map-day-chips::-webkit-scrollbar{display:none}
-.map-day-chips button{flex:0 0 auto;border:1px solid var(--line);background:#fff;border-radius:999px;padding:6px 11px;font-size:12.5px;font-weight:700;color:var(--muted);cursor:pointer;font-family:var(--font-num),var(--font)}
+.map-day-chips button{flex:0 0 auto;border:1px solid var(--line);background:#fff;border-radius:999px;padding:8px 12px;font-size:13px;font-weight:700;color:var(--muted);cursor:pointer;font-family:var(--font-num),var(--font);-webkit-tap-highlight-color:rgba(20,184,166,.25);touch-action:manipulation}
 .map-day-chips button[aria-pressed="true"]{background:var(--ocean-700);color:#fff;border-color:var(--ocean-700)}
-.pin{background:var(--ocean-700);color:#fff;border-radius:50%;width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-family:var(--font-num);font-size:13px;font-weight:700;border:2px solid #fff;box-shadow:0 1px 5px rgba(0,0,0,.28);line-height:1;transition:transform .15s,box-shadow .15s}
+.pin{background:var(--ocean-700);color:#fff;border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;font-family:var(--font-num);font-size:14px;font-weight:700;border:2px solid #fff;box-shadow:0 1px 5px rgba(0,0,0,.28);line-height:1;transition:transform .15s,box-shadow .15s;pointer-events:auto}
 .pin.hotel{background:var(--gold);border-radius:8px}
 .pin.opt{background:#fff;color:var(--muted);border:2px dashed #64748b;box-shadow:0 1px 4px rgba(0,0,0,.15)}
 .pin.opt.a{color:#16a34a;border-color:#16a34a}
 .pin.opt.b{color:#0f7fa0;border-color:#0f7fa0}
 .pin.opt.c{color:#c98a1b;border-color:#c98a1b}
-.pin.active{transform:scale(1.4);box-shadow:0 0 0 4px rgba(20,184,166,.5),0 2px 10px rgba(0,0,0,.35);z-index:500}
-.leaflet-marker-icon.pin-wrap{background:transparent!important;border:0!important}
+.pin.active{transform:scale(1.35);box-shadow:0 0 0 4px rgba(20,184,166,.55),0 2px 10px rgba(0,0,0,.35)}
+.leaflet-div-icon.pin-wrap{background:transparent!important;border:0!important}
+.leaflet-marker-icon{cursor:pointer!important}
+.route-stops li{-webkit-tap-highlight-color:rgba(20,184,166,.2);touch-action:manipulation;user-select:none;-webkit-user-select:none}
 
 @media print{.tabs-bar,.share-btn,.status{display:none}.panel[hidden]{display:block}.day{break-inside:avoid;box-shadow:none}}
 </style>
@@ -770,6 +773,7 @@ function renderStatus(){
 
 
 
+
 /* ================= RENDER: MAP ================= */
 var mapObj=null, mapInited=false, mapMarkers={}, mapActiveDay=0, mapActiveKey=null, mapLayerGroup=null;
 
@@ -788,45 +792,39 @@ function stopLabel(s){
   return PLACES[s.id]?PLACES[s.id].name:s.id;
 }
 function stopKey(di,si){return "d"+di+"-s"+si;}
-/** Number stops in visit order; A/B/C stay lettered (not in 1..n). Hotels keep a sequence number on a gold pin. */
 function numberDayStops(day){
   var n=0, out=[];
   day.stops.forEach(function(s,si){
     var kind=s.kind||"stop";
     var label, pinCls="pin";
     if(kind==="opt" && s.optLetter){
-      label=s.optLetter;
-      pinCls="pin opt "+s.optLetter;
+      label=s.optLetter; pinCls="pin opt "+s.optLetter;
     } else {
-      n++;
-      label=String(n);
+      n++; label=String(n);
       if(kind==="hotel") pinCls="pin hotel";
       else if(kind==="opt") pinCls="pin opt";
-      else pinCls="pin";
     }
     out.push({s:s, si:si, label:label, pinCls:pinCls, kind:kind});
   });
   return out;
 }
 function listBadgeClass(item){
-  var kind=item.kind;
-  if(kind==="opt" && item.s.optLetter) return "badge opt "+item.s.optLetter;
-  if(kind==="hotel") return "badge hotel";
-  if(kind==="opt") return "badge opt";
+  if(item.kind==="opt" && item.s.optLetter) return "badge opt "+item.s.optLetter;
+  if(item.kind==="hotel") return "badge hotel";
+  if(item.kind==="opt") return "badge opt";
   return "badge";
 }
 
 function renderMap(){
-  var h='<div class="section-h"><h2>路線地圖</h2><span>點列表可對焦地圖</span></div>';
-  h+='<div class="map-sticky">';
-  h+='<div class="map-day-chips" id="mapDayChips" role="toolbar" aria-label="選擇行程日">';
+  var h='<div class="section-h"><h2>路線地圖</h2><span>撳下面地點會喺地圖標示</span></div>';
+  h+='<div class="map-toolbar"><div class="map-day-chips" id="mapDayChips" role="toolbar" aria-label="選擇行程日">';
   MAP_DAYS.forEach(function(d,i){
     h+='<button type="button" data-map-day="'+i+'" aria-pressed="'+(i===0?"true":"false")+'">'+md(d.date)+'</button>';
   });
-  h+='</div>';
+  h+='</div></div>';
   h+='<div id="overviewMap" role="img" aria-label="沖繩行程路線地圖"></div>';
   h+='<div class="map-legend"><span><i style="background:#0b5470"></i>停靠編號</span><span><i class="hotel" style="background:#d4a24c"></i>當晚酒店</span><span><i class="opt"></i>可選／三選一</span></div>';
-  h+='</div>';
+  h+='<p id="mapHint" class="map-legend" style="margin-top:-4px">載入地圖中…</p>';
   MAP_DAYS.forEach(function(d,i){
     var items=numberDayStops(d);
     h+='<article class="route-day" id="map-day-'+(i+1)+'" data-day-idx="'+i+'">';
@@ -860,52 +858,88 @@ function renderMap(){
     h+='</article>';
   });
   $("#panel-map").innerHTML=h;
-  mapInited=false; mapObj=null; mapMarkers={}; mapActiveKey=null; mapLayerGroup=null;
+  // reset map instance (DOM node was replaced)
+  if(mapObj){ try{ mapObj.remove(); }catch(e){} }
+  mapObj=null; mapInited=false; mapMarkers={}; mapActiveKey=null; mapLayerGroup=null; mapActiveDay=0;
+  wireMapPanelHandlers();
 }
 
 function pinIcon(label, pinCls, active){
   return L.divIcon({
     className:"pin-wrap",
     html:'<div class="'+pinCls+(active?" active":"")+'">'+esc(label)+'</div>',
-    iconSize:[28,28],
-    iconAnchor:[14,14],
-    popupAnchor:[0,-16]
+    iconSize:[32,32],
+    iconAnchor:[16,16],
+    popupAnchor:[0,-18]
   });
 }
 
 function clearMapHighlights(){
   mapActiveKey=null;
-  document.querySelectorAll(".route-stops li.active").forEach(function(el){el.classList.remove("active");});
+  document.querySelectorAll("#panel-map .route-stops li.active").forEach(function(el){el.classList.remove("active");});
   Object.keys(mapMarkers).forEach(function(k){
     var m=mapMarkers[k];
     if(m && m.marker) m.marker.setIcon(pinIcon(m.label, m.pinCls, false));
   });
 }
 
+function highlightListRow(key){
+  document.querySelectorAll("#panel-map .route-stops li.active").forEach(function(el){el.classList.remove("active");});
+  var row=document.querySelector('#panel-map .route-stops li[data-stop-key="'+key+'"]');
+  if(row) row.classList.add("active");
+  return row;
+}
+
 function focusStop(key, fromMap){
-  if(!mapInited) initLeafletMap();
   var parts=key.match(/^d(\d+)-s(\d+)$/);
   if(!parts) return;
   var di=+parts[1];
-  if(di!==mapActiveDay) setMapDay(di, true);
-  var ent=mapMarkers[key];
-  if(!ent) return;
-  clearMapHighlights();
-  mapActiveKey=key;
-  ent.marker.setIcon(pinIcon(ent.label, ent.pinCls, true));
-  ent.marker.setZIndexOffset(1000);
-  ent.marker.openPopup();
-  mapObj.setView(ent.latlng, Math.max(mapObj.getZoom(), 13), {animate:true});
-  var row=document.querySelector('.route-stops li[data-stop-key="'+key+'"]');
-  if(row){
-    row.classList.add("active");
-    if(!fromMap){
-      // keep sticky map visible; gently bring row into view below map
-      row.scrollIntoView({behavior:"smooth", block:"nearest"});
+  // Always give list feedback first (works even if Leaflet failed)
+  if(di!==mapActiveDay){
+    mapActiveDay=di;
+    document.querySelectorAll("#mapDayChips [data-map-day]").forEach(function(btn){
+      btn.setAttribute("aria-pressed", String(+btn.getAttribute("data-map-day")===di));
+    });
+  }
+  var row=highlightListRow(key);
+  ensureMapReady(function(){
+    if(di!==mapActiveDay){ /* chips already synced */ }
+    // Rebuild markers if day changed or empty
+    var needRebuild=false;
+    Object.keys(mapMarkers).forEach(function(){});
+    if(!mapMarkers[key] || Object.keys(mapMarkers).length===0){
+      rebuildDayMarkers(false);
     } else {
+      // If markers belong to another day, rebuild
+      var sample=Object.keys(mapMarkers)[0];
+      if(sample && sample.indexOf("d"+di+"-")!==0) rebuildDayMarkers(false);
+    }
+    var ent=mapMarkers[key];
+    if(!ent){
+      toast("搵唔到呢個地點嘅標記");
+      return;
+    }
+    clearMapHighlights();
+    mapActiveKey=key;
+    highlightListRow(key);
+    ent.marker.setIcon(pinIcon(ent.label, ent.pinCls, true));
+    ent.marker.setZIndexOffset(1000);
+    try{ ent.marker.openPopup(); }catch(e){}
+    try{
+      mapObj.setView(ent.latlng, Math.max(mapObj.getZoom()||12, 13), {animate:true});
+    }catch(e){
+      try{ mapObj.setView(ent.latlng, 13); }catch(e2){}
+    }
+    // Bring map into view when selecting from list
+    if(!fromMap){
+      var mapEl=$("#overviewMap");
+      if(mapEl) mapEl.scrollIntoView({behavior:"smooth", block:"center"});
+    } else if(row){
       row.scrollIntoView({behavior:"smooth", block:"nearest"});
     }
-  }
+    var label=ent.label+". "+(row?row.querySelector("b").textContent:"");
+    toast("📍 "+label);
+  });
 }
 
 function setMapDay(di, keepFocus){
@@ -913,15 +947,19 @@ function setMapDay(di, keepFocus){
   document.querySelectorAll("#mapDayChips [data-map-day]").forEach(function(btn){
     btn.setAttribute("aria-pressed", String(+btn.getAttribute("data-map-day")===di));
   });
-  if(!mapInited){ initLeafletMap(); return; }
-  rebuildDayMarkers(keepFocus);
-  var art=document.getElementById("map-day-"+(di+1));
-  if(art && !keepFocus) art.scrollIntoView({behavior:"smooth", block:"nearest"});
+  ensureMapReady(function(){
+    rebuildDayMarkers(keepFocus);
+    var art=document.getElementById("map-day-"+(di+1));
+    if(art && !keepFocus) art.scrollIntoView({behavior:"smooth", block:"nearest"});
+    var d=MAP_DAYS[di];
+    if(d) toast("顯示 "+md(d.date)+" 路線");
+  });
 }
 
 function rebuildDayMarkers(keepFocus){
-  if(!mapObj) return;
-  if(mapLayerGroup){ mapLayerGroup.clearLayers(); } else { mapLayerGroup=L.layerGroup().addTo(mapObj); }
+  if(!mapObj || typeof L==="undefined") return;
+  if(mapLayerGroup){ mapLayerGroup.clearLayers(); }
+  else { mapLayerGroup=L.layerGroup().addTo(mapObj); }
   mapMarkers={};
   var d=MAP_DAYS[mapActiveDay];
   if(!d) return;
@@ -932,65 +970,143 @@ function rebuildDayMarkers(keepFocus){
     var key=stopKey(mapActiveDay, it.si);
     var latlng=[p.lat, p.lng];
     var popup="<b>"+esc(it.label)+". "+esc(stopLabel(it.s))+"</b><br><span style=\"color:#5f7682;font-size:12px\">"+esc(p.name)+"</span>";
-    var marker=L.marker(latlng,{icon:pinIcon(it.label, it.pinCls, false), riseOnHover:true});
+    var marker=L.marker(latlng,{icon:pinIcon(it.label, it.pinCls, false), riseOnHover:true, keyboard:true});
     marker.bindPopup(popup);
-    marker.on("click", function(){ focusStop(key, true); });
+    marker.on("click", function(ev){
+      if(ev && ev.originalEvent){ ev.originalEvent.stopPropagation(); }
+      focusStop(key, true);
+    });
     mapLayerGroup.addLayer(marker);
     mapMarkers[key]={marker:marker, label:it.label, pinCls:it.pinCls, latlng:latlng, placeId:it.s.id};
     bounds.push(latlng);
   });
   if(bounds.length){
-    mapObj.fitBounds(bounds,{padding:[36,36], maxZoom:14});
+    try{ mapObj.fitBounds(bounds,{padding:[36,36], maxZoom:14}); }catch(e){}
   }
   if(keepFocus && mapActiveKey && mapMarkers[mapActiveKey]){
     var ent=mapMarkers[mapActiveKey];
     ent.marker.setIcon(pinIcon(ent.label, ent.pinCls, true));
-    ent.marker.openPopup();
-  } else {
+    try{ ent.marker.openPopup(); }catch(e){}
+  } else if(!keepFocus){
     mapActiveKey=null;
-    document.querySelectorAll(".route-stops li.active").forEach(function(el){el.classList.remove("active");});
+    document.querySelectorAll("#panel-map .route-stops li.active").forEach(function(el){el.classList.remove("active");});
   }
+  var hint=$("#mapHint");
+  if(hint) hint.textContent="撳下面列表或地圖標記，會標示該地點";
+}
+
+function refreshMapSize(){
+  if(!mapObj) return;
+  try{
+    mapObj.invalidateSize(true);
+    if(mapActiveKey && mapMarkers[mapActiveKey]){
+      mapObj.setView(mapMarkers[mapActiveKey].latlng, mapObj.getZoom(), {animate:false});
+    } else if(Object.keys(mapMarkers).length){
+      var b=[]; Object.keys(mapMarkers).forEach(function(k){b.push(mapMarkers[k].latlng);});
+      mapObj.fitBounds(b,{padding:[36,36], maxZoom:14});
+    }
+  }catch(e){}
 }
 
 function initLeafletMap(){
-  if(typeof L==="undefined") return;
-  var el=$("#overviewMap"); if(!el) return;
-  if(mapInited && mapObj){
-    setTimeout(function(){mapObj.invalidateSize(); rebuildDayMarkers(!!mapActiveKey);}, 40);
-    return;
+  var hint=$("#mapHint");
+  if(typeof L==="undefined"){
+    if(hint) hint.textContent="地圖套件載入失敗，請刷新頁面。列表仍可撳（會提示）。";
+    return false;
   }
-  mapInited=true;
-  mapObj=L.map(el,{scrollWheelZoom:false, attributionControl:true, zoomControl:true});
-  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{
-    maxZoom:18, attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a>'
-  }).addTo(mapObj);
-  mapLayerGroup=L.layerGroup().addTo(mapObj);
-  rebuildDayMarkers(false);
-  setTimeout(function(){mapObj.invalidateSize();}, 80);
+  var el=$("#overviewMap"); if(!el) return false;
+  if(mapInited && mapObj){
+    refreshMapSize();
+    return true;
+  }
+  try{
+    mapObj=L.map(el,{scrollWheelZoom:false, attributionControl:true, zoomControl:true, tap:true, tapTolerance:25});
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{
+      maxZoom:18, attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a>'
+    }).addTo(mapObj);
+    mapLayerGroup=L.layerGroup().addTo(mapObj);
+    mapInited=true;
+    rebuildDayMarkers(false);
+    // Leaflet must recalc after tab becomes visible
+    requestAnimationFrame(function(){
+      refreshMapSize();
+      setTimeout(refreshMapSize, 50);
+      setTimeout(refreshMapSize, 250);
+    });
+    if(hint) hint.textContent="撳下面列表或地圖標記，會標示該地點";
+    return true;
+  }catch(err){
+    if(hint) hint.textContent="地圖初始化失敗："+(err && err.message?err.message:"error");
+    mapInited=false; mapObj=null;
+    return false;
+  }
 }
 
-// Map tab interactions (chips, list rows)
-document.addEventListener("click", function(e){
-  var chip=e.target.closest && e.target.closest("#mapDayChips [data-map-day]");
-  if(chip){
-    setMapDay(+chip.getAttribute("data-map-day"), false);
-    return;
+function ensureMapReady(cb){
+  if(mapInited && mapObj){ refreshMapSize(); cb(); return; }
+  var ok=initLeafletMap();
+  if(ok){ cb(); return; }
+  // Retry briefly in case script still loading
+  var n=0;
+  var t=setInterval(function(){
+    n++;
+    if(typeof L!=="undefined"){
+      clearInterval(t);
+      initLeafletMap();
+      cb();
+    } else if(n>20){
+      clearInterval(t);
+      cb();
+    }
+  }, 100);
+}
+
+function wireMapPanelHandlers(){
+  var panel=$("#panel-map"); if(!panel || panel._mapWired) return;
+  panel._mapWired=true;
+  var lastTap=0;
+  function onActivate(e){
+    var now=Date.now();
+    if(now-lastTap<400){ e.preventDefault(); return; } // debounce touchend+click
+    var t=e.target;
+    if(!t || !t.closest) return;
+    if(t.closest("a.map, a.gmaps-btn")) return; // keep external links
+    var chip=t.closest("#mapDayChips [data-map-day]");
+    if(chip){
+      lastTap=now;
+      e.preventDefault();
+      e.stopPropagation();
+      setMapDay(+chip.getAttribute("data-map-day"), false);
+      return;
+    }
+    var row=t.closest("[data-map-focus]");
+    if(row && panel.contains(row)){
+      lastTap=now;
+      e.preventDefault();
+      e.stopPropagation();
+      focusStop(row.getAttribute("data-map-focus"), false);
+    }
   }
-  // Don't steal clicks on external map / directions links
-  if(e.target.closest && e.target.closest("a.map, a.gmaps-btn")) return;
-  var row=e.target.closest && e.target.closest("#panel-map [data-map-focus]");
-  if(row){
+  // click + touchend for mobile browsers that drop click
+  panel.addEventListener("click", onActivate, false);
+  panel.addEventListener("touchend", function(e){
+    // Only handle if target is our controls (avoid breaking map pan)
+    var t=e.target;
+    if(!t || !t.closest) return;
+    if(t.closest("#overviewMap")) return; // let Leaflet handle
+    if(t.closest("a.map, a.gmaps-btn")) return;
+    if(t.closest("#mapDayChips [data-map-day], [data-map-focus]")){
+      onActivate(e);
+    }
+  }, {passive:false});
+  panel.addEventListener("keydown", function(e){
+    if(e.key!=="Enter" && e.key!==" ") return;
+    var row=e.target.closest && e.target.closest("[data-map-focus]");
+    if(!row) return;
     e.preventDefault();
     focusStop(row.getAttribute("data-map-focus"), false);
-  }
-});
-document.addEventListener("keydown", function(e){
-  if(e.key!=="Enter" && e.key!==" ") return;
-  var row=e.target.closest && e.target.closest("#panel-map [data-map-focus]");
-  if(!row) return;
-  e.preventDefault();
-  focusStop(row.getAttribute("data-map-focus"), false);
-});
+  });
+}
 
 /* ================= TABS & NAV ================= */
 var TABS=["itinerary","map","hotels","notes"];
@@ -1001,7 +1117,14 @@ function showTab(name,noScroll){
     $("#panel-"+t).hidden = t!==name;
   });
   $("#dayStrip").style.display = name==="itinerary"?"":"none";
-  if(name==="map"){setTimeout(initLeafletMap,30); if(mapObj) setTimeout(function(){mapObj.invalidateSize();},100);}
+  if(name==="map"){
+    // Panel was display:none — Leaflet needs invalidateSize after it becomes visible
+    requestAnimationFrame(function(){
+      ensureMapReady(function(){ refreshMapSize(); });
+      setTimeout(function(){ refreshMapSize(); }, 100);
+      setTimeout(function(){ refreshMapSize(); }, 300);
+    });
+  }
   if(!noScroll){
     var bar=$("#tabsBar"); var top=bar.getBoundingClientRect().top+window.scrollY;
     if(window.scrollY>top) window.scrollTo({top:top,behavior:"auto"});
