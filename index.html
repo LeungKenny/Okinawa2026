@@ -4,11 +4,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#0b5470">
-<meta name="description" content="沖繩之旅 2026 · 11/23 – 11/29 行程、酒店及清單">
+<meta name="description" content="沖繩之旅 2026 · 11/23 – 11/29 行程、路線地圖、酒店及清單">
 <title>沖繩之旅 2026 · Okinawa Trip</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBgIIlAuPv8yYe1tNL4AVzSsBkBM/ykpwYyzs=" crossorigin="">
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 <style>
 :root{
   --ocean-900:#06344a;
@@ -236,6 +238,44 @@ footer{text-align:center;font-size:12px;color:#9ab0b8;padding:10px 16px 36px}
   .day-title h2{font-size:21px}
 }
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+
+/* ---------- Map tab ---------- */
+.tab{font-size:14px;padding:9px 4px}
+#overviewMap{height:280px;border-radius:var(--radius);border:1px solid rgba(6,52,74,.08);box-shadow:var(--shadow);margin:8px 0 14px;z-index:1;background:#dbe8ec}
+.map-legend{display:flex;flex-wrap:wrap;gap:8px 12px;font-size:12px;color:var(--muted);margin:0 2px 12px}
+.map-legend span{display:inline-flex;align-items:center;gap:5px}
+.map-legend i{width:12px;height:12px;border-radius:50%;display:inline-block;flex:0 0 auto}
+.map-legend i.opt{border:2px dashed #94a3b8;background:transparent;box-sizing:border-box}
+.map-legend i.hotel{border-radius:3px}
+.route-day{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);margin:12px 0;overflow:hidden;border:1px solid rgba(6,52,74,.05)}
+.route-day-h{display:flex;gap:12px;align-items:center;padding:14px 14px 10px;border-bottom:1px dashed var(--line)}
+.route-day-h .date-badge{width:52px;height:56px}
+.route-day-h .date-badge .d{font-size:22px}
+.route-cap{font-size:13px;color:var(--muted);margin-top:2px}
+.route-stops{list-style:none;margin:0;padding:10px 14px 6px}
+.route-stops li{display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid #eef3f5}
+.route-stops li:last-child{border-bottom:0}
+.route-stops .badge{flex:0 0 auto;width:26px;height:26px;border-radius:50%;background:var(--ocean-700);color:#fff;font-family:var(--font-num);font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;line-height:1}
+.route-stops .badge.hotel{background:var(--gold);border-radius:8px;font-size:11px}
+.route-stops .badge.opt{background:transparent;color:var(--muted);border:2px dashed #94a3b8;font-size:12px}
+.route-stops .badge.a{background:#16a34a;border:0;color:#fff}
+.route-stops .badge.b{background:#0f7fa0;border:0;color:#fff}
+.route-stops .badge.c{background:#c98a1b;border:0;color:#fff}
+.route-stops .info{flex:1;min-width:0}
+.route-stops .info b{display:block;font-size:15px;line-height:1.35}
+.route-stops .info span{font-size:12.5px;color:var(--muted)}
+.route-stops li.opt-stop{opacity:.92}
+.route-stops li.opt-stop .info b{font-weight:600}
+.gmaps-btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;margin:4px 14px 14px;padding:10px 14px;border-radius:12px;background:var(--ocean-700);color:#fff;text-decoration:none;font-weight:700;font-size:14px;border:0}
+.gmaps-btn:active{transform:scale(.98)}
+.leaflet-container{font-family:var(--font)}
+.pin-num{background:var(--ocean-700);color:#fff;border-radius:50%;width:24px;height:24px;display:flex;align-items:center;justify-content:center;font-family:var(--font-num);font-size:12px;font-weight:700;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.25)}
+.pin-hotel{background:var(--gold);border-radius:6px;width:24px;height:24px;display:flex;align-items:center;justify-content:center;font-size:12px;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.25)}
+.pin-opt{background:#fff;color:var(--muted);border:2px dashed #64748b;border-radius:50%;width:24px;height:24px;display:flex;align-items:center;justify-content:center;font-family:var(--font-num);font-size:11px;font-weight:700;box-shadow:0 1px 4px rgba(0,0,0,.15)}
+.pin-opt.a{color:#16a34a;border-color:#16a34a}
+.pin-opt.b{color:#0f7fa0;border-color:#0f7fa0}
+.pin-opt.c{color:#c98a1b;border-color:#c98a1b}
+
 @media print{.tabs-bar,.share-btn,.status{display:none}.panel[hidden]{display:block}.day{break-inside:avoid;box-shadow:none}}
 </style>
 </head>
@@ -272,6 +312,7 @@ footer{text-align:center;font-size:12px;color:#9ab0b8;padding:10px 16px 36px}
     <div class="wrap">
       <div class="tabs" role="tablist">
         <button class="tab" role="tab" id="tab-itinerary" aria-controls="panel-itinerary" aria-selected="true" data-tab="itinerary" type="button">🗺️ 行程</button>
+        <button class="tab" role="tab" id="tab-map" aria-controls="panel-map" aria-selected="false" data-tab="map" type="button">📍 地圖</button>
         <button class="tab" role="tab" id="tab-hotels" aria-controls="panel-hotels" aria-selected="false" data-tab="hotels" type="button">🏨 酒店</button>
         <button class="tab" role="tab" id="tab-notes" aria-controls="panel-notes" aria-selected="false" data-tab="notes" type="button">✅ 清單</button>
       </div>
@@ -329,6 +370,88 @@ var HOTELS = {
   hoshinoya:{name:"Hoshinoya 星野度假村", short:"Hoshinoya", zh:"讀谷村", q:P.hoshinoya, color:"#14b8a6"},
   ritz:{name:"The Ritz-Carlton Okinawa", short:"Ritz-Carlton", zh:"名護", q:P.ritz, color:"#d4a24c"}
 };
+
+/* Verified lat/lng (Nominatim OSM / Wikidata / Wikipedia). Do not invent. */
+var PLACES = {
+  airport:   {name:"那霸機場", lat:26.19670, lng:127.64895, q:P.airport},
+  collective:{name:"Hotel Collective", lat:26.21512, lng:127.68550, q:P.collective},
+  kokusai:   {name:"國際通", lat:26.21719, lng:127.69101, q:P.kokusai},
+  senaga:    {name:"瀨長島", lat:26.17531, lng:127.64239, q:P.senaga},
+  tsuboya:   {name:"壺屋やちむん通り", lat:26.21316, lng:127.69137, q:P.tsuboyaSt},
+  makishi:   {name:"第一牧志公設市場", lat:26.21455, lng:127.68829, q:P.makishi},
+  naminoue:  {name:"波上宮", lat:26.22056, lng:127.67114, q:P.naminoue},
+  shuri:     {name:"首里城", lat:26.21700, lng:127.71937, q:P.shuri},
+  hoshinoya: {name:"Hoshinoya 星野", lat:26.41799, lng:127.71431, q:P.hoshinoya},
+  lazor:     {name:"Lazor Garden Alivila", lat:26.41590, lng:127.71454, q:P.lazor},
+  churaumi:  {name:"美麗海水族館", lat:26.69437, lng:127.87804, q:P.churaumi},
+  kouriTower:{name:"古宇利 Ocean Tower", lat:26.70013, lng:128.02416, q:P.kouriTower},
+  kouriBridge:{name:"古宇利大橋", lat:26.68664, lng:128.01732, q:P.kouriBridge},
+  ritz:      {name:"The Ritz-Carlton Okinawa", lat:26.52795, lng:127.93929, q:P.ritz},
+  ryuka:     {name:"琉華菜苑（ブセナテラス）", lat:26.54042, lng:127.93578, q:P.ryuka},
+  junglia:   {name:"JUNGLIA", lat:26.64224, lng:127.97362, q:P.junglia},
+  bluecave:  {name:"青之洞窟（真榮田岬）", lat:26.44628, lng:127.77136, q:P.bluecave},
+  busena:    {name:"部瀨名海中公園", lat:26.54054, lng:127.93571, q:P.busena},
+  ufuya:     {name:"百年古家 大家", lat:26.62102, lng:127.96364, q:P.ufuya},
+  manzamo:   {name:"萬座毛", lat:26.50501, lng:127.85026, q:P.manzamo},
+  rycom:     {name:"AEON Rycom", lat:26.31423, lng:127.79592, q:P.rycom},
+  amvillage: {name:"美國村", lat:26.31472, lng:127.76113, q:P.amvillage},
+  dmm:       {name:"DMM Kariyushi 水族館", lat:26.15633, lng:127.65071, q:P.dmm}
+};
+
+/* Day routes for map tab: stops in visit order. kind: stop|hotel|opt; optLetter for 11/27 A/B/C */
+var MAP_DAYS = [
+  {date:"2026-11-23", w:"一", title:"抵達那霸", cap:"機場 → 那霸市區 Hotel Collective",
+   stops:[
+     {id:"airport", kind:"stop"},
+     {id:"collective", kind:"hotel", label:"入住 Hotel Collective"},
+     {id:"kokusai", kind:"stop", label:"國際通（自由活動／晚餐）"},
+     {id:"senaga", kind:"opt", label:"可選：瀨長島夜景"}
+   ]},
+  {date:"2026-11-24", w:"二", title:"那霸文化散策 → 讀谷", cap:"那霸 → 中部 Hoshinoya",
+   stops:[
+     {id:"tsuboya", kind:"stop"},
+     {id:"kokusai", kind:"stop", label:"國際通"},
+     {id:"makishi", kind:"stop"},
+     {id:"naminoue", kind:"stop"},
+     {id:"shuri", kind:"stop"},
+     {id:"hoshinoya", kind:"hotel", label:"入住 Hoshinoya 星野"}
+   ]},
+  {date:"2026-11-25", w:"三", title:"婚禮日", cap:"讀谷 · Lazor Garden Alivila",
+   stops:[
+     {id:"hoshinoya", kind:"stop", label:"早上 · Hoshinoya 自由活動"},
+     {id:"lazor", kind:"stop", label:"Lazor Garden Alivila 婚禮"},
+     {id:"hoshinoya", kind:"hotel", label:"入住 Hoshinoya 星野"}
+   ]},
+  {date:"2026-11-26", w:"四", title:"美麗海 · 古宇利", cap:"北部水族館 → 古宇利 → 名護 Ritz",
+   stops:[
+     {id:"churaumi", kind:"stop"},
+     {id:"kouriBridge", kind:"stop", label:"古宇利大橋"},
+     {id:"kouriTower", kind:"stop"},
+     {id:"ritz", kind:"hotel", label:"入住 Ritz-Carlton"},
+     {id:"ryuka", kind:"stop", label:"晚餐 · 琉華菜苑"}
+   ]},
+  {date:"2026-11-27", w:"五", title:"三選一活動日", cap:"各自自由揀 A／B／C → 大家晚餐 → Ritz",
+   stops:[
+     {id:"junglia", kind:"opt", optLetter:"A", label:"方案 A · JUNGLIA"},
+     {id:"bluecave", kind:"opt", optLetter:"B", label:"方案 B · 青之洞窟"},
+     {id:"busena", kind:"opt", optLetter:"C", label:"方案 C · 部瀨名海中公園"},
+     {id:"ufuya", kind:"stop", label:"18:00 全員 · 百年古家 大家"},
+     {id:"ritz", kind:"hotel", label:"入住 Ritz-Carlton"}
+   ]},
+  {date:"2026-11-28", w:"六", title:"萬座毛 · 購物 · 美國村", cap:"中部海岸 → 那霸 Hotel Collective",
+   stops:[
+     {id:"manzamo", kind:"stop"},
+     {id:"rycom", kind:"stop"},
+     {id:"amvillage", kind:"stop"},
+     {id:"collective", kind:"hotel", label:"入住 Hotel Collective"}
+   ]},
+  {date:"2026-11-29", w:"日", title:"DMM · 回程", cap:"豐見城 → 那霸機場",
+   stops:[
+     {id:"dmm", kind:"stop"},
+     {id:"airport", kind:"stop", label:"那霸機場 · 回程香港"}
+   ]}
+];
+
 
 /* stop: t=time, h=title (html ok), p=desc, maps=[[label,query]], travel=[text], tags, cls */
 var DAYS = [
@@ -636,8 +759,103 @@ function renderStatus(){
   tick(); setInterval(tick,1000);
 }
 
+
+/* ================= RENDER: MAP ================= */
+var mapObj=null, mapInited=false;
+function ll(id){var p=PLACES[id]; return p?[p.lat,p.lng]:null;}
+function dirsUrl(stopIds){
+  // Google Maps Directions: origin / destination / waypoints (lat,lng)
+  var pts=stopIds.map(function(id){var p=PLACES[id];return p? (p.lat+","+p.lng):null;}).filter(Boolean);
+  if(pts.length<2){
+    var p=PLACES[stopIds[0]]; return p?mapUrl(p.q):"#";
+  }
+  var origin=pts[0], dest=pts[pts.length-1], wps=pts.slice(1,-1);
+  var u="https://www.google.com/maps/dir/?api=1&origin="+encodeURIComponent(origin)+"&destination="+encodeURIComponent(dest)+"&travelmode=driving";
+  if(wps.length) u+="&waypoints="+encodeURIComponent(wps.join("|"));
+  return u;
+}
+function stopLabel(s){
+  if(s.label) return s.label;
+  return PLACES[s.id]?PLACES[s.id].name:s.id;
+}
+function renderMap(){
+  var h='<div class="section-h"><h2>路線地圖</h2><span>11/23 – 11/29</span></div>';
+  h+='<div id="overviewMap" role="img" aria-label="沖繩行程總覽地圖"></div>';
+  h+='<div class="map-legend"><span><i style="background:#0b5470"></i>行程停靠</span><span><i class="hotel" style="background:#d4a24c"></i>當晚酒店</span><span><i class="opt"></i>可選／三選一</span></div>';
+  MAP_DAYS.forEach(function(d,i){
+    var n=0;
+    h+='<article class="route-day" id="map-day-'+(i+1)+'">';
+    h+='<div class="route-day-h"><div class="date-badge"><span class="m">NOV</span><span class="d">'+(+d.date.slice(8))+'</span><span class="w">星期'+d.w+'</span></div>';
+    h+='<div class="day-title"><div class="n">DAY '+(i+1)+' · '+md(d.date)+'（'+d.w+'）</div><h2>'+esc(d.title)+'</h2><div class="route-cap">'+esc(d.cap)+'</div></div></div>';
+    h+='<ul class="route-stops">';
+    var dirIds=[];
+    d.stops.forEach(function(s){
+      var kind=s.kind||"stop";
+      var isOpt=kind==="opt";
+      var isHotel=kind==="hotel";
+      if(!isOpt) dirIds.push(s.id);
+      var badgeCls="badge"+(isHotel?" hotel":"")+(isOpt?" opt":"")+(s.optLetter?" "+s.optLetter:"");
+      var badgeTxt;
+      if(isOpt&&s.optLetter) badgeTxt=s.optLetter;
+      else if(isHotel) badgeTxt="宿";
+      else {n++; badgeTxt=String(n);}
+      h+='<li class="'+(isOpt?"opt-stop":"")+'"><span class="'+badgeCls+'">'+esc(badgeTxt)+'</span><div class="info"><b>'+esc(stopLabel(s))+'</b>';
+      var p=PLACES[s.id];
+      if(p) h+='<span>'+p.lat.toFixed(5)+', '+p.lng.toFixed(5)+' · </span>'+mapLink("Maps",p.q);
+      h+='</div></li>';
+    });
+    // For 11/27: directions use Ufuya→Ritz only for shared; also offer per-option links
+    var btnIds=dirIds.length>=2?dirIds:d.stops.filter(function(s){return s.kind!=="opt";}).map(function(s){return s.id;});
+    if(btnIds.length>=2){
+      h+='</ul><a class="gmaps-btn" target="_blank" rel="noopener" href="'+esc(dirsUrl(btnIds))+'">🚗 Google Maps 本日路線</a>';
+    } else {
+      h+='</ul>';
+    }
+    if(d.date==="2026-11-27"){
+      h+='<div style="padding:0 14px 14px;display:flex;flex-wrap:wrap;gap:8px">';
+      [["A","junglia","JUNGLIA → 大家"],["B","bluecave","青之洞窟 → 大家"],["C","busena","部瀨名 → 大家"]].forEach(function(x){
+        h+='<a class="map" target="_blank" rel="noopener" href="'+esc(dirsUrl([x[1],"ufuya"]))+'">方案 '+x[0]+'：'+esc(x[2])+'</a>';
+      });
+      h+='</div>';
+    }
+    h+='</article>';
+  });
+  $("#panel-map").innerHTML=h;
+}
+function initLeafletMap(){
+  if(mapInited||typeof L==="undefined") return;
+  var el=$("#overviewMap"); if(!el) return;
+  mapInited=true;
+  mapObj=L.map(el,{scrollWheelZoom:false,attributionControl:true});
+  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{
+    maxZoom:18, attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a>'
+  }).addTo(mapObj);
+  var bounds=[];
+  // unique pins for overview (prefer first occurrence; mark hotels/opts)
+  var seen={};
+  MAP_DAYS.forEach(function(d){
+    d.stops.forEach(function(s){
+      var p=PLACES[s.id]; if(!p) return;
+      var key=s.id+(s.optLetter||"")+(s.kind||"");
+      if(seen[s.id] && s.kind!=="opt") return;
+      if(s.kind==="opt") key=s.id+"-opt";
+      if(seen[key]) return; seen[key]=1;
+      var cls="pin-num", txt="•";
+      if(s.kind==="hotel"){cls="pin-hotel"; txt="宿";}
+      else if(s.kind==="opt"){cls="pin-opt"+(s.optLetter?" "+s.optLetter:""); txt=s.optLetter||"?";}
+      else {txt="";}
+      var icon=L.divIcon({className:"", html:'<div class="'+cls+'">'+(txt||"")+'</div>', iconSize:[24,24], iconAnchor:[12,12]});
+      var m=L.marker([p.lat,p.lng],{icon:icon}).addTo(mapObj);
+      m.bindPopup("<b>"+esc(stopLabel(s))+"</b><br>"+esc(p.name));
+      bounds.push([p.lat,p.lng]);
+    });
+  });
+  if(bounds.length) mapObj.fitBounds(bounds,{padding:[28,28]});
+  setTimeout(function(){mapObj.invalidateSize();},80);
+}
+
 /* ================= TABS & NAV ================= */
-var TABS=["itinerary","hotels","notes"];
+var TABS=["itinerary","map","hotels","notes"];
 function showTab(name,noScroll){
   if(TABS.indexOf(name)<0) name="itinerary";
   TABS.forEach(function(t){
@@ -645,6 +863,7 @@ function showTab(name,noScroll){
     $("#panel-"+t).hidden = t!==name;
   });
   $("#dayStrip").style.display = name==="itinerary"?"":"none";
+  if(name==="map"){setTimeout(initLeafletMap,30); if(mapObj) setTimeout(function(){mapObj.invalidateSize();},100);}
   if(!noScroll){
     var bar=$("#tabsBar"); var top=bar.getBoundingClientRect().top+window.scrollY;
     if(window.scrollY>top) window.scrollTo({top:top,behavior:"auto"});
@@ -680,7 +899,7 @@ $("#shareBtn").addEventListener("click",function(){
 });
 
 /* ================= INIT ================= */
-renderItinerary(); renderHotels(); renderNotes(); renderStatus();
+renderItinerary(); renderMap(); renderHotels(); renderNotes(); renderStatus();
 var hash=location.hash.replace("#","");
 if(TABS.indexOf(hash)>=0) showTab(hash,true);
 else if(hash.indexOf("day-")===0) setTimeout(function(){scrollToDay(hash);},60);
