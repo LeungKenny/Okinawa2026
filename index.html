@@ -1064,17 +1064,17 @@ function ensureMapReady(cb){
 function wireMapPanelHandlers(){
   var panel=$("#panel-map"); if(!panel || panel._mapWired) return;
   panel._mapWired=true;
-  var lastTap=0;
+  var lastTap=0, touchMoved=false, touchStartY=0;
   function onActivate(e){
     var now=Date.now();
-    if(now-lastTap<400){ e.preventDefault(); return; } // debounce touchend+click
+    if(now-lastTap<450){ if(e.cancelable) e.preventDefault(); return; }
     var t=e.target;
     if(!t || !t.closest) return;
-    if(t.closest("a.map, a.gmaps-btn")) return; // keep external links
+    if(t.closest("a.map, a.gmaps-btn")) return;
     var chip=t.closest("#mapDayChips [data-map-day]");
     if(chip){
       lastTap=now;
-      e.preventDefault();
+      if(e.cancelable) e.preventDefault();
       e.stopPropagation();
       setMapDay(+chip.getAttribute("data-map-day"), false);
       return;
@@ -1082,22 +1082,27 @@ function wireMapPanelHandlers(){
     var row=t.closest("[data-map-focus]");
     if(row && panel.contains(row)){
       lastTap=now;
-      e.preventDefault();
+      if(e.cancelable) e.preventDefault();
       e.stopPropagation();
       focusStop(row.getAttribute("data-map-focus"), false);
     }
   }
-  // click + touchend for mobile browsers that drop click
   panel.addEventListener("click", onActivate, false);
+  panel.addEventListener("touchstart", function(e){
+    touchMoved=false;
+    touchStartY=(e.touches && e.touches[0]) ? e.touches[0].clientY : 0;
+  }, {passive:true});
+  panel.addEventListener("touchmove", function(e){
+    if(!e.touches || !e.touches[0]) return;
+    if(Math.abs(e.touches[0].clientY - touchStartY) > 10) touchMoved=true;
+  }, {passive:true});
   panel.addEventListener("touchend", function(e){
-    // Only handle if target is our controls (avoid breaking map pan)
+    if(touchMoved) return; // was a scroll, not a tap
     var t=e.target;
     if(!t || !t.closest) return;
-    if(t.closest("#overviewMap")) return; // let Leaflet handle
+    if(t.closest("#overviewMap")) return;
     if(t.closest("a.map, a.gmaps-btn")) return;
-    if(t.closest("#mapDayChips [data-map-day], [data-map-focus]")){
-      onActivate(e);
-    }
+    if(t.closest("#mapDayChips [data-map-day], [data-map-focus]")) onActivate(e);
   }, {passive:false});
   panel.addEventListener("keydown", function(e){
     if(e.key!=="Enter" && e.key!==" ") return;
