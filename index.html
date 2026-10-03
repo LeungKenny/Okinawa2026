@@ -421,12 +421,13 @@ var MAP_DAYS = [
    ]},
   {date:"2026-11-24", w:"二", title:"那霸文化散策 → 讀谷", cap:"那霸 → 中部 Hoshinoya",
    stops:[
-     {id:"tsuboya", kind:"stop"},
-     {id:"kokusai", kind:"stop", label:"國際通"},
-     {id:"makishi", kind:"stop"},
-     {id:"naminoue", kind:"stop"},
-     {id:"shuri", kind:"stop"},
-     {id:"hoshinoya", kind:"hotel", label:"入住 Hoshinoya 星野"}
+     {id:"kokusai", kind:"opt", label:"可選：國際通"},
+     {id:"tsuboya", kind:"opt", label:"可選：壺屋やちむん通り"},
+     {id:"collective", kind:"stop", label:"11:00 Hotel Collective check out"},
+     {id:"makishi", kind:"stop", label:"12:00 牧志市場午餐"},
+     {id:"naminoue", kind:"stop", label:"13:30 波上宮"},
+     {id:"shuri", kind:"stop", label:"14:30 首里城正殿"},
+     {id:"hoshinoya", kind:"hotel", label:"16:30 出發 · 入住 Hoshinoya 星野"}
    ]},
   {date:"2026-11-25", w:"三", title:"婚禮日", cap:"讀谷 · Lazor Garden Alivila",
    stops:[
@@ -477,17 +478,13 @@ var DAYS = [
    ]},
  { date:"2026-11-24", w:"二", title:"那霸文化散策 → 讀谷", hotel:"hoshinoya",
    stops:[
-    {h:"壺屋やちむん通り（陶器街）", p:"石板路陶器街，照常可以行。（壺屋燒物博物館維修閉館，入唔到）", travel:["🚶 酒店步行10分鐘"], maps:[["壺屋やちむん通り",P.tsuboyaSt]]},
-    {h:"國際通 Kokusai-dori", maps:[["國際通",P.kokusai]]},
-    {h:"第一牧志公設市場 Makishi Market", p:"沖繩美食。午餐？可食小食，市場可能未必啱食正餐。", tags:["🍢 午餐？"], maps:[["第一牧志公設市場",P.makishi]]},
-    {h:"波上宮 Naminoue Shrine", p:"祈福打卡。", travel:["🚗 10分鐘車程"], maps:[["波上宮",P.naminoue]]},
-    {h:"首里城 Shuri Castle", p:"琉球王國歷史，11/23 重開，可能多人。", travel:["🚗 20分鐘車程"], cls:"key", maps:[["首里城",P.shuri]]},
-    {h:"前往位於讀谷村的酒店 · 星野度假村 Hoshinoya", travel:["🚗 約50分鐘車程"], maps:[["Hoshinoya 星野",P.hoshinoya]]},
+    {t:"早上", h:"自由活動 · 二選一", p:"國際通，或者壺屋やちむん通り（陶器街）。揀一個就得，唔使兩個都去。（壺屋燒物博物館維修閉館，入唔到）", cls:"opt", tags:["opt:可選"], maps:[["國際通",P.kokusai],["壺屋やちむん通り",P.tsuboyaSt]]},
+    {t:"11:00", h:"Hotel Collective check out", maps:[["Hotel Collective",P.collective]]},
+    {t:"12:00", h:"牧志市場午餐", p:"第一牧志公設市場。", tags:["🍢 午餐"], maps:[["第一牧志公設市場",P.makishi]]},
+    {t:"13:30", h:"波上宮 Naminoue Shrine", p:"祈福打卡。", travel:["🚗 約10分鐘車程"], maps:[["波上宮",P.naminoue]]},
+    {t:"14:30", h:"首里城正殿", p:"琉球王國歷史。正殿門票已買。", travel:["🚗 約20分鐘車程"], cls:"key", tags:["🎫 已買門票"], maps:[["首里城",P.shuri]]},
+    {t:"16:30", h:"出發前往讀谷 · Hoshinoya 星野度假村", travel:["🚗 約50分鐘車程"], maps:[["Hoshinoya 星野",P.hoshinoya]]},
     {h:"晚餐"}
-   ],
-   tips:[
-    {k:"suggest", ic:"💡", b:"小建議（原定行程不變，僅供參考）",
-     html:"可考慮早上先去首里城，避開人潮，之後順序：<ol><li>首里城 Shuri Castle（早上）</li><li>壺屋 / 第一牧志公設市場（午餐）</li><li>波上宮 Naminoue Shrine</li><li>由那霸揸車前往星野度假村 Hoshinoya</li></ol>"}
    ]},
  { date:"2026-11-25", w:"三", title:"婚禮日 💍", hotel:"hoshinoya", wedding:true,
    stops:[
@@ -547,7 +544,7 @@ var DAYS = [
 ];
 
 var CHECKLIST_DEFAULT = [
-  {id:"shuri", text:"首里城重開日子及入場安排"},
+  {id:"shuri", text:"首里城正殿門票（已買）", done:true},
   {id:"fireworks", text:"美國村 11/28 煙花（未確認會放）"},
   {id:"ryuka", text:"琉華菜苑訂位"},
   {id:"bluecave", text:"青之洞窟車程"},
@@ -701,9 +698,9 @@ function loadChecklist(){
   // lists saved before "known" existed already contained the original 5 defaults
   if(!Array.isArray(s.known)) s.known=["shuri","fireworks","ryuka","bluecave","rentcar"];
   // append any newly added default items without resurrecting deleted ones
-  CHECKLIST_DEFAULT.forEach(function(x){if(s.known.indexOf(x.id)<0){s.items.push({id:x.id,text:x.text,done:false});s.known.push(x.id);}});
-  // keep wording of default items in sync with the latest version (done state is kept)
-  s.items.forEach(function(it){CHECKLIST_DEFAULT.forEach(function(x){if(x.id===it.id) it.text=x.text;});});
+  CHECKLIST_DEFAULT.forEach(function(x){if(s.known.indexOf(x.id)<0){s.items.push({id:x.id,text:x.text,done:!!x.done});s.known.push(x.id);}});
+  // keep wording of default items in sync; items flagged done:true stay checked on saved phones
+  s.items.forEach(function(it){CHECKLIST_DEFAULT.forEach(function(x){if(x.id===it.id){it.text=x.text; if(x.done) it.done=true;}});});
   return s;
 }
 var CL=loadChecklist();
