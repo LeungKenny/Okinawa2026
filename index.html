@@ -416,7 +416,8 @@ var MAP_DAYS = [
    stops:[
      {id:"airport", kind:"stop"},
      {id:"collective", kind:"hotel", label:"入住 Hotel Collective"},
-     {id:"kokusai", kind:"stop", label:"國際通（自由活動／晚餐）"},
+     {id:"kokusai", kind:"stop", label:"國際通（自由活動）"},
+     {id:"collective", kind:"stop", label:"18:30 碧海庭（酒店內）"},
      {id:"senaga", kind:"opt", label:"可選：瀨長島夜景"}
    ]},
   {date:"2026-11-24", w:"二", title:"那霸文化散策 → 讀谷", cap:"那霸 → 中部 Hoshinoya",
@@ -473,7 +474,7 @@ var DAYS = [
     {t:"15:25", h:"到達沖繩那霸國際機場", cls:"key", maps:[["那霸機場",P.airport]], tags:["✈️ 抵達"]},
     {h:"前往那霸市區酒店 Hotel Collective", travel:["🚗 約12分鐘車程"], maps:[["Hotel Collective",P.collective]]},
     {h:"Check in 後自由活動", p:"酒店外便是國際通商店街，應有盡有。", maps:[["國際通 Kokusai-dori",P.kokusai]]},
-    {t:"19:00", h:"晚餐", p:"國際通內或附近。"},
+    {t:"18:30", h:"晚餐 · 碧海庭（Hotel Collective）", p:"酒店內餐廳。", cls:"key", tags:["🍽️ 晚餐"], maps:[["Hotel Collective",P.collective]]},
     {h:"可考慮去瀨長島 Senaga Island 看夜景", p:"一望那霸夜景。", cls:"opt", tags:["opt:可選"], maps:[["瀨長島 Senaga Island",P.senaga]]}
    ]},
  { date:"2026-11-24", w:"二", title:"那霸文化散策 → 讀谷", hotel:"hoshinoya",
