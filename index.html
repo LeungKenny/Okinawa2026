@@ -428,7 +428,8 @@ var MAP_DAYS = [
      {id:"makishi", kind:"stop", label:"12:00 牧志市場午餐"},
      {id:"naminoue", kind:"stop", label:"13:30 波上宮"},
      {id:"shuri", kind:"stop", label:"14:30 首里城正殿"},
-     {id:"hoshinoya", kind:"hotel", label:"16:30 出發 · 入住 Hoshinoya 星野"}
+     {id:"hoshinoya", kind:"hotel", label:"16:30 出發 · 入住 Hoshinoya 星野"},
+     {id:"hoshinoya", kind:"stop", label:"晚餐 · Bellezza（酒店內）"}
    ]},
   {date:"2026-11-25", w:"三", title:"婚禮日", cap:"讀谷 · Lazor Garden Alivila",
    stops:[
@@ -442,14 +443,14 @@ var MAP_DAYS = [
      {id:"kouriBridge", kind:"stop", label:"古宇利大橋"},
      {id:"kouriTower", kind:"stop"},
      {id:"ritz", kind:"hotel", label:"入住 Ritz-Carlton"},
-     {id:"ryuka", kind:"stop", label:"晚餐 · 琉華菜苑"}
+     {id:"ritz", kind:"stop", label:"18:30 鐵板燒 Kise（酒店內）"}
    ]},
-  {date:"2026-11-27", w:"五", title:"三選一活動日", cap:"各自自由揀 A／B／C → 大家晚餐 → Ritz",
+  {date:"2026-11-27", w:"五", title:"三選一活動日", cap:"各自自由揀 A／B／C → Gusuku 晚餐 → Ritz",
    stops:[
      {id:"junglia", kind:"opt", optLetter:"A", label:"方案 A · JUNGLIA"},
      {id:"bluecave", kind:"opt", optLetter:"B", label:"方案 B · 青之洞窟"},
      {id:"busena", kind:"opt", optLetter:"C", label:"方案 C · 部瀨名海中公園"},
-     {id:"ufuya", kind:"stop", label:"18:00 全員 · 百年古家 大家"},
+     {id:"ritz", kind:"stop", label:"18:30 Dining Gusuku（酒店內）"},
      {id:"ritz", kind:"hotel", label:"入住 Ritz-Carlton"}
    ]},
   {date:"2026-11-28", w:"六", title:"萬座毛 · 購物 · 美國村", cap:"中部海岸 → 那霸 Hotel Collective",
@@ -485,7 +486,7 @@ var DAYS = [
     {t:"13:30", h:"波上宮 Naminoue Shrine", p:"祈福打卡。", travel:["🚗 約10分鐘車程"], maps:[["波上宮",P.naminoue]]},
     {t:"14:30", h:"首里城正殿", p:"琉球王國歷史。正殿門票已買。", travel:["🚗 約20分鐘車程"], cls:"key", tags:["🎫 已買門票"], maps:[["首里城",P.shuri]]},
     {t:"16:30", h:"出發前往讀谷 · Hoshinoya 星野度假村", travel:["🚗 約50分鐘車程"], maps:[["Hoshinoya 星野",P.hoshinoya]]},
-    {h:"晚餐"}
+    {h:"晚餐 · Bellezza（Hoshinoya）", p:"酒店內「琉球ガストロノミア〜Bellezza〜」。已訂 20 人。", cls:"key", tags:["🍽️ 晚餐","🎫 已訂"], maps:[["Hoshinoya 星野",P.hoshinoya]]}
    ]},
  { date:"2026-11-25", w:"三", title:"婚禮日 💍", hotel:"hoshinoya", wedding:true,
    stops:[
@@ -504,13 +505,13 @@ var DAYS = [
     {h:"古宇利島（海上大橋）", travel:["🚗 約30分鐘車程"], maps:[["古宇利島",P.kouri],["古宇利大橋",P.kouriBridge]]},
     {h:"古宇利海洋塔 Kouri Ocean Tower", maps:[["古宇利海洋塔",P.kouriTower]]},
     {h:"前往位於名護的酒店 · Ritz-Carlton", travel:["🚗 約40分鐘車程"], maps:[["The Ritz-Carlton Okinawa",P.ritz]]},
-    {t:"晚餐", h:"琉華菜苑 · ザ・ブセナテラス", addr:"1808 Kise, Nago, Okinawa 905-0026, Japan", cls:"key", tags:["🍽️ 晚餐"], maps:[["琉華菜苑",P.ryuka]]}
+    {t:"18:30", h:"晚餐 · 鐵板燒 Kise（Teppanyaki Kise）", p:"The Ritz-Carlton Okinawa 酒店內（3 樓）。已訂：21 大人 + 1 小朋友。", cls:"key", tags:["🍽️ 晚餐","🎫 已訂"], maps:[["The Ritz-Carlton Okinawa",P.ritz]]}
    ]},
  { date:"2026-11-27", w:"五", title:"三選一活動日", hotel:"ritz",
    stops:[
-    {choose:true, h:"各自自由揀", p:"每人自由揀一個，唔使全團一齊。JUNGLIA 要成日，揀咗就玩唔到另外兩個。晚上 18:00 全員喺大家集合食晚飯。", items:[
+    {choose:true, h:"各自自由揀", p:"每人自由揀一個，唔使全團一齊。JUNGLIA 要成日，揀咗就玩唔到另外兩個。晚上 18:30 全員喺酒店 Dining Gusuku 食晚飯。", items:[
       {k:"a", lbl:"方案 A", when:"全日 10:00 – 17:00", h:"JUNGLIA 樂園（今歸仁村）",
-       notes:["要成日先玩得晒，午餐喺園內食","買 1Day 票：買咗之後可以免費改期","玩完直接去大家（Ufuya）食 18:00 晚餐"],
+       notes:["要成日先玩得晒，午餐喺園內食","買 1Day 票：買咗之後可以免費改期","玩完返酒店 Dining Gusuku 食 18:30 晚餐"],
        maps:[["JUNGLIA",P.junglia]]},
       {k:"b", lbl:"方案 B", when:"上午", h:"青之洞窟 浮潛 / 坐船（真榮田岬）",
        notes:["!11 月常吹北風，隨時取消，通常臨出發先決定","坐船出發的團成功率較高；要著全身 wetsuit，帶外套","報團前問清楚取消條款"],
@@ -520,7 +521,7 @@ var DAYS = [
        maps:[["部瀨名海中公園",P.busena]]}
     ]},
     {h:"其餘時間 · 享受 Ritz-Carlton 酒店設施", p:"室內溫水泳池；Spa 要預約。午餐按各自活動自己解決。", maps:[["The Ritz-Carlton Okinawa",P.ritz]]},
-    {t:"18:00 晚餐", h:"全員集合 · 百年古家 大家 (Ufuya)", p:"位於名護。各自玩完，18:00 喺大家一齊食晚飯（包廂坐得下 22 人，只做 18:00 晚市），要打電話確認（0980-53-0280）。", cls:"key", tags:["🍽️ 全團晚餐"], maps:[["百年古家 大家",P.ufuya]]}
+    {t:"18:30", h:"全員集合 · Dining Gusuku（Ritz-Carlton）", p:"酒店內餐廳。已訂：21 大人 + 1 小朋友。各自玩完返酒店集合食晚飯。", cls:"key", tags:["🍽️ 全團晚餐","🎫 已訂"], maps:[["The Ritz-Carlton Okinawa",P.ritz]]}
    ],
    tips:[
     {k:"warn", ic:"🌬️", b:"睇天氣留後備", html:"青之洞窟同玻璃底船都有北風停航風險，揀 B 或 C 最好預備後備方案。"}
@@ -547,10 +548,11 @@ var DAYS = [
 var CHECKLIST_DEFAULT = [
   {id:"shuri", text:"首里城正殿門票（已買）", done:true},
   {id:"fireworks", text:"美國村 11/28 煙花（未確認會放）"},
-  {id:"ryuka", text:"琉華菜苑訂位"},
+  {id:"ryuka", text:"11/26 18:30 鐵板燒 Kise（Ritz · 已訂：21 大人 + 1 小朋友）", done:true},
   {id:"bluecave", text:"青之洞窟車程"},
   {id:"rentcar", text:"租車還車時間"},
-  {id:"ufuya", text:"百年古家 大家 11/27 18:00 晚餐訂位（包廂坐得下 22 人，只做晚市，要打電話確認）"},
+  {id:"ufuya", text:"11/27 18:30 Dining Gusuku（Ritz · 已訂：21 大人 + 1 小朋友）", done:true},
+  {id:"bellezza", text:"11/24 Bellezza 晚餐（Hoshinoya · 已訂 20 人）", done:true},
   {id:"plan1127", text:"收集大家 11/27 揀邊個活動（JUNGLIA / 青之洞窟 / 部瀨名海中公園）"}
 ];
 
@@ -848,8 +850,8 @@ function renderMap(){
     }
     if(d.date==="2026-11-27"){
       h+='<div style="padding:0 14px 14px;display:flex;flex-wrap:wrap;gap:8px">';
-      [["A","junglia","JUNGLIA → 大家"],["B","bluecave","青之洞窟 → 大家"],["C","busena","部瀨名 → 大家"]].forEach(function(x){
-        h+='<a class="map" target="_blank" rel="noopener" href="'+esc(dirsUrl([x[1],"ufuya"]))+'">方案 '+x[0]+'：'+esc(x[2])+'</a>';
+      [["A","junglia","JUNGLIA → Ritz"],["B","bluecave","青之洞窟 → Ritz"],["C","busena","部瀨名 → Ritz"]].forEach(function(x){
+        h+='<a class="map" target="_blank" rel="noopener" href="'+esc(dirsUrl([x[1],"ritz"]))+'">方案 '+x[0]+'：'+esc(x[2])+'</a>';
       });
       h+='</div>';
     }
