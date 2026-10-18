@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#0b5470">
-<meta name="description" content="沖繩之旅 2026 · 11/23 – 11/29 行程、路線地圖、酒店及清單">
+<meta name="description" content="沖繩之旅 2026 · 11/23 – 11/29 行程、路線地圖、酒店、天氣及清單">
 <title>沖繩之旅 2026 · Okinawa Trip</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -239,8 +239,47 @@ footer{text-align:center;font-size:12px;color:#9ab0b8;padding:10px 16px 36px}
 }
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
 
+
+/* ---------- Weather tab ---------- */
+.wx-climate{background:linear-gradient(135deg,#e8f7fb 0%,#fff 55%);border:1px solid rgba(15,127,160,.18);border-radius:var(--radius);box-shadow:var(--shadow);padding:14px 16px;margin:12px 0}
+.wx-climate h3{margin:0 0 6px;font-size:17px;display:flex;align-items:center;gap:8px}
+.wx-climate p{margin:0;font-size:14px;color:#3b5664;line-height:1.55}
+.wx-climate .wx-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}
+.wx-climate .wx-stat{background:#fff;border:1px solid var(--teal-100);border-radius:12px;padding:8px 6px;text-align:center}
+.wx-climate .wx-stat b{display:block;font-family:var(--font-num);font-size:18px;font-weight:700;color:var(--ocean-700);line-height:1.15}
+.wx-climate .wx-stat span{font-size:11px;color:var(--muted)}
+.wx-note{font-size:12.5px;color:var(--muted);margin:8px 2px 0;line-height:1.45}
+.wx-strip{display:flex;gap:8px;overflow-x:auto;padding:2px 0 8px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.wx-strip::-webkit-scrollbar{display:none}
+.wx-day{flex:0 0 auto;min-width:72px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px 8px 8px;text-align:center;box-shadow:0 1px 3px rgba(6,52,74,.05)}
+.wx-day .wx-d{font-family:var(--font-num);font-size:12px;color:var(--muted);font-weight:600}
+.wx-day .wx-ic{font-size:26px;line-height:1.2;margin:4px 0 2px}
+.wx-day .wx-t{font-family:var(--font-num);font-size:14px;font-weight:700;color:var(--ink);font-variant-numeric:tabular-nums}
+.wx-day .wx-t small{font-weight:500;color:var(--muted);font-size:12px}
+.wx-day .wx-p{font-size:11px;color:var(--ocean-500);margin-top:3px}
+.wx-day.trip{border-color:var(--teal-400);background:linear-gradient(180deg,var(--teal-50),#fff)}
+.wx-day.pending{opacity:.85;border-style:dashed}
+.wx-day.pending .wx-ic{opacity:.55}
+.wx-list{display:grid;gap:10px;margin:8px 0 4px}
+.wx-row{display:flex;align-items:center;gap:12px;background:var(--card);border:1px solid rgba(6,52,74,.06);border-radius:14px;padding:12px 14px;box-shadow:var(--shadow)}
+.wx-row .wx-badge{flex:0 0 auto;width:48px;height:52px;border-radius:12px;background:linear-gradient(160deg,var(--ocean-700),var(--teal-500));color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1.1}
+.wx-row .wx-badge .m{font-size:10px;opacity:.9;font-family:var(--font-num);letter-spacing:.06em}
+.wx-row .wx-badge .d{font-family:var(--font-num);font-size:20px;font-weight:700}
+.wx-row .wx-main{flex:1;min-width:0}
+.wx-row .wx-main b{display:block;font-size:15px}
+.wx-row .wx-main span{font-size:13px;color:var(--muted)}
+.wx-row .wx-temps{flex:0 0 auto;text-align:right;font-family:var(--font-num);font-variant-numeric:tabular-nums}
+.wx-row .wx-temps .hi{font-size:18px;font-weight:700;color:var(--ocean-700)}
+.wx-row .wx-temps .lo{font-size:13px;color:var(--muted)}
+.wx-row .wx-temps .pop{font-size:11px;color:var(--ocean-500);margin-top:2px}
+.wx-row.pending{background:var(--sand-50);border-style:dashed}
+.wx-err{background:#fff1ee;border:1px solid #fbd0c6;color:#8a2f1f;border-radius:14px;padding:10px 14px;font-size:14px;margin:8px 0}
+.wx-credit{font-size:11px;color:#9ab0b8;text-align:center;margin:14px 0 4px}
+.wx-credit a{color:var(--ocean-500);text-decoration:none}
+.wx-loading{text-align:center;padding:18px;color:var(--muted);font-size:14px}
+
 /* ---------- Map tab ---------- */
-.tab{font-size:14px;padding:9px 4px}
+.tab{font-size:12.5px;padding:9px 2px;gap:3px}
 #overviewMap{height:240px;width:100%;border-radius:var(--radius);border:1px solid rgba(6,52,74,.08);box-shadow:var(--shadow);margin:0 0 6px;z-index:1;background:#dbe8ec;touch-action:pan-x pan-y}
 .map-legend{display:flex;flex-wrap:wrap;gap:8px 12px;font-size:12px;color:var(--muted);margin:0 2px 12px}
 .map-legend span{display:inline-flex;align-items:center;gap:5px}
@@ -325,6 +364,7 @@ footer{text-align:center;font-size:12px;color:#9ab0b8;padding:10px 16px 36px}
         <button class="tab" role="tab" id="tab-itinerary" aria-controls="panel-itinerary" aria-selected="true" data-tab="itinerary" type="button">🗺️ 行程</button>
         <button class="tab" role="tab" id="tab-map" aria-controls="panel-map" aria-selected="false" data-tab="map" type="button">📍 地圖</button>
         <button class="tab" role="tab" id="tab-hotels" aria-controls="panel-hotels" aria-selected="false" data-tab="hotels" type="button">🏨 酒店</button>
+        <button class="tab" role="tab" id="tab-weather" aria-controls="panel-weather" aria-selected="false" data-tab="weather" type="button">🌤️ 天氣</button>
         <button class="tab" role="tab" id="tab-notes" aria-controls="panel-notes" aria-selected="false" data-tab="notes" type="button">✅ 清單</button>
       </div>
       <div class="day-strip" id="dayStrip" role="group" aria-label="跳到某一日"></div>
@@ -334,6 +374,7 @@ footer{text-align:center;font-size:12px;color:#9ab0b8;padding:10px 16px 36px}
   <div class="panel wrap" id="panel-itinerary" role="tabpanel" aria-labelledby="tab-itinerary"></div>
   <div class="panel wrap" id="panel-map" role="tabpanel" aria-labelledby="tab-map" hidden></div>
   <div class="panel wrap" id="panel-hotels" role="tabpanel" aria-labelledby="tab-hotels" hidden></div>
+  <div class="panel wrap" id="panel-weather" role="tabpanel" aria-labelledby="tab-weather" hidden></div>
   <div class="panel wrap" id="panel-notes" role="tabpanel" aria-labelledby="tab-notes" hidden></div>
 </main>
 
@@ -1113,8 +1154,171 @@ function wireMapPanelHandlers(){
   });
 }
 
+
+/* ================= WEATHER ================= */
+var WX_LAT = 26.2124, WX_LNG = 127.6809;
+/* Naha late-November climate normals (JMA-style averages; packing reference, not a forecast) */
+var WX_CLIMATE = {high:24, low:18, rainDays:"約 6–8 日／月", tip:"十一月下旬那霸溫暖微涼，間中有秋雨。日間短袖＋薄外套夠用，晚間可能再涼少少；帶把摺傘同跣水鞋會穩陣啲。"};
+var WX_TRIP_DAYS = [
+  {date:"2026-11-23", w:"一", title:"抵達那霸"},
+  {date:"2026-11-24", w:"二", title:"那霸市區"},
+  {date:"2026-11-25", w:"三", title:"婚禮日"},
+  {date:"2026-11-26", w:"四", title:"水族館／古宇利"},
+  {date:"2026-11-27", w:"五", title:"自由活動"},
+  {date:"2026-11-28", w:"六", title:"那霸／購物"},
+  {date:"2026-11-29", w:"日", title:"回程"}
+];
+
+function wxCodeInfo(code){
+  var c = Number(code);
+  if(c===0) return {ic:"☀️", t:"晴朗"};
+  if(c===1) return {ic:"🌤️", t:"大致晴"};
+  if(c===2) return {ic:"⛅", t:"間中有雲"};
+  if(c===3) return {ic:"☁️", t:"陰天"};
+  if(c===45 || c===48) return {ic:"🌫️", t:"有霧"};
+  if(c===51 || c===53 || c===55) return {ic:"🌦️", t:"毛毛雨"};
+  if(c===56 || c===57) return {ic:"🌧️", t:"凍雨"};
+  if(c===61 || c===63 || c===65) return {ic:"🌧️", t:"有雨"};
+  if(c===66 || c===67) return {ic:"🌧️", t:"凍雨"};
+  if(c===71 || c===73 || c===75 || c===77) return {ic:"🌨️", t:"有雪"};
+  if(c===80 || c===81 || c===82) return {ic:"🌦️", t:"陣雨"};
+  if(c===85 || c===86) return {ic:"🌨️", t:"陣雪"};
+  if(c===95) return {ic:"⛈️", t:"雷暴"};
+  if(c===96 || c===99) return {ic:"⛈️", t:"雷暴冰雹"};
+  return {ic:"🌡️", t:"—"};
+}
+function wxRound(n){
+  if(n==null || isNaN(n)) return "—";
+  return Math.round(Number(n));
+}
+function wxIsoParts(iso){
+  var p = iso.split("-");
+  return {y:p[0], m:String(Number(p[1])), d:String(Number(p[2])), md:Number(p[1])+"/"+Number(p[2])};
+}
+function wxBuildIndex(daily){
+  var idx = {};
+  if(!daily || !daily.time) return idx;
+  for(var i=0;i<daily.time.length;i++){
+    idx[daily.time[i]] = {
+      code: daily.weather_code[i],
+      tmax: daily.temperature_2m_max[i],
+      tmin: daily.temperature_2m_min[i],
+      pop: daily.precipitation_probability_max ? daily.precipitation_probability_max[i] : null
+    };
+  }
+  return idx;
+}
+function wxDayCard(iso, data, opts){
+  opts = opts || {};
+  var parts = wxIsoParts(iso);
+  var cls = "wx-day" + (opts.trip?" trip":"") + (opts.pending?" pending":"");
+  if(opts.pending || !data){
+    return '<div class="'+cls+'" title="'+(opts.title||"")+'">'
+      + '<div class="wx-d">'+esc(parts.md)+(opts.w?" ·"+opts.w:"")+'</div>'
+      + '<div class="wx-ic">🌡️</div>'
+      + '<div class="wx-t">'+WX_CLIMATE.high+'°<small>/'+WX_CLIMATE.low+'°</small></div>'
+      + '<div class="wx-p">氣候平均</div>'
+      + '</div>';
+  }
+  var info = wxCodeInfo(data.code);
+  var pop = data.pop!=null ? ('降水 '+wxRound(data.pop)+'%') : '';
+  return '<div class="'+cls+'" title="'+esc(info.t)+'">'
+    + '<div class="wx-d">'+esc(parts.md)+(opts.w?" ·"+opts.w:"")+'</div>'
+    + '<div class="wx-ic">'+info.ic+'</div>'
+    + '<div class="wx-t">'+wxRound(data.tmax)+'°<small>/'+wxRound(data.tmin)+'°</small></div>'
+    + (pop?'<div class="wx-p">'+pop+'</div>':'')
+    + '</div>';
+}
+function wxTripRow(day, data){
+  var parts = wxIsoParts(day.date);
+  if(!data){
+    return '<div class="wx-row pending">'
+      + '<div class="wx-badge"><span class="m">'+esc(parts.m)+'月</span><span class="d">'+esc(parts.d)+'</span></div>'
+      + '<div class="wx-main"><b>'+esc(day.title)+' · 週'+esc(day.w)+'</b>'
+      + '<span>詳細預報約出發前兩星期會自動出現 · 暫顯示十一月下旬平均 '+WX_CLIMATE.high+'° / '+WX_CLIMATE.low+'°</span></div>'
+      + '<div class="wx-temps"><div class="hi">'+WX_CLIMATE.high+'°</div><div class="lo">'+WX_CLIMATE.low+'°</div><div class="pop">氣候平均</div></div>'
+      + '</div>';
+  }
+  var info = wxCodeInfo(data.code);
+  var pop = data.pop!=null ? ('降水 '+wxRound(data.pop)+'%') : '';
+  return '<div class="wx-row">'
+    + '<div class="wx-badge"><span class="m">'+esc(parts.m)+'月</span><span class="d">'+esc(parts.d)+'</span></div>'
+    + '<div class="wx-main"><b>'+info.ic+' '+esc(info.t)+' · '+esc(day.title)+'</b>'
+    + '<span>週'+esc(day.w)+' · 那霸</span></div>'
+    + '<div class="wx-temps"><div class="hi">'+wxRound(data.tmax)+'°</div><div class="lo">'+wxRound(data.tmin)+'°</div>'
+    + (pop?'<div class="pop">'+pop+'</div>':'') + '</div>'
+    + '</div>';
+}
+function wxShell(bodyInner, errMsg){
+  var h = '<div class="section-h"><h2>那霸天氣</h2><span>Open-Meteo</span></div>';
+  h += '<div class="wx-climate"><h3>📊 十一月下旬平均</h3>'
+    + '<p>'+esc(WX_CLIMATE.tip)+'</p>'
+    + '<div class="wx-stats">'
+    + '<div class="wx-stat"><b>'+WX_CLIMATE.high+'°C</b><span>典型高溫</span></div>'
+    + '<div class="wx-stat"><b>'+WX_CLIMATE.low+'°C</b><span>典型低溫</span></div>'
+    + '<div class="wx-stat"><b>偶有雨</b><span>'+esc(WX_CLIMATE.rainDays)+'</span></div>'
+    + '</div>'
+    + '<p class="wx-note">以上係氣候平均值，唔係即時預報，方便而家執行李參考。</p></div>';
+  if(errMsg){
+    h += '<div class="wx-err" role="alert">'+esc(errMsg)+'</div>';
+  }
+  h += bodyInner;
+  h += '<p class="wx-credit">天氣資料由 <a href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo</a> 提供 · 那霸約 26.21°N 127.68°E</p>';
+  return h;
+}
+function renderWeather(state){
+  state = state || {loading:true};
+  var body = '';
+  if(state.loading){
+    body = '<div class="wx-loading">讀緊預報…</div>';
+    $("#panel-weather").innerHTML = wxShell(body, null);
+    return;
+  }
+  var idx = state.idx || {};
+  var near = state.nearDates || [];
+  // Near-term live strip
+  body += '<div class="section-h" style="margin-top:18px"><h2>近日預報</h2><span>未來約兩星期</span></div>';
+  if(near.length){
+    body += '<div class="wx-strip" role="list">';
+    near.forEach(function(iso){
+      var isTrip = WX_TRIP_DAYS.some(function(d){ return d.date===iso; });
+      body += wxDayCard(iso, idx[iso], {trip:isTrip});
+    });
+    body += '</div>';
+    body += '<p class="wx-note">即時預報會隨日期更新；行程日若落喺預報窗口內會自動顯示實際高／低溫同降水機率。</p>';
+  } else if(!state.error){
+    body += '<p class="wx-note">暫時未有近日預報資料。</p>';
+  }
+  // Trip days
+  body += '<div class="section-h" style="margin-top:18px"><h2>行程日天氣</h2><span>11/23 – 11/29</span></div>';
+  body += '<div class="wx-list">';
+  WX_TRIP_DAYS.forEach(function(day){
+    var d = idx[day.date];
+    body += wxTripRow(day, d || null);
+  });
+  body += '</div>';
+  $("#panel-weather").innerHTML = wxShell(body, state.error || null);
+}
+function loadWeather(){
+  renderWeather({loading:true});
+  var url = "https://api.open-meteo.com/v1/forecast"
+    + "?latitude="+WX_LAT+"&longitude="+WX_LNG
+    + "&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max"
+    + "&timezone=Asia%2FTokyo&forecast_days=16";
+  fetch(url).then(function(r){
+    if(!r.ok) throw new Error("HTTP "+r.status);
+    return r.json();
+  }).then(function(json){
+    var idx = wxBuildIndex(json.daily);
+    var near = (json.daily && json.daily.time) ? json.daily.time.slice() : [];
+    renderWeather({loading:false, idx:idx, nearDates:near, error:null});
+  }).catch(function(){
+    renderWeather({loading:false, idx:{}, nearDates:[], error:"暫時讀唔到預報，請稍後再開天氣頁。氣候平均仍然可以用嚟執行李。"});
+  });
+}
+
 /* ================= TABS & NAV ================= */
-var TABS=["itinerary","map","hotels","notes"];
+var TABS=["itinerary","map","hotels","weather","notes"];
 function showTab(name,noScroll){
   if(TABS.indexOf(name)<0) name="itinerary";
   TABS.forEach(function(t){
@@ -1165,7 +1369,7 @@ $("#shareBtn").addEventListener("click",function(){
 });
 
 /* ================= INIT ================= */
-renderItinerary(); renderMap(); renderHotels(); renderNotes(); renderStatus();
+renderItinerary(); renderMap(); renderHotels(); renderNotes(); renderWeather({loading:true}); loadWeather(); renderStatus();
 var hash=location.hash.replace("#","");
 if(TABS.indexOf(hash)>=0) showTab(hash,true);
 else if(hash.indexOf("day-")===0) setTimeout(function(){scrollToDay(hash);},60);
