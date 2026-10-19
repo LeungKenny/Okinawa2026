@@ -143,6 +143,10 @@ button{font:inherit;color:inherit}
   background:#fff;border:1px solid #cfe6ee;padding:3px 10px 3px 8px;border-radius:999px;transition:background .15s}
 .map:hover,.map:active{background:var(--teal-50)}
 .map svg{width:13px;height:13px;flex:0 0 auto}
+.menu{display:inline-flex;align-items:center;gap:4px;font-size:12.5px;font-weight:500;text-decoration:none;color:#7a4a12;
+  background:#fffaf3;border:1px solid #f0d9b0;padding:3px 10px 3px 8px;border-radius:999px;transition:background .15s}
+.menu:hover,.menu:active{background:#fff4e0}
+.menu svg{width:13px;height:13px;flex:0 0 auto}
 .addr{font-size:12.5px;color:var(--muted);margin-top:3px}
 .optgroup{margin:4px 0 0;padding:10px 12px;border:1px dashed #cfdbe0;border-radius:14px;background:#fbfdfd}
 .optgroup .optlist{list-style:none;margin:6px 0 0;padding:0;display:grid;gap:10px}
@@ -516,7 +520,7 @@ var DAYS = [
     {t:"15:25", h:"到達沖繩那霸國際機場", cls:"key", maps:[["那霸機場",P.airport]], tags:["✈️ 抵達"]},
     {h:"前往那霸市區酒店 Hotel Collective", travel:["🚗 約12分鐘車程"], maps:[["Hotel Collective",P.collective]]},
     {h:"Check in 後自由活動", p:"酒店外便是國際通商店街，應有盡有。", maps:[["國際通 Kokusai-dori",P.kokusai]]},
-    {t:"18:30", h:"晚餐 · 碧海庭（Hotel Collective）", p:"酒店內餐廳。", cls:"key", tags:["🍽️ 晚餐"], maps:[["Hotel Collective",P.collective]]},
+    {t:"18:30", h:"晚餐 · 碧海庭（Hotel Collective）", p:"酒店內餐廳。可揀會席 course：アカバナー／サンダンカ／デイゴ。", cls:"key", tags:["🍽️ 晚餐"], maps:[["Hotel Collective",P.collective]], menus:[["Menu · アカバナー ¥7,000","menus/hekikaitei-akabana.pdf"],["Menu · サンダンカ ¥9,000","menus/hekikaitei-sandanka.pdf"],["Menu · デイゴ ¥12,000","menus/hekikaitei-deigo.pdf"]]},
     {h:"可考慮去瀨長島 Senaga Island 看夜景", p:"一望那霸夜景。", cls:"opt", tags:["opt:可選"], maps:[["瀨長島 Senaga Island",P.senaga]]}
    ]},
  { date:"2026-11-24", w:"二", title:"那霸文化散策 → 讀谷", hotel:"hoshinoya",
@@ -546,7 +550,7 @@ var DAYS = [
     {h:"古宇利島（海上大橋）", travel:["🚗 約30分鐘車程"], maps:[["古宇利島",P.kouri],["古宇利大橋",P.kouriBridge]]},
     {h:"古宇利海洋塔 Kouri Ocean Tower", maps:[["古宇利海洋塔",P.kouriTower]]},
     {h:"前往位於名護的酒店 · Ritz-Carlton", travel:["🚗 約40分鐘車程"], maps:[["The Ritz-Carlton Okinawa",P.ritz]]},
-    {t:"18:30", h:"晚餐 · 鐵板燒 Kise（Teppanyaki Kise）", p:"The Ritz-Carlton Okinawa 酒店內（3 樓）。已訂：21 大人 + 1 小朋友。", cls:"key", tags:["🍽️ 晚餐","🎫 已訂"], maps:[["The Ritz-Carlton Okinawa",P.ritz]]}
+    {t:"18:30", h:"晚餐 · 鐵板燒 Kise（Teppanyaki Kise）", p:"The Ritz-Carlton Okinawa 酒店內（3 樓）。已訂：21 大人 + 1 小朋友。Course：KISE／KEION／AKEMIO。", cls:"key", tags:["🍽️ 晚餐","🎫 已訂"], maps:[["The Ritz-Carlton Okinawa",P.ritz]], menus:[["Menu · 鐵板燒 Kise（KISE／KEION／AKEMIO）","menus/kise-teppanyaki.pdf"],["Menu · Ritz Kids（2–12歲）","menus/ritz-kids.pdf"]]}
    ]},
  { date:"2026-11-27", w:"五", title:"三選一活動日", hotel:"ritz",
    stops:[
@@ -562,7 +566,7 @@ var DAYS = [
        maps:[["部瀨名海中公園",P.busena]]}
     ]},
     {h:"其餘時間 · 享受 Ritz-Carlton 酒店設施", p:"室內溫水泳池；Spa 要預約。午餐按各自活動自己解決。", maps:[["The Ritz-Carlton Okinawa",P.ritz]]},
-    {t:"18:30", h:"全員集合 · Dining Gusuku（Ritz-Carlton）", p:"酒店內餐廳。已訂：21 大人 + 1 小朋友。各自玩完返酒店集合食晚飯。", cls:"key", tags:["🍽️ 全團晚餐","🎫 已訂"], maps:[["The Ritz-Carlton Okinawa",P.ritz]]}
+    {t:"18:30", h:"全員集合 · Dining Gusuku（Ritz-Carlton）", p:"酒店內餐廳。已訂：21 大人 + 1 小朋友。各自玩完返酒店集合食晚飯。（未有 Gusuku 專屬 menu；小朋友可用 Ritz Kids）", cls:"key", tags:["🍽️ 全團晚餐","🎫 已訂"], maps:[["The Ritz-Carlton Okinawa",P.ritz]], menus:[["Menu · Ritz Kids（2–12歲）","menus/ritz-kids.pdf"]]}
    ],
    tips:[
     {k:"warn", ic:"🌬️", b:"睇天氣留後備", html:"青之洞窟同玻璃底船都有北風停航風險，揀 B 或 C 最好預備後備方案。"}
@@ -602,6 +606,8 @@ var PIN = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path
 function esc(s){return String(s).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];});}
 function mapUrl(q){return q.indexOf("https://")===0?q:"https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(q);}
 function mapLink(label,q){return '<a class="map" target="_blank" rel="noopener" href="'+esc(mapUrl(q))+'">'+PIN+esc(label)+'</a>';}
+var DOC = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 13h8M8 17h8M8 9h3" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/></svg>';
+function menuLink(label,href){return '<a class="menu" target="_blank" rel="noopener" href="'+esc(href)+'">'+DOC+esc(label)+'</a>';}
 function $(s,r){return (r||document).querySelector(s);}
 function toast(msg){var t=$("#toast");t.textContent=msg;t.classList.add("show");clearTimeout(toast._t);toast._t=setTimeout(function(){t.classList.remove("show");},1800);}
 function md(d){var p=d.split("-");return (+p[1])+"/"+(+p[2]);}
@@ -633,6 +639,7 @@ function renderStop(s){
     else meta+='<span class="tag">'+esc(x)+'</span>';
   });
   (s.maps||[]).forEach(function(m){meta+=mapLink(m[0],m[1]);});
+  (s.menus||[]).forEach(function(m){meta+=menuLink(m[0],m[1]);});
   if(meta) h+='<div class="meta">'+meta+'</div>';
   return h+'</li>';
 }
