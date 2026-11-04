@@ -152,7 +152,7 @@ button{font:inherit;color:inherit}
 .optgroup .optlist{list-style:none;margin:6px 0 0;padding:0;display:grid;gap:10px}
 .optgroup .optlist li{padding-left:0}
 .optgroup h4{margin:0;font-size:15px}
-/* 三選一 choice cards */
+/* 二選一 choice cards */
 .choose{margin:4px 0 0;padding:12px;border-radius:16px;background:linear-gradient(180deg,#f3fbfd,#fff);border:1px solid #cfe6ee}
 .choose-h{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 .choose-h .badge3{font-weight:900;font-size:15px;color:#fff;background:linear-gradient(120deg,var(--coral),var(--rose));padding:3px 12px;border-radius:999px;letter-spacing:.06em}
@@ -457,7 +457,7 @@ var PLACES = {
   dmm:       {name:"DMM Kariyushi 水族館", lat:26.15633, lng:127.65071, q:P.dmm}
 };
 
-/* Day routes for map tab: stops in visit order. kind: stop|hotel|opt; optLetter for 11/27 A/B/C */
+/* Day routes for map tab: stops in visit order. kind: stop|hotel|opt; optLetter for 11/27 A/B */
 var MAP_DAYS = [
   {date:"2026-11-23", w:"一", title:"抵達那霸", cap:"機場 → 那霸市區 Hotel Collective",
    stops:[
@@ -492,11 +492,10 @@ var MAP_DAYS = [
      {id:"ritz", kind:"hotel", label:"入住 Ritz-Carlton"},
      {id:"ritz", kind:"stop", label:"18:30 鐵板燒 Kise（酒店內）"}
    ]},
-  {date:"2026-11-27", w:"五", title:"三選一活動日", cap:"各自自由揀 A／B／C → Gusuku 晚餐 → Ritz",
+  {date:"2026-11-27", w:"五", title:"二選一活動日", cap:"各自自由揀 A／B → Gusuku 晚餐 → Ritz",
    stops:[
-     {id:"junglia", kind:"opt", optLetter:"A", label:"方案 A · JUNGLIA"},
-     {id:"bluecave", kind:"opt", optLetter:"B", label:"方案 B · 青之洞窟"},
-     {id:"busena", kind:"opt", optLetter:"C", label:"方案 C · 部瀨名海中公園"},
+     {id:"bluecave", kind:"opt", optLetter:"A", label:"方案 A · 青之洞窟"},
+     {id:"busena", kind:"opt", optLetter:"B", label:"方案 B · 部瀨名海中公園"},
      {id:"ritz", kind:"stop", label:"18:30 Dining Gusuku（酒店內）"},
      {id:"ritz", kind:"hotel", label:"入住 Ritz-Carlton"}
    ]},
@@ -555,16 +554,13 @@ var DAYS = [
     {h:"前往位於名護的酒店 · Ritz-Carlton", travel:["🚗 約40分鐘車程"], maps:[["The Ritz-Carlton Okinawa",P.ritz]]},
     {t:"18:30", h:"晚餐 · 鐵板燒 Kise（Teppanyaki Kise）", p:"The Ritz-Carlton Okinawa 酒店內（3 樓）。已訂：21 大人 + 1 小朋友。Course：KISE／KEION／AKEMIO。", cls:"key", tags:["🍽️ 晚餐","🎫 已訂"], maps:[["The Ritz-Carlton Okinawa",P.ritz]], menus:[["Menu · 鐵板燒 Kise（KISE／KEION／AKEMIO）","menus/kise-teppanyaki.pdf"],["Menu · Ritz Kids（2–12歲）","menus/ritz-kids.pdf"]]}
    ]},
- { date:"2026-11-27", w:"五", title:"三選一活動日", hotel:"ritz",
+ { date:"2026-11-27", w:"五", title:"二選一活動日", hotel:"ritz",
    stops:[
-    {choose:true, h:"各自自由揀", p:"每人自由揀一個，唔使全團一齊。JUNGLIA 要成日，揀咗就玩唔到另外兩個。晚上 18:30 全員喺酒店 Dining Gusuku 食晚飯。", items:[
-      {k:"a", lbl:"方案 A", when:"全日 10:00 – 17:00", h:"JUNGLIA 樂園（今歸仁村）",
-       notes:["要成日先玩得晒，午餐喺園內食","買 1Day 票：買咗之後可以免費改期","玩完返酒店 Dining Gusuku 食 18:30 晚餐"],
-       maps:[["JUNGLIA",P.junglia]]},
-      {k:"b", lbl:"方案 B", when:"上午", h:"青之洞窟 浮潛 / 坐船（真榮田岬）",
+    {choose:true, h:"各自自由揀", p:"每人自由揀一個，唔使全團一齊。兩個方案揀一個就得。晚上 18:30 全員喺酒店 Dining Gusuku 食晚飯。", items:[
+      {k:"a", lbl:"方案 A", when:"上午", h:"青之洞窟 浮潛 / 坐船（真榮田岬）",
        notes:["!11 月常吹北風，隨時取消，通常臨出發先決定","坐船出發的團成功率較高；要著全身 wetsuit，帶外套","報團前問清楚取消條款"],
        travel:["🚗 大概30分鐘車程"], maps:[["青之洞窟",P.bluecave]]},
-      {k:"c", lbl:"方案 C", when:"輕鬆半日", h:"部瀨名海中公園 海中展望塔 + 玻璃底船",
+      {k:"b", lbl:"方案 B", when:"輕鬆半日", h:"部瀨名海中公園 海中展望塔 + 玻璃底船",
        notes:["就喺 Busena Terrace 旁邊，近 Ritz，最輕鬆","唔使落水都睇到好多魚；展望塔一次最多 24 人","!冬天大風時玻璃底船會停航"],
        maps:[["部瀨名海中公園",P.busena]]}
     ]},
@@ -572,7 +568,7 @@ var DAYS = [
     {t:"18:30", h:"全員集合 · Dining Gusuku（Ritz-Carlton）", p:"酒店內餐廳。已訂：21 大人 + 1 小朋友。各自玩完返酒店集合食晚飯。Course 約 ¥12,000（Agu 豬／和牛可選）＋ a la carte。", cls:"key", tags:["🍽️ 全團晚餐","🎫 已訂"], maps:[["The Ritz-Carlton Okinawa",P.ritz]], menus:[["Menu · Dining Gusuku","menus/gusuku.pdf"],["Menu · Ritz Kids（2–12歲）","menus/ritz-kids.pdf"]]}
    ],
    tips:[
-    {k:"warn", ic:"🌬️", b:"睇天氣留後備", html:"青之洞窟同玻璃底船都有北風停航風險，揀 B 或 C 最好預備後備方案。"}
+    {k:"warn", ic:"🌬️", b:"睇天氣留後備", html:"青之洞窟同玻璃底船都有北風停航風險，揀 A 或 B 最好預備後備方案。"}
    ]},
  { date:"2026-11-28", w:"六", title:"萬座毛 · 購物 · 美國村", hotel:"collective",
    stops:[
@@ -602,7 +598,7 @@ var CHECKLIST_DEFAULT = [
   {id:"rentcar", text:"租車還車時間"},
   {id:"ufuya", text:"11/27 18:30 Dining Gusuku（Ritz · 已訂：21 大人 + 1 小朋友）", done:true},
   {id:"bellezza", text:"11/24 Bellezza 晚餐（Hoshinoya · 已訂 20 人）", done:true},
-  {id:"plan1127", text:"收集大家 11/27 揀邊個活動（JUNGLIA / 青之洞窟 / 部瀨名海中公園）"}
+  {id:"plan1127", text:"收集大家 11/27 揀邊個活動（青之洞窟 / 部瀨名海中公園）"}
 ];
 
 /* ================= HELPERS ================= */
@@ -658,7 +654,8 @@ function renderOptGroup(s){
   return h+'</ul></div></li>';
 }
 function renderChoose(s){
-  var h='<li class="stop key"><div class="choose"><div class="choose-h"><span class="badge3">三選一</span><h3>'+esc(s.h)+'</h3></div>';
+  var badge=(s.items&&s.items.length===2)?'二選一':'三選一';
+  var h='<li class="stop key"><div class="choose"><div class="choose-h"><span class="badge3">'+badge+'</span><h3>'+esc(s.h)+'</h3></div>';
   if(s.p) h+='<p class="choose-sub">'+esc(s.p)+'</p>';
   h+='<ul class="choices">';
   s.items.forEach(function(it){
@@ -875,7 +872,7 @@ function renderMap(){
   });
   h+='</div></div>';
   h+='<div id="overviewMap" role="img" aria-label="沖繩行程路線地圖"></div>';
-  h+='<div class="map-legend"><span><i style="background:#0b5470"></i>停靠編號</span><span><i class="hotel" style="background:#d4a24c"></i>當晚酒店</span><span><i class="opt"></i>可選／三選一</span></div>';
+  h+='<div class="map-legend"><span><i style="background:#0b5470"></i>停靠編號</span><span><i class="hotel" style="background:#d4a24c"></i>當晚酒店</span><span><i class="opt"></i>可選／二選一</span></div>';
   h+='<p id="mapHint" class="map-legend" style="margin-top:-4px">載入地圖中…</p>';
   MAP_DAYS.forEach(function(d,i){
     var items=numberDayStops(d);
@@ -902,7 +899,7 @@ function renderMap(){
     }
     if(d.date==="2026-11-27"){
       h+='<div style="padding:0 14px 14px;display:flex;flex-wrap:wrap;gap:8px">';
-      [["A","junglia","JUNGLIA → Ritz"],["B","bluecave","青之洞窟 → Ritz"],["C","busena","部瀨名 → Ritz"]].forEach(function(x){
+      [["A","bluecave","青之洞窟 → Ritz"],["B","busena","部瀨名 → Ritz"]].forEach(function(x){
         h+='<a class="map" target="_blank" rel="noopener" href="'+esc(dirsUrl([x[1],"ritz"]))+'">方案 '+x[0]+'：'+esc(x[2])+'</a>';
       });
       h+='</div>';
