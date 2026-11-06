@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#0b5470">
-<meta name="description" content="沖繩之旅 2026 · 11/23 – 11/29 行程、路線地圖、酒店、天氣及清單">
+<meta name="description" content="沖繩之旅 2026 · 11/23 – 11/29 行程、餐廳、路線地圖、酒店、天氣及清單">
 <title>沖繩之旅 2026 · Okinawa Trip</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -78,8 +78,8 @@ button{font:inherit;color:inherit}
 .tabs-bar{position:sticky;top:0;z-index:20;background:rgba(251,248,242,.88);backdrop-filter:saturate(1.4) blur(10px);-webkit-backdrop-filter:saturate(1.4) blur(10px);
   border-bottom:1px solid transparent;transition:border-color .2s;margin-top:14px}
 .tabs-bar.scrolled{border-bottom-color:var(--line)}
-.tabs{display:flex;gap:6px;padding:10px 0;margin:0;list-style:none}
-.tab{flex:1;border:0;background:#fff;border-radius:12px;padding:9px 6px;font-weight:700;font-size:15px;color:var(--muted);cursor:pointer;
+.tabs{display:flex;flex-wrap:wrap;gap:6px;padding:10px 0;margin:0;list-style:none}
+.tab{flex:1 1 calc(33.33% - 6px);min-width:0;border:0;background:#fff;border-radius:12px;padding:9px 6px;font-weight:700;font-size:15px;color:var(--muted);cursor:pointer;
   box-shadow:0 1px 2px rgba(6,52,74,.06);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;gap:6px;white-space:nowrap}
 .tab[aria-selected="true"]{background:var(--ocean-700);color:#fff;border-color:var(--ocean-700);box-shadow:0 4px 12px rgba(11,84,112,.25)}
 .day-strip{display:flex;gap:8px;overflow-x:auto;padding:0 0 10px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
@@ -208,6 +208,38 @@ button{font:inherit;color:inherit}
 .flight b{display:block;font-size:15px}
 .flight span{font-size:13px;color:var(--muted)}
 
+/* ---------- Dining ---------- */
+.dining-card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);margin:12px 0;overflow:hidden;display:flex;border:1px solid rgba(6,52,74,.05)}
+.dining-card .stripe{flex:0 0 8px;background:var(--ocean-500)}
+.dining-card.booked .stripe{background:var(--teal-500)}
+.dining-card.opt .stripe{background:#94a3b8}
+.dining-card.self .stripe{background:var(--gold)}
+.dining-card.plan .stripe{background:#c98a1b}
+.dining-card.skip .stripe{background:#cbd5e1}
+.dining-card .body{padding:14px 16px;flex:1;min-width:0}
+.dining-card .when{font-family:var(--font-num);font-size:12px;letter-spacing:.04em;color:var(--muted);font-weight:500;display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.dining-card .meal-pill{display:inline-flex;align-items:center;font-size:11px;font-weight:700;padding:2px 8px;border-radius:999px;background:var(--sand-100);color:#6b5a3e;letter-spacing:.02em}
+.dining-card .meal-pill.lunch{background:#e8f5fa;color:var(--ocean-500)}
+.dining-card .meal-pill.dinner{background:#fff1f3;color:var(--rose)}
+.dining-card .meal-pill.morning{background:#ecfdf3;color:#15803d}
+.dining-card h3{margin:4px 0 2px;font-size:17px;line-height:1.35}
+.dining-card .loc{font-size:13px;color:var(--muted)}
+.dining-card .note{margin:6px 0 0;font-size:13.5px;color:#3b5664;line-height:1.5}
+.dining-card .meta{margin-top:8px}
+.dining-status{display:inline-flex;align-items:center;gap:4px;font-size:12px;font-weight:700;padding:2px 9px;border-radius:999px;border:1px solid}
+.dining-status.booked{background:var(--teal-50);color:var(--ocean-700);border-color:var(--teal-100)}
+.dining-status.opt{background:#f3f5f7;color:var(--muted);border-color:#e3e8ec}
+.dining-status.self{background:#fff8e8;color:#6b4b10;border-color:#f6e2b3}
+.dining-status.plan{background:#fff4e6;color:#b45309;border-color:#fde2bd}
+.dining-status.skip{background:#f3f5f7;color:#64748b;border-color:#e2e8f0}
+.dining-day-h{display:flex;align-items:baseline;justify-content:space-between;margin:18px 2px 4px;padding-top:4px;border-top:1px dashed var(--line)}
+.dining-day-h:first-of-type{border-top:0;margin-top:8px}
+.dining-day-h h3{margin:0;font-size:15px;color:var(--ocean-700)}
+.dining-day-h span{font-size:12px;color:var(--muted)}
+.dining-summary{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0 4px}
+.dining-summary .stat{font-size:13px;padding:6px 12px;border-radius:12px;background:#fff;border:1px solid var(--line);color:var(--muted)}
+.dining-summary .stat b{color:var(--ocean-700);font-family:var(--font-num)}
+
 /* ---------- Notes / checklist ---------- */
 .card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:14px 16px;margin:12px 0}
 .progress{height:8px;background:var(--sand-100);border-radius:999px;overflow:hidden;margin:8px 0 4px}
@@ -283,7 +315,7 @@ footer{text-align:center;font-size:12px;color:#9ab0b8;padding:10px 16px 36px}
 .wx-loading{text-align:center;padding:18px;color:var(--muted);font-size:14px}
 
 /* ---------- Map tab ---------- */
-.tab{font-size:12.5px;padding:9px 2px;gap:3px}
+.tab{font-size:12px;padding:8px 2px;gap:2px}
 #overviewMap{height:240px;width:100%;border-radius:var(--radius);border:1px solid rgba(6,52,74,.08);box-shadow:var(--shadow);margin:0 0 6px;z-index:1;background:#dbe8ec;touch-action:pan-x pan-y}
 .map-legend{display:flex;flex-wrap:wrap;gap:8px 12px;font-size:12px;color:var(--muted);margin:0 2px 12px}
 .map-legend span{display:inline-flex;align-items:center;gap:5px}
@@ -368,6 +400,7 @@ footer{text-align:center;font-size:12px;color:#9ab0b8;padding:10px 16px 36px}
         <button class="tab" role="tab" id="tab-itinerary" aria-controls="panel-itinerary" aria-selected="true" data-tab="itinerary" type="button">🗺️ 行程</button>
         <button class="tab" role="tab" id="tab-map" aria-controls="panel-map" aria-selected="false" data-tab="map" type="button">📍 地圖</button>
         <button class="tab" role="tab" id="tab-hotels" aria-controls="panel-hotels" aria-selected="false" data-tab="hotels" type="button">🏨 酒店</button>
+        <button class="tab" role="tab" id="tab-dining" aria-controls="panel-dining" aria-selected="false" data-tab="dining" type="button">🍽️ 餐廳</button>
         <button class="tab" role="tab" id="tab-weather" aria-controls="panel-weather" aria-selected="false" data-tab="weather" type="button">🌤️ 天氣</button>
         <button class="tab" role="tab" id="tab-notes" aria-controls="panel-notes" aria-selected="false" data-tab="notes" type="button">✅ 清單</button>
       </div>
@@ -378,6 +411,7 @@ footer{text-align:center;font-size:12px;color:#9ab0b8;padding:10px 16px 36px}
   <div class="panel wrap" id="panel-itinerary" role="tabpanel" aria-labelledby="tab-itinerary"></div>
   <div class="panel wrap" id="panel-map" role="tabpanel" aria-labelledby="tab-map" hidden></div>
   <div class="panel wrap" id="panel-hotels" role="tabpanel" aria-labelledby="tab-hotels" hidden></div>
+  <div class="panel wrap" id="panel-dining" role="tabpanel" aria-labelledby="tab-dining" hidden></div>
   <div class="panel wrap" id="panel-weather" role="tabpanel" aria-labelledby="tab-weather" hidden></div>
   <div class="panel wrap" id="panel-notes" role="tabpanel" aria-labelledby="tab-notes" hidden></div>
 </main>
@@ -419,6 +453,7 @@ var P = { // Google Maps search queries
   rycom:"Aeon Mall Okinawa Rycom",
   amvillage:"American Village Chatan Okinawa",
   mahae:"真南風 ホテルテラス那覇",
+  echizen:"越前 おもろシティコートGINOZA 那覇市おもろまち4-11-1",
   dmm:"DMM Kariyushi Aquarium Okinawa",
   ufuya:"https://www.google.com/maps/search/?api=1&query=%E7%99%BE%E5%B9%B4%E5%8F%A4%E5%AE%B6+%E5%A4%A7%E5%AE%B6+Ufuya+Nago+Okinawa"
 };
@@ -499,17 +534,14 @@ var MAP_DAYS = [
      {id:"ritz", kind:"stop", label:"18:30 Dining Gusuku（酒店內）"},
      {id:"ritz", kind:"hotel", label:"入住 Ritz-Carlton"}
    ]},
-  {date:"2026-11-28", w:"六", title:"萬座毛 · 購物 · 美國村", cap:"中部海岸 → 美國村 → 真南風午餐 → Hotel Collective",
+  {date:"2026-11-28", w:"六", title:"萬座毛 · 那霸", cap:"萬座毛 → 真南風午餐 → Hotel Collective → 18:30 越前晚餐",
    stops:[
      {id:"manzamo", kind:"stop"},
-     {id:"rycom", kind:"stop"},
-     {id:"amvillage", kind:"stop"},
      {id:"mahae", kind:"stop", label:"午餐 · 真南風 Mahae（已訂）"},
      {id:"collective", kind:"hotel", label:"入住 Hotel Collective"}
    ]},
-  {date:"2026-11-29", w:"日", title:"DMM · 回程", cap:"豐見城 → 那霸機場",
+  {date:"2026-11-29", w:"日", title:"自由活動 · 回程", cap:"自由活動 → 那霸機場",
    stops:[
-     {id:"dmm", kind:"stop"},
      {id:"airport", kind:"stop", label:"那霸機場 · 回程香港"}
    ]}
 ];
@@ -559,9 +591,9 @@ var DAYS = [
     {choose:true, h:"各自自由揀", p:"每人自由揀一個，唔使全團一齊。兩個方案揀一個就得。晚上 18:30 全員喺酒店 Dining Gusuku 食晚飯。", items:[
       {k:"a", lbl:"方案 A", when:"上午", h:"青之洞窟 浮潛 / 坐船（真榮田岬）",
        notes:["!11 月常吹北風，隨時取消，通常臨出發先決定","坐船出發的團成功率較高；要著全身 wetsuit，帶外套","報團前問清楚取消條款"],
-       travel:["🚗 大概30分鐘車程"], maps:[["青之洞窟",P.bluecave]]},
+       travel:["🚗 Ritz → 真榮田岬約 30–35 分鐘"], maps:[["青之洞窟",P.bluecave]]},
       {k:"b", lbl:"方案 B", when:"輕鬆半日", h:"部瀨名海中公園 海中展望塔 + 玻璃底船",
-       notes:["就喺 Busena Terrace 旁邊，近 Ritz，最輕鬆","唔使落水都睇到好多魚；展望塔一次最多 24 人","!冬天大風時玻璃底船會停航"],
+       notes:["就喺 Busena Terrace 旁邊；由 Ritz 步行約 15 分鐘／車約 5 分鐘","11/27（五）照常開；11 月臨時休園唔包括呢日（休：2／6／13／15／19／24／29）","10 人以上團體要預約（0980-52-3379）；少過 10 人先到先得；只收現金","!冬天大風時玻璃底船會停航；展望塔一次最多 24 人"],
        maps:[["部瀨名海中公園",P.busena]]}
     ]},
     {h:"其餘時間 · 享受 Ritz-Carlton 酒店設施", p:"室內溫水泳池；Spa 要預約。午餐按各自活動自己解決。", maps:[["The Ritz-Carlton Okinawa",P.ritz]]},
@@ -570,18 +602,16 @@ var DAYS = [
    tips:[
     {k:"warn", ic:"🌬️", b:"睇天氣留後備", html:"青之洞窟同玻璃底船都有北風停航風險，揀 A 或 B 最好預備後備方案。"}
    ]},
- { date:"2026-11-28", w:"六", title:"萬座毛 · 購物 · 美國村", hotel:"collective",
+ { date:"2026-11-28", w:"六", title:"萬座毛 · 那霸", hotel:"collective",
    stops:[
     {h:"萬座毛 Cape Manzamo", p:"象鼻石，純打卡。", travel:["🚗 約20分鐘車程"], maps:[["萬座毛",P.manzamo]]},
-    {h:"前往 Aeon Rycom Mall 購物中心", travel:["🚗 約30分鐘車程"], maps:[["Aeon Rycom Mall",P.rycom]]},
-    {h:"前往美國村", p:"日落及入夜後燈飾。", travel:["🚗 約10分鐘車程"], cls:"key", maps:[["美國村",P.amvillage]]},
-    {t:"午餐", h:"午餐 · 真南風 Mahae（那霸）", p:"Hotel Terrace Naha（ホテルテラス那覇）內。已訂 lunch。", cls:"key", tags:["🍢 午餐","🎫 已訂"], maps:[["真南風 Mahae",P.mahae]], travel:["🚗 前往那霸（Hotel Terrace）"]},
+    {t:"午餐", h:"午餐 · 真南風 Mahae（那霸）", p:"Hotel Terrace Naha（ホテルテラス那覇）內。已訂 lunch。唔去 Aeon Rycom、美國村同北谷煙花。", cls:"key", tags:["🍢 午餐","🎫 已訂"], maps:[["真南風 Mahae",P.mahae]], travel:["🚗 由萬座毛前往那霸（Hotel Terrace）"]},
     {h:"前往那霸市區酒店 · Hotel Collective", travel:["🚗 約幾分鐘車程"], maps:[["Hotel Collective",P.collective]]},
-    {h:"晚餐 · 自理", p:"午餐已訂真南風；晚上可喺那霸／國際通自由食。", cls:"opt", tags:["opt:可選"]}
+    {t:"18:30", h:"晚餐 · 越前 Echizen（おもろまち）", p:"蟹料理專門店。Google 已訂 18:30。地址：那霸市おもろまち4-11-1 おもろシティコートGINOZA 1F。官方網站 echizen.restaurant；店舖電話 098-869-8888。", cls:"key", tags:["🍽️ 晚餐","🎫 已訂"], maps:[["越前 Echizen",P.echizen]]}
    ]},
- { date:"2026-11-29", w:"日", title:"DMM水族館 · 回程", hotel:null,
+ { date:"2026-11-29", w:"日", title:"自由活動 · 回程", hotel:null,
    stops:[
-    {h:"DMM水族館 + 商場", maps:[["DMM水族館",P.dmm]]},
+    {t:"早上", h:"自由活動", p:"不指定景點；回程前可自由排時間。午餐自理。", cls:"opt", tags:["opt:可選"]},
     {t:"16:25", h:"回程香港", cls:"key", tags:["✈️ 航班 16:25"], maps:[["那霸機場",P.airport]]}
    ],
    tips:[
@@ -591,10 +621,11 @@ var DAYS = [
 
 var CHECKLIST_DEFAULT = [
   {id:"shuri", text:"首里城正殿門票（已買）", done:true},
-  {id:"fireworks", text:"美國村 11/28 煙花（未確認會放）"},
+  {id:"fireworks", text:"11/28 Aeon Rycom、美國村同北谷煙花（已取消，唔去）", done:true},
   {id:"mahae", text:"11/28 午餐 真南風 Mahae（那霸 · 已訂）", done:true},
+  {id:"echizen", text:"11/28 18:30 晚餐 越前（おもろまち · Google 已訂）", done:true},
   {id:"ryuka", text:"11/26 18:30 鐵板燒 Kise（Ritz · 已訂：21 大人 + 1 小朋友）", done:true},
-  {id:"bluecave", text:"青之洞窟車程"},
+  {id:"bluecave", text:"青之洞窟車程：Ritz → 真榮田岬約 30–35 分鐘", done:true},
   {id:"rentcar", text:"租車還車時間"},
   {id:"ufuya", text:"11/27 18:30 Dining Gusuku（Ritz · 已訂：21 大人 + 1 小朋友）", done:true},
   {id:"bellezza", text:"11/24 Bellezza 晚餐（Hoshinoya · 已訂 20 人）", done:true},
@@ -740,6 +771,82 @@ function renderHotels(){
   h+='<div class="flight"><div class="fi">🛫</div><div><b>11/29（日）16:25 回程香港</b><span>建議約 14:25 前到達機場，預留時間還租車</span></div></div>';
   h+='</div>';
   $("#panel-hotels").innerHTML=h;
+}
+
+
+/* ================= DINING ================= */
+var DINING = [
+  {date:"2026-11-23", w:"一", meal:"晚餐", time:"18:30", name:"碧海庭", loc:"Hotel Collective（那霸）",
+   status:"plan", statusLabel:"計劃中", note:"酒店內會席。Course：アカバナー／サンダンカ／デイゴ。行程未標已訂。",
+   maps:[["Hotel Collective",P.collective]],
+   menus:[["Menu · アカバナー ¥7,000","menus/hekikaitei-akabana.pdf"],["Menu · サンダンカ ¥9,000","menus/hekikaitei-sandanka.pdf"],["Menu · デイゴ ¥12,000","menus/hekikaitei-deigo.pdf"]]},
+  {date:"2026-11-24", w:"二", meal:"午餐", time:"12:00", name:"牧志市場", loc:"第一牧志公設市場（那霸）",
+   status:"self", statusLabel:"自理", note:"自由／未訂。",
+   maps:[["第一牧志公設市場",P.makishi]], menus:[]},
+  {date:"2026-11-24", w:"二", meal:"晚餐", time:"", name:"Bellezza", loc:"Hoshinoya 星野（讀谷）",
+   status:"booked", statusLabel:"🎫 已訂", note:"酒店內「琉球ガストロノミア〜Bellezza〜」。已訂 20 人。",
+   maps:[["Hoshinoya 星野",P.hoshinoya]],
+   menus:[["Menu · Bellezza / Hoshinoya Dining","menus/bellezza-dining.pdf"]]},
+  {date:"2026-11-25", w:"三", meal:"早上", time:"", name:"酒店早餐／Bellezza，或 BANTA Café／OLU Grill", loc:"Hoshinoya 一帶",
+   status:"opt", statusLabel:"可選", note:"婚禮日早上自由；唔係全團訂位。",
+   maps:[["Hoshinoya 星野",P.hoshinoya],["Banta Cafe",P.banta]],
+   menus:[["Menu · Bellezza / Dining（星野）","menus/bellezza-dining.pdf"],["Menu · BANTA Café / OLU Grill","menus/banta-olu.pdf"]]},
+  {date:"2026-11-25", w:"三", meal:"午餐", time:"14:00–16:00", name:"婚禮午宴", loc:"Lazor Garden Alivila",
+   status:"booked", statusLabel:"🎫 已訂", note:"婚禮日午餐（場地內）。",
+   maps:[["Lazor Garden Alivila",P.lazor]], menus:[]},
+  {date:"2026-11-26", w:"四", meal:"午餐", time:"", name:"Ocean Blue Café", loc:"美麗海水族館內",
+   status:"self", statusLabel:"自理", note:"無法預約，最好分開坐。",
+   maps:[["Ocean Blue Café",P.oceanblue]], menus:[]},
+  {date:"2026-11-26", w:"四", meal:"晚餐", time:"18:30", name:"鐵板燒 Kise", loc:"The Ritz-Carlton Okinawa（3 樓）",
+   status:"booked", statusLabel:"🎫 已訂", note:"已訂：21 大人 + 1 小朋友。Course：KISE／KEION／AKEMIO。",
+   maps:[["The Ritz-Carlton Okinawa",P.ritz]],
+   menus:[["Menu · 鐵板燒 Kise（KISE／KEION／AKEMIO）","menus/kise-teppanyaki.pdf"],["Menu · Ritz Kids（2–12歲）","menus/ritz-kids.pdf"]]},
+  {date:"2026-11-27", w:"五", meal:"午餐", time:"", name:"按活動自理", loc:"青之洞窟／部瀨名一帶",
+   status:"self", statusLabel:"自理", note:"二選一活動各自解決午餐。",
+   maps:[], menus:[]},
+  {date:"2026-11-27", w:"五", meal:"晚餐", time:"18:30", name:"Dining Gusuku", loc:"The Ritz-Carlton Okinawa",
+   status:"booked", statusLabel:"🎫 已訂", note:"已訂：21 大人 + 1 小朋友。Course 約 ¥12,000（Agu 豬／和牛可選）＋ a la carte。",
+   maps:[["The Ritz-Carlton Okinawa",P.ritz]],
+   menus:[["Menu · Dining Gusuku","menus/gusuku.pdf"],["Menu · Ritz Kids（2–12歲）","menus/ritz-kids.pdf"]]},
+  {date:"2026-11-28", w:"六", meal:"午餐", time:"", name:"真南風 Mahae", loc:"Hotel Terrace Naha（那霸）",
+   status:"booked", statusLabel:"🎫 已訂", note:"已訂 lunch。",
+   maps:[["真南風 Mahae",P.mahae]], menus:[]},
+  {date:"2026-11-28", w:"六", meal:"晚餐", time:"18:30", name:"越前 Echizen", loc:"おもろまち（那霸）",
+   status:"booked", statusLabel:"🎫 已訂", note:"蟹料理專門店。Google 已訂 18:30。おもろシティコートGINOZA 1F。",
+   maps:[["越前 Echizen",P.echizen]], menus:[]},
+  {date:"2026-11-29", w:"日", meal:"全日", time:"", name:"自由活動 · 無團餐", loc:"那霸／回程",
+   status:"skip", statusLabel:"無團餐", note:"自由活動；午餐自理。16:25 回程香港。",
+   maps:[["那霸機場",P.airport]], menus:[]}
+];
+
+function renderDining(){
+  var booked=DINING.filter(function(m){return m.status==="booked";}).length;
+  var h='<div class="section-h"><h2>餐廳總覽</h2><span>共 '+DINING.length+' 項 · '+booked+' 已訂</span></div>';
+  h+='<div class="dining-summary">';
+  h+='<div class="stat"><b>'+booked+'</b> 已訂團餐</div>';
+  h+='<div class="stat"><b>'+DINING.filter(function(m){return m.status==="plan";}).length+'</b> 計劃中</div>';
+  h+='<div class="stat"><b>'+DINING.filter(function(m){return m.status==="self"||m.status==="opt";}).length+'</b> 自理／可選</div>';
+  h+='</div>';
+  var last="";
+  DINING.forEach(function(m){
+    if(m.date!==last){
+      h+='<div class="dining-day-h"><h3>'+md(m.date)+'（'+m.w+'）</h3><span>DAY '+(DAYS.findIndex(function(d){return d.date===m.date;})+1)+'</span></div>';
+      last=m.date;
+    }
+    var mealCls = m.meal==="午餐"?"lunch":(m.meal==="晚餐"?"dinner":(m.meal==="早上"?"morning":""));
+    var when = (m.time?m.time+" · ":"")+m.meal;
+    h+='<div class="dining-card '+esc(m.status)+'"><div class="stripe"></div><div class="body">';
+    h+='<div class="when"><span class="meal-pill '+mealCls+'">'+esc(when)+'</span>';
+    h+='<span class="dining-status '+esc(m.status)+'">'+esc(m.statusLabel)+'</span></div>';
+    h+='<h3>'+esc(m.name)+'</h3>';
+    h+='<div class="loc">📍 '+esc(m.loc)+'</div>';
+    if(m.note) h+='<p class="note">'+esc(m.note)+'</p>';
+    h+='<div class="meta">';
+    (m.maps||[]).forEach(function(x){h+=mapLink(x[0],x[1]);});
+    (m.menus||[]).forEach(function(x){h+=menuLink(x[0],x[1]);});
+    h+='</div></div></div>';
+  });
+  $("#panel-dining").innerHTML=h;
 }
 
 /* ================= RENDER: NOTES / CHECKLIST ================= */
@@ -1173,8 +1280,8 @@ var WX_TRIP_DAYS = [
   {date:"2026-11-25", w:"三", title:"婚禮日"},
   {date:"2026-11-26", w:"四", title:"水族館／古宇利"},
   {date:"2026-11-27", w:"五", title:"自由活動"},
-  {date:"2026-11-28", w:"六", title:"美國村／真南風"},
-  {date:"2026-11-29", w:"日", title:"回程"}
+  {date:"2026-11-28", w:"六", title:"萬座毛／真南風／越前"},
+  {date:"2026-11-29", w:"日", title:"自由活動 · 回程"}
 ];
 
 function wxCodeInfo(code){
@@ -1326,7 +1433,7 @@ function loadWeather(){
 }
 
 /* ================= TABS & NAV ================= */
-var TABS=["itinerary","map","hotels","weather","notes"];
+var TABS=["itinerary","map","hotels","dining","weather","notes"];
 function showTab(name,noScroll){
   if(TABS.indexOf(name)<0) name="itinerary";
   TABS.forEach(function(t){
@@ -1377,7 +1484,7 @@ $("#shareBtn").addEventListener("click",function(){
 });
 
 /* ================= INIT ================= */
-renderItinerary(); renderMap(); renderHotels(); renderNotes(); renderWeather({loading:true}); loadWeather(); renderStatus();
+renderItinerary(); renderMap(); renderHotels(); renderDining(); renderNotes(); renderWeather({loading:true}); loadWeather(); renderStatus();
 var hash=location.hash.replace("#","");
 if(TABS.indexOf(hash)>=0) showTab(hash,true);
 else if(hash.indexOf("day-")===0) setTimeout(function(){scrollToDay(hash);},60);
