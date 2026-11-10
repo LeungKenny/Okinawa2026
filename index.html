@@ -454,6 +454,7 @@ var P = { // Google Maps search queries
   manzamo:"Cape Manzamo Okinawa",
   rycom:"Aeon Mall Okinawa Rycom",
   amvillage:"American Village Chatan Okinawa",
+  nomix:"NÔMIX 北谷町美浜9-8 シーサイドスクエアA10",
   mahae:"真南風 ホテルテラス那覇",
   echizen:"越前 おもろシティコートGINOZA 那覇市おもろまち4-11-1",
   dmm:"DMM Kariyushi Aquarium Okinawa",
@@ -492,6 +493,7 @@ var PLACES = {
   manzamo:   {name:"萬座毛", lat:26.50501, lng:127.85026, q:P.manzamo},
   rycom:     {name:"AEON Rycom", lat:26.31423, lng:127.79592, q:P.rycom},
   amvillage: {name:"美國村", lat:26.31472, lng:127.76113, q:P.amvillage},
+  nomix:     {name:"NÔMIX（美國村）", lat:26.31670, lng:127.75570, q:P.nomix},
   mahae:     {name:"真南風 Mahae", lat:26.2165, lng:127.6880, q:P.mahae},
   dmm:       {name:"DMM Kariyushi 水族館", lat:26.15633, lng:127.65071, q:P.dmm}
 };
@@ -539,10 +541,10 @@ var MAP_DAYS = [
      {id:"ritz", kind:"stop", label:"18:30 Dining Gusuku（酒店內）"},
      {id:"ritz", kind:"hotel", label:"入住 Ritz-Carlton"}
    ]},
-  {date:"2026-11-28", w:"六", title:"萬座毛 · 美國村 · 購物", cap:"萬座毛 → 美國村午餐 → AEON Rycom → Hotel Collective → 18:30 越前晚餐",
+  {date:"2026-11-28", w:"六", title:"萬座毛 · NÔMIX · 購物", cap:"萬座毛 → NÔMIX 午餐（暫定）→ AEON Rycom → Hotel Collective → 18:30 越前晚餐",
    stops:[
      {id:"manzamo", kind:"stop"},
-     {id:"amvillage", kind:"stop", label:"美國村（午餐尚未訂位）"},
+     {id:"nomix", kind:"stop", label:"NÔMIX（美國村 · 午餐暫定）"},
      {id:"rycom", kind:"stop", label:"食完午餐 → AEON Rycom"},
      {id:"collective", kind:"hotel", label:"入住 Hotel Collective"}
    ]},
@@ -607,7 +609,7 @@ var DAYS = [
  { date:"2026-11-28", w:"六", title:"萬座毛 · 美國村 · 購物", hotel:"collective",
    stops:[
     {h:"萬座毛 Cape Manzamo", p:"象鼻石，純打卡。", travel:["🚗 約20分鐘車程"], maps:[["萬座毛",P.manzamo]]},
-    {t:"午餐", h:"美國村 American Village · 午餐", p:"北谷美國村一帶午餐尚未訂位（約 20 人）。食完再到 AEON Rycom。今次行程唔包括北谷煙花。", cls:"key", tags:["🍢 午餐","尚未訂位"], maps:[["美國村",P.amvillage]], travel:["🚗 由萬座毛約30分鐘車程"]},
+    {t:"午餐", h:"NÔMIX（美國村）· 午餐", p:"暫定 NÔMIX（北谷美浜シーサイドスクエア A10；現代印度菜）。星期六午餐 11:00–15:00（料理 L.O. 14:30）；約 75 席，20 人理論上可以。尚未訂位。食完再到 AEON Rycom。今次行程唔包括北谷煙花。", cls:"key", tags:["🍢 午餐","暫定"], maps:[["NÔMIX",P.nomix]], travel:["🚗 由萬座毛約30分鐘車程"]},
     {h:"Aeon Mall Okinawa Rycom 購物中心", p:"午餐之後再去購物。之後前往那霸入住，趕 18:30 越前晚餐。", maps:[["Aeon Rycom Mall",P.rycom]], travel:["🚗 由美國村約10分鐘車程"]},
     {h:"前往那霸市區酒店 · Hotel Collective", travel:["🚗 由 Rycom 約20–25分鐘車程"], maps:[["Hotel Collective",P.collective]]},
     {t:"18:30", h:"晚餐 · 越前 Echizen（おもろまち）", p:"蟹料理專門店。Google 已訂 18:30。地址：那霸市おもろまち4-11-1 おもろシティコートGINOZA 1F。官方網站 echizen.restaurant；店舖電話 098-869-8888。", cls:"key", tags:["🍽️ 晚餐","🎫 已訂"], maps:[["越前 Echizen",P.echizen]]}
@@ -628,6 +630,7 @@ var CHECKLIST_DEFAULT = [
   {id:"shuri", text:"首里城正殿門票（已買）", done:true},
   {id:"fireworks", text:"11/28 北谷煙花（行程唔包括）", done:true},
   {id:"mahae", text:"11/29 12:00 午餐 真南風 Mahae（那霸 · 已訂）", done:true},
+  {id:"nomix", text:"11/28 午餐 NÔMIX（美國村 · 暫定，尚未訂位）"},
   {id:"echizen", text:"11/28 18:30 晚餐 越前（おもろまち · Google 已訂）", done:true},
   {id:"ryuka", text:"11/26 18:30 鐵板燒 Kise（Ritz · 已訂：21 大人 + 1 小朋友）", done:true},
   {id:"bluecave", text:"青之洞窟車程：Ritz → 真榮田岬約 30–35 分鐘", done:true},
@@ -814,9 +817,9 @@ var DINING = [
    status:"booked", statusLabel:"🎫 已訂", note:"已訂：21 大人 + 1 小朋友。Course 約 ¥12,000（Agu 豬／和牛可選）＋ a la carte。",
    maps:[["The Ritz-Carlton Okinawa",P.ritz]],
    menus:[["Menu · Dining Gusuku","menus/gusuku.pdf"],["Menu · Ritz Kids（2–12歲）","menus/ritz-kids.pdf"]]},
-  {date:"2026-11-28", w:"六", meal:"午餐", time:"", name:"美國村一帶", loc:"北谷美國村",
-   status:"self", statusLabel:"尚未訂位", note:"美國村午餐尚未訂位，食完再到 AEON Rycom。可考慮蒸気海鮮、東洋飯店、ばってん等（約 20 人）。",
-   maps:[["美國村",P.amvillage]], menus:[]},
+  {date:"2026-11-28", w:"六", meal:"午餐", time:"", name:"NÔMIX（美國村）", loc:"北谷美浜 シーサイドスクエア A10",
+   status:"plan", statusLabel:"暫定", note:"暫定，尚未訂位。現代印度菜；星期六午餐 11:00–15:00（料理 L.O. 14:30）；總席約 75，無包廂。電話 098-989-1922；Hot Pepper 可網訂。食完再到 AEON Rycom。",
+   maps:[["NÔMIX",P.nomix]], menus:[]},
   {date:"2026-11-28", w:"六", meal:"晚餐", time:"18:30", name:"越前 Echizen", loc:"おもろまち（那霸）",
    status:"booked", statusLabel:"🎫 已訂", note:"蟹料理專門店。Google 已訂 18:30。おもろシティコートGINOZA 1F。",
    maps:[["越前 Echizen",P.echizen]], menus:[]},
@@ -1284,7 +1287,7 @@ var WX_TRIP_DAYS = [
   {date:"2026-11-25", w:"三", title:"婚禮日"},
   {date:"2026-11-26", w:"四", title:"水族館／古宇利"},
   {date:"2026-11-27", w:"五", title:"自己安排／部瀨名"},
-  {date:"2026-11-28", w:"六", title:"萬座毛／美國村／AEON／越前"},
+  {date:"2026-11-28", w:"六", title:"萬座毛／NÔMIX／AEON／越前"},
   {date:"2026-11-29", w:"日", title:"DMM／真南風 · 回程"}
 ];
 
