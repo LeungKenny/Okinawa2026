@@ -546,9 +546,10 @@ var MAP_DAYS = [
      {id:"amvillage", kind:"stop", label:"美國村（午餐尚未訂位）"},
      {id:"collective", kind:"hotel", label:"入住 Hotel Collective"}
    ]},
-  {date:"2026-11-29", w:"日", title:"真南風 · 回程", cap:"午餐真南風（未確認）→ 那霸機場",
+  {date:"2026-11-29", w:"日", title:"DMM · 真南風 · 回程", cap:"早上 DMM水族館 → 12:00 真南風午餐 → 那霸機場",
    stops:[
-     {id:"mahae", kind:"stop", label:"午餐 · 真南風 Mahae（未確認）"},
+     {id:"dmm", kind:"stop", label:"早上 · DMMかりゆし水族館"},
+     {id:"mahae", kind:"stop", label:"12:00 午餐 · 真南風 Mahae（已訂）"},
      {id:"airport", kind:"stop", label:"那霸機場 · 回程香港"}
    ]}
 ];
@@ -611,21 +612,22 @@ var DAYS = [
     {h:"前往那霸市區酒店 · Hotel Collective", travel:["🚗 由美國村約25–30分鐘車程"], maps:[["Hotel Collective",P.collective]]},
     {t:"18:30", h:"晚餐 · 越前 Echizen（おもろまち）", p:"蟹料理專門店。Google 已訂 18:30。地址：那霸市おもろまち4-11-1 おもろシティコートGINOZA 1F。官方網站 echizen.restaurant；店舖電話 098-869-8888。", cls:"key", tags:["🍽️ 晚餐","🎫 已訂"], maps:[["越前 Echizen",P.echizen]]}
    ]},
- { date:"2026-11-29", w:"日", title:"真南風 · 回程", hotel:null,
+ { date:"2026-11-29", w:"日", title:"DMM · 真南風 · 回程", hotel:null,
    stops:[
-    {t:"早上", h:"自由活動", p:"回程前可自由排時間。", cls:"opt", tags:["opt:可選"]},
-    {t:"午餐", h:"午餐 · 真南風 Mahae（那霸）", p:"Hotel Terrace Naha（ホテルテラス那覇）內。由 11/28 改期，尚未確認。", cls:"key", tags:["🍢 午餐","未確認"], maps:[["真南風 Mahae",P.mahae]]},
+    {h:"Hotel Collective check out", maps:[["Hotel Collective",P.collective]]},
+    {t:"早上", h:"DMMかりゆし水族館", p:"豐見城豐崎。11/29（日）通常營業 9:00–19:00（官方行事曆）。開館 9:00，12:00 真南風前大約 11:20–11:30 要出發。館旁有商場。", cls:"key", tags:["🐠 水族館"], maps:[["DMM水族館",P.dmm]], travel:["🚗 由 Hotel Collective 約 15–20 分鐘"]},
+    {t:"12:00", h:"午餐 · 真南風 Mahae（那霸）", p:"Hotel Terrace Naha（ホテルテラス那覇）內。已改期至 11/29 12:00。", cls:"key", tags:["🍢 午餐","🎫 已訂"], maps:[["真南風 Mahae",P.mahae]], travel:["🚗 由 DMM 返回那霸"]},
     {t:"16:25", h:"回程香港", cls:"key", tags:["✈️ 航班 16:25"], maps:[["那霸機場",P.airport]]}
    ],
    tips:[
-    {k:"warn", ic:"⏰", b:"回程提提你", html:"航班 16:25，建議約 <b style=\"display:inline\">14:25</b> 前到達機場，並預留額外時間還租車。真南風若訂得成，建議訂早啲（例如 11:30）；12:30 可能會趕。"}
+    {k:"warn", ic:"⏰", b:"回程提提你", html:"航班 16:25，建議約 <b style=\"display:inline\">14:25</b> 前到達機場，並預留額外時間還租車。12:00 真南風之後唔好拖太耐。"}
    ]}
 ];
 
 var CHECKLIST_DEFAULT = [
   {id:"shuri", text:"首里城正殿門票（已買）", done:true},
   {id:"fireworks", text:"11/28 北谷煙花（行程唔包括）", done:true},
-  {id:"mahae", text:"11/29 午餐 真南風 Mahae（那霸 · 未確認；需改期）", done:false},
+  {id:"mahae", text:"11/29 12:00 午餐 真南風 Mahae（那霸 · 已訂）", done:true},
   {id:"echizen", text:"11/28 18:30 晚餐 越前（おもろまち · Google 已訂）", done:true},
   {id:"ryuka", text:"11/26 18:30 鐵板燒 Kise（Ritz · 已訂：21 大人 + 1 小朋友）", done:true},
   {id:"bluecave", text:"青之洞窟車程：Ritz → 真榮田岬約 30–35 分鐘", done:true},
@@ -818,8 +820,8 @@ var DINING = [
   {date:"2026-11-28", w:"六", meal:"晚餐", time:"18:30", name:"越前 Echizen", loc:"おもろまち（那霸）",
    status:"booked", statusLabel:"🎫 已訂", note:"蟹料理專門店。Google 已訂 18:30。おもろシティコートGINOZA 1F。",
    maps:[["越前 Echizen",P.echizen]], menus:[]},
-  {date:"2026-11-29", w:"日", meal:"午餐", time:"", name:"真南風 Mahae", loc:"Hotel Terrace Naha（那霸）",
-   status:"plan", statusLabel:"未確認", note:"由 11/28 改期，尚未確認。航班 16:25，建議訂早啲以免趕機場。",
+  {date:"2026-11-29", w:"日", meal:"午餐", time:"12:00", name:"真南風 Mahae", loc:"Hotel Terrace Naha（那霸）",
+   status:"booked", statusLabel:"🎫 已訂", note:"已改期至 11/29 12:00。航班 16:25，午餐後預留時間還租車同去機場。",
    maps:[["真南風 Mahae",P.mahae]], menus:[]}
 ];
 
@@ -864,8 +866,6 @@ function loadChecklist(){
   CHECKLIST_DEFAULT.forEach(function(x){if(s.known.indexOf(x.id)<0){s.items.push({id:x.id,text:x.text,done:!!x.done});s.known.push(x.id);}});
   // keep wording of default items in sync; items flagged done:true stay checked on saved phones
   s.items.forEach(function(it){CHECKLIST_DEFAULT.forEach(function(x){if(x.id===it.id){it.text=x.text; if(x.done) it.done=true;}});});
-  // 真南風改期至 11/29 且未確認：取消舊嘅「已訂」剔號
-  s.items.forEach(function(it){if(it.id==="mahae") it.done=false;});
   return s;
 }
 var CL=loadChecklist();
@@ -1285,7 +1285,7 @@ var WX_TRIP_DAYS = [
   {date:"2026-11-26", w:"四", title:"水族館／古宇利"},
   {date:"2026-11-27", w:"五", title:"自己安排／部瀨名"},
   {date:"2026-11-28", w:"六", title:"萬座毛／美國村／越前"},
-  {date:"2026-11-29", w:"日", title:"真南風 · 回程"}
+  {date:"2026-11-29", w:"日", title:"DMM／真南風 · 回程"}
 ];
 
 function wxCodeInfo(code){
