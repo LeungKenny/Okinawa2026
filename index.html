@@ -500,18 +500,18 @@ var PLACES = {
 
 /* Day routes for map tab: stops in visit order. kind: stop|hotel|opt */
 var MAP_DAYS = [
-  {date:"2026-11-23", w:"一", title:"抵達那霸", cap:"機場 → 那霸市區 Hotel Collective",
+  {date:"2026-11-23", w:"一", title:"抵達那霸", cap:"15:25 機場 → 約16:15 Hotel Collective → 18:30 碧海庭",
    stops:[
-     {id:"airport", kind:"stop"},
-     {id:"collective", kind:"hotel", label:"入住 Hotel Collective"},
-     {id:"kokusai", kind:"stop", label:"國際通（自由活動）"},
+     {id:"airport", kind:"stop", label:"15:25 到達那霸機場"},
+     {id:"collective", kind:"hotel", label:"約16:15 入住 Hotel Collective"},
+     {id:"kokusai", kind:"stop", label:"約16:30 國際通（自由活動）"},
      {id:"collective", kind:"stop", label:"18:30 碧海庭（酒店內）"},
-     {id:"senaga", kind:"opt", label:"可選：瀨長島夜景"}
+     {id:"senaga", kind:"opt", label:"約20:30 可選：瀨長島夜景"}
    ]},
   {date:"2026-11-24", w:"二", title:"那霸文化散策 → 讀谷", cap:"那霸 → 中部 Hoshinoya",
    stops:[
-     {id:"kokusai", kind:"opt", label:"可選：國際通"},
-     {id:"tsuboya", kind:"opt", label:"可選：壺屋やちむん通り"},
+     {id:"kokusai", kind:"opt", label:"約09:00 可選：國際通"},
+     {id:"tsuboya", kind:"opt", label:"約09:00 可選：壺屋やちむん通り"},
      {id:"collective", kind:"stop", label:"11:00 Hotel Collective check out"},
      {id:"tsubame", kind:"stop", label:"12:00 燕食堂（牧志市場二樓）已訂"},
      {id:"naminoue", kind:"stop", label:"13:30 波上宮"},
@@ -519,40 +519,40 @@ var MAP_DAYS = [
      {id:"hoshinoya", kind:"hotel", label:"16:30 出發 · 入住 Hoshinoya 星野"},
      {id:"hoshinoya", kind:"stop", label:"晚餐 · Bellezza（酒店內）"}
    ]},
-  {date:"2026-11-25", w:"三", title:"婚禮日", cap:"讀谷 · Lazor Garden Alivila",
+  {date:"2026-11-25", w:"三", title:"婚禮日", cap:"約09:00 自由活動 → 11:30 到達教堂 → 12:00 婚禮 → 14:00 午宴",
    stops:[
-     {id:"hoshinoya", kind:"stop", label:"早上 · Hoshinoya 自由活動"},
-     {id:"lazor", kind:"stop", label:"Lazor Garden Alivila 婚禮"},
+     {id:"hoshinoya", kind:"stop", label:"約09:00 早上 · Hoshinoya 自由活動"},
+     {id:"lazor", kind:"stop", label:"11:30 到達 · 12:00 婚禮 · 14:00 午宴"},
      {id:"hoshinoya", kind:"hotel", label:"入住 Hoshinoya 星野"}
    ]},
-  {date:"2026-11-26", w:"四", title:"美麗海 · 古宇利", cap:"北部水族館 → 古宇利 → 名護 Ritz",
+  {date:"2026-11-26", w:"四", title:"美麗海 · 古宇利", cap:"約09:15 美麗海 → 約12:00 Ocean Blue → 古宇利 → 18:30 鐵板燒 Kise",
    stops:[
-     {id:"churaumi", kind:"stop"},
-     {id:"kouriBridge", kind:"stop", label:"古宇利大橋"},
-     {id:"kouriTower", kind:"stop"},
-     {id:"ritz", kind:"hotel", label:"入住 Ritz-Carlton"},
+     {id:"churaumi", kind:"stop", label:"約09:15 美麗海水族館"},
+     {id:"kouriBridge", kind:"stop", label:"約13:30 古宇利大橋"},
+     {id:"kouriTower", kind:"stop", label:"約14:30 古宇利海洋塔"},
+     {id:"ritz", kind:"hotel", label:"約17:10 入住 Ritz-Carlton"},
      {id:"ritz", kind:"stop", label:"18:30 鐵板燒 Kise（酒店內）"}
    ]},
-  {date:"2026-11-27", w:"五", title:"名護 · 部瀨名", cap:"上晝自己安排 → Busena Terrace 午餐 → 15:10 部瀨名 → Gusuku 晚餐",
+  {date:"2026-11-27", w:"五", title:"名護 · 部瀨名", cap:"約09:00 自己安排 → 約12:30 Busena Terrace 午餐（未訂）→ 15:10 部瀨名 → 18:30 Gusuku",
    stops:[
-     {id:"bluecave", kind:"opt", label:"上晝 · 自己安排（可選青之洞窟）"},
-     {id:"busenaTerrace", kind:"stop", label:"午餐 · Busena Terrace（未訂）"},
+     {id:"bluecave", kind:"opt", label:"約09:00 上晝 · 自己安排（可選青之洞窟）"},
+     {id:"busenaTerrace", kind:"stop", label:"約12:30 午餐 · Busena Terrace（未訂）"},
      {id:"busena", kind:"stop", label:"15:10 下午 · 方案 B · 部瀨名海中公園"},
      {id:"ritz", kind:"stop", label:"18:30 Dining Gusuku（酒店內）"},
      {id:"ritz", kind:"hotel", label:"入住 Ritz-Carlton"}
    ]},
-  {date:"2026-11-28", w:"六", title:"萬座毛 · NÔMIX · 購物", cap:"萬座毛 → 12:00 NÔMIX 午餐（已訂）→ AEON Rycom → Hotel Collective → 18:30 越前晚餐",
+  {date:"2026-11-28", w:"六", title:"萬座毛 · NÔMIX · 購物", cap:"約10:30 萬座毛 → 12:00 NÔMIX 午餐（已訂）→ 約14:00 AEON Rycom → 約16:30 Hotel Collective → 18:30 越前晚餐",
    stops:[
-     {id:"manzamo", kind:"stop"},
+     {id:"manzamo", kind:"stop", label:"約10:30 萬座毛"},
      {id:"nomix", kind:"stop", label:"12:00 NÔMIX（美國村 · 已訂）"},
-     {id:"rycom", kind:"stop", label:"食完午餐 → AEON Rycom"},
-     {id:"collective", kind:"hotel", label:"入住 Hotel Collective"}
+     {id:"rycom", kind:"stop", label:"約14:00 AEON Rycom"},
+     {id:"collective", kind:"hotel", label:"約16:30 入住 Hotel Collective"}
    ]},
-  {date:"2026-11-29", w:"日", title:"DMM · 真南風 · 回程", cap:"早上 DMM水族館 → 12:00 真南風午餐 → 那霸機場",
+  {date:"2026-11-29", w:"日", title:"DMM · 真南風 · 回程", cap:"09:00 DMM水族館 → 12:00 真南風午餐 → 14:25 機場（16:25 航班）",
    stops:[
-     {id:"dmm", kind:"stop", label:"早上 · DMMかりゆし水族館"},
+     {id:"dmm", kind:"stop", label:"09:00 DMMかりゆし水族館"},
      {id:"mahae", kind:"stop", label:"12:00 午餐 · 真南風 Mahae（已訂）"},
-     {id:"airport", kind:"stop", label:"那霸機場 · 回程香港"}
+     {id:"airport", kind:"stop", label:"14:25 抵達機場（16:25 航班）"}
    ]}
 ];
 
@@ -562,14 +562,14 @@ var DAYS = [
  { date:"2026-11-23", w:"一", title:"抵達那霸 · 國際通", hotel:"collective",
    stops:[
     {t:"15:25", h:"到達沖繩那霸國際機場", cls:"key", maps:[["那霸機場",P.airport]], tags:["✈️ 抵達"]},
-    {h:"前往那霸市區酒店 Hotel Collective", travel:["🚗 約12分鐘車程"], maps:[["Hotel Collective",P.collective]]},
-    {h:"Check in 後自由活動", p:"酒店外便是國際通商店街，應有盡有。", maps:[["國際通 Kokusai-dori",P.kokusai]]},
+    {t:"約16:15", h:"前往那霸市區酒店 Hotel Collective", travel:["🚗 約12分鐘車程"], maps:[["Hotel Collective",P.collective]]},
+    {t:"約16:30", h:"Check in 後自由活動", p:"酒店外便是國際通商店街，應有盡有。", maps:[["國際通 Kokusai-dori",P.kokusai]]},
     {t:"18:30", h:"晚餐 · 碧海庭（Hotel Collective）", p:"酒店內餐廳。可揀會席 course：アカバナー／サンダンカ／デイゴ。", cls:"key", tags:["🍽️ 晚餐"], maps:[["Hotel Collective",P.collective]], menus:[["Menu · アカバナー ¥7,000","menus/hekikaitei-akabana.pdf"],["Menu · サンダンカ ¥9,000","menus/hekikaitei-sandanka.pdf"],["Menu · デイゴ ¥12,000","menus/hekikaitei-deigo.pdf"]]},
-    {h:"可考慮去瀨長島 Senaga Island 看夜景", p:"一望那霸夜景。", cls:"opt", tags:["opt:可選"], maps:[["瀨長島 Senaga Island",P.senaga]]}
+    {t:"約20:30", h:"可考慮去瀨長島 Senaga Island 看夜景", p:"晚餐後可選。一望那霸夜景。", cls:"opt", tags:["opt:可選"], maps:[["瀨長島 Senaga Island",P.senaga]]}
    ]},
  { date:"2026-11-24", w:"二", title:"那霸文化散策 → 讀谷", hotel:"hoshinoya",
    stops:[
-    {t:"早上", h:"自由活動 · 二選一", p:"國際通，或者壺屋やちむん通り（陶器街）。揀一個就得，唔使兩個都去。（壺屋燒物博物館維修閉館，入唔到）", cls:"opt", tags:["opt:可選"], maps:[["國際通",P.kokusai],["壺屋やちむん通り",P.tsuboyaSt]]},
+    {t:"約09:00", h:"自由活動 · 二選一", p:"國際通，或者壺屋やちむん通り（陶器街）。揀一個就得，唔使兩個都去。（壺屋燒物博物館維修閉館，入唔到）", cls:"opt", tags:["opt:可選"], maps:[["國際通",P.kokusai],["壺屋やちむん通り",P.tsuboyaSt]]},
     {t:"11:00", h:"Hotel Collective check out", maps:[["Hotel Collective",P.collective]]},
     {t:"12:00", h:"午餐 · 燕食堂（牧志市場二樓）", p:"第一牧志公設市場 2F。已訂。一樓買海鮮，二樓加工／用餐。", cls:"key", tags:["🍢 午餐","🎫 已訂"], maps:[["燕食堂",P.tsubame]]},
     {t:"13:30", h:"波上宮 Naminoue Shrine", p:"祈福打卡。", travel:["🚗 約10分鐘車程"], maps:[["波上宮",P.naminoue]]},
@@ -579,7 +579,7 @@ var DAYS = [
    ]},
  { date:"2026-11-25", w:"三", title:"婚禮日 💍", hotel:"hoshinoya", wedding:true,
    stops:[
-    {t:"早上", h:"自由活動", p:"可享受酒店設施、酒店餐廳早餐／Bellezza，或者去 BANTA Café／OLU Grill。", maps:[["Hoshinoya 星野",P.hoshinoya]], menus:[["Menu · Bellezza / Dining（星野）","menus/bellezza-dining.pdf"],["Menu · BANTA Café / OLU Grill","menus/banta-olu.pdf"]]},
+    {t:"約09:00", h:"自由活動", p:"可享受酒店設施、酒店餐廳早餐／Bellezza，或者去 BANTA Café／OLU Grill。", maps:[["Hoshinoya 星野",P.hoshinoya]], menus:[["Menu · Bellezza / Dining（星野）","menus/bellezza-dining.pdf"],["Menu · BANTA Café / OLU Grill","menus/banta-olu.pdf"]]},
     {t:"11:30 – 11:50", h:"賓客到達教堂 Lazor Garden Alivila", travel:["🚶 酒店步行到教堂大概10–15分鐘"], cls:"key", maps:[["Lazor Garden Alivila",P.lazor]]},
     {t:"12:00", h:"婚禮儀式", cls:"heart", tags:["💒 Wedding"]},
     {t:"14:00 – 16:00", h:"午餐", cls:"heart"}
@@ -589,17 +589,17 @@ var DAYS = [
    ]},
  { date:"2026-11-26", w:"四", title:"美麗海水族館 · 古宇利島", hotel:"ritz",
    stops:[
-    {h:"美麗海水族館 Churaumi Aquarium", travel:["🚗 約1小時15分鐘車程"], cls:"key", maps:[["美麗海水族館",P.churaumi]]},
-    {h:"午餐 · Ocean Blue Café", p:"可於水族館內最大的水箱旁與海洋生物共進午餐，不過無法預約，最好分開坐。", tags:["🐋 水箱旁用餐"], maps:[["Ocean Blue Café",P.oceanblue]]},
-    {h:"古宇利島（海上大橋）", travel:["🚗 約30分鐘車程"], maps:[["古宇利島",P.kouri],["古宇利大橋",P.kouriBridge]]},
-    {h:"古宇利海洋塔 Kouri Ocean Tower", maps:[["古宇利海洋塔",P.kouriTower]]},
-    {h:"前往位於名護的酒店 · Ritz-Carlton", travel:["🚗 約40分鐘車程"], maps:[["The Ritz-Carlton Okinawa",P.ritz]]},
+    {t:"約09:15", h:"美麗海水族館 Churaumi Aquarium", p:"通常開館 8:30–18:30（入館締切 17:30）。建議由星野約 08:00 出發。", travel:["🚗 約1小時15分鐘車程"], cls:"key", maps:[["美麗海水族館",P.churaumi]]},
+    {t:"約12:00", h:"午餐 · Ocean Blue Café", p:"可於水族館內最大的水箱旁與海洋生物共進午餐，不過無法預約，最好分開坐。時間為建議。", tags:["🐋 水箱旁用餐"], maps:[["Ocean Blue Café",P.oceanblue]]},
+    {t:"約13:30", h:"古宇利島（海上大橋）", travel:["🚗 約30分鐘車程"], maps:[["古宇利島",P.kouri],["古宇利大橋",P.kouriBridge]]},
+    {t:"約14:30", h:"古宇利海洋塔 Kouri Ocean Tower", maps:[["古宇利海洋塔",P.kouriTower]]},
+    {t:"約16:30", h:"前往位於名護的酒店 · Ritz-Carlton", travel:["🚗 約40分鐘車程"], maps:[["The Ritz-Carlton Okinawa",P.ritz]]},
     {t:"18:30", h:"晚餐 · 鐵板燒 Kise（Teppanyaki Kise）", p:"The Ritz-Carlton Okinawa 酒店內（3 樓）。已訂：21 大人 + 1 小朋友。Course：KISE／KEION／AKEMIO。", cls:"key", tags:["🍽️ 晚餐","🎫 已訂"], maps:[["The Ritz-Carlton Okinawa",P.ritz]], menus:[["Menu · 鐵板燒 Kise（KISE／KEION／AKEMIO）","menus/kise-teppanyaki.pdf"],["Menu · Ritz Kids（2–12歲）","menus/ritz-kids.pdf"]]}
    ]},
  { date:"2026-11-27", w:"五", title:"名護 · 部瀨名活動日", hotel:"ritz",
    stops:[
-    {t:"上晝", h:"上晝 · 自己安排", p:"原方案 A。上晝唔係全團訂團，大家自行安排。想去青之洞窟浮潛／坐船（真榮田岬）可以自己報；11 月常吹北風，隨時取消，通常臨出發先決定。坐船團成功率較高；要著全身 wetsuit，帶外套。", cls:"opt", tags:["opt:自己安排"], travel:["🚗 Ritz → 真榮田岬約 30–35 分鐘"], maps:[["青之洞窟（可選）",P.bluecave]]},
-    {t:"午餐", h:"午餐 · Busena Terrace（部瀨名／ザ・ブセナテラス）", p:"The Busena Terrace 一帶午餐。尚未訂位；未指定酒店內某間餐廳名。", tags:["🍢 午餐","尚未訂位"], maps:[["The Busena Terrace",P.busenaTerrace]], travel:["🚗 Ritz → Busena Terrace 約 5 分鐘／步行約 15 分鐘"]},
+    {t:"約09:00", h:"上晝 · 自己安排", p:"原方案 A。上晝唔係全團訂團，大家自行安排。想去青之洞窟浮潛／坐船（真榮田岬）可以自己報；11 月常吹北風，隨時取消，通常臨出發先決定。坐船團成功率較高；要著全身 wetsuit，帶外套。", cls:"opt", tags:["opt:自己安排"], travel:["🚗 Ritz → 真榮田岬約 30–35 分鐘"], maps:[["青之洞窟（可選）",P.bluecave]]},
+    {t:"約12:30", h:"午餐 · Busena Terrace（部瀨名／ザ・ブセナテラス）", p:"建議約 12:30，以便趕 15:10 上船。尚未訂位；未指定酒店內某間餐廳名。", tags:["🍢 午餐","尚未訂位"], maps:[["The Busena Terrace",P.busenaTerrace]], travel:["🚗 Ritz → Busena Terrace 約 5 分鐘／步行約 15 分鐘"]},
     {t:"15:10", h:"下午 · 方案 B · 部瀨名海中公園", p:"玻璃底船 15:10 上船。尚未訂實。海中展望塔 + 玻璃底船。就喺 Busena Terrace 旁邊。11/27（五）照常開；11 月臨時休園唔包括呢日。10 人以上團體要預約（0980-52-3379）；少過 10 人先到先得；只收現金。冬天大風時玻璃底船會停航；展望塔一次最多 24 人。", cls:"key", tags:["尚未訂實"], maps:[["部瀨名海中公園",P.busena]]},
     {t:"18:30", h:"全員集合 · Dining Gusuku（Ritz-Carlton）", p:"酒店內餐廳。已訂：21 大人 + 1 小朋友。Course 約 ¥12,000（Agu 豬／和牛可選）＋ a la carte。", cls:"key", tags:["🍽️ 全團晚餐","🎫 已訂"], maps:[["The Ritz-Carlton Okinawa",P.ritz]], menus:[["Menu · Dining Gusuku","menus/gusuku.pdf"],["Menu · Ritz Kids（2–12歲）","menus/ritz-kids.pdf"]]}
    ],
@@ -608,18 +608,18 @@ var DAYS = [
    ]},
  { date:"2026-11-28", w:"六", title:"萬座毛 · 美國村 · 購物", hotel:"collective",
    stops:[
-    {h:"萬座毛 Cape Manzamo", p:"象鼻石，純打卡。", travel:["🚗 約20分鐘車程"], maps:[["萬座毛",P.manzamo]]},
+    {t:"約10:30", h:"萬座毛 Cape Manzamo", p:"象鼻石，純打卡約 20 分鐘。12:00 午餐前由呢度去美國村約 30 分鐘，宜預早出發。", travel:["🚗 打卡約20分鐘"], maps:[["萬座毛",P.manzamo]]},
     {t:"12:00", h:"NÔMIX（美國村）· 午餐", p:"已訂 12:00：21 大人 + 1 小朋友。北谷美浜シーサイドスクエア A10；現代印度菜。星期六午餐 11:00–15:00（料理 L.O. 14:30）。食完再到 AEON Rycom。今次行程唔包括北谷煙花。", cls:"key", tags:["🍢 午餐","🎫 已訂"], maps:[["NÔMIX",P.nomix]], travel:["🚗 由萬座毛約30分鐘車程"]},
-    {h:"Aeon Mall Okinawa Rycom 購物中心", p:"午餐之後再去購物。之後前往那霸入住，趕 18:30 越前晚餐。", maps:[["Aeon Rycom Mall",P.rycom]], travel:["🚗 由美國村約10分鐘車程"]},
-    {h:"前往那霸市區酒店 · Hotel Collective", travel:["🚗 由 Rycom 約20–25分鐘車程"], maps:[["Hotel Collective",P.collective]]},
+    {t:"約14:00", h:"Aeon Mall Okinawa Rycom 購物中心", p:"午餐之後再去購物。之後前往那霸入住，趕 18:30 越前晚餐。", maps:[["Aeon Rycom Mall",P.rycom]], travel:["🚗 由美國村約10分鐘車程"]},
+    {t:"約16:30", h:"前往那霸市區酒店 · Hotel Collective", travel:["🚗 由 Rycom 約20–25分鐘車程"], maps:[["Hotel Collective",P.collective]]},
     {t:"18:30", h:"晚餐 · 越前 Echizen（おもろまち）", p:"蟹料理專門店。Google 已訂 18:30。地址：那霸市おもろまち4-11-1 おもろシティコートGINOZA 1F。官方網站 echizen.restaurant；店舖電話 098-869-8888。", cls:"key", tags:["🍽️ 晚餐","🎫 已訂"], maps:[["越前 Echizen",P.echizen]]}
    ]},
  { date:"2026-11-29", w:"日", title:"DMM · 真南風 · 回程", hotel:null,
    stops:[
-    {h:"Hotel Collective check out", maps:[["Hotel Collective",P.collective]]},
-    {t:"早上", h:"DMMかりゆし水族館", p:"豐見城豐崎。11/29（日）通常營業 9:00–19:00（官方行事曆）。開館 9:00，12:00 真南風前大約 11:20–11:30 要出發。館旁有商場。", cls:"key", tags:["🐠 水族館"], maps:[["DMM水族館",P.dmm]], travel:["🚗 由 Hotel Collective 約 15–20 分鐘"]},
+    {t:"約08:40", h:"Hotel Collective check out", maps:[["Hotel Collective",P.collective]]},
+    {t:"09:00", h:"DMMかりゆし水族館", p:"豐見城豐崎。11/29（日）通常營業 9:00–19:00（官方行事曆）。開館 9:00，12:00 真南風前大約 11:20–11:30 要出發。館旁有商場。", cls:"key", tags:["🐠 水族館"], maps:[["DMM水族館",P.dmm]], travel:["🚗 由 Hotel Collective 約 15–20 分鐘"]},
     {t:"12:00", h:"午餐 · 真南風 Mahae（那霸）", p:"Hotel Terrace Naha（ホテルテラス那覇）內。已改期至 11/29 12:00。", cls:"key", tags:["🍢 午餐","🎫 已訂"], maps:[["真南風 Mahae",P.mahae]], travel:["🚗 由 DMM 返回那霸"]},
-    {t:"16:25", h:"回程香港", cls:"key", tags:["✈️ 航班 16:25"], maps:[["那霸機場",P.airport]]}
+    {t:"14:25", h:"抵達那霸機場 · 16:25 回程香港", cls:"key", tags:["✈️ 航班 16:25"], maps:[["那霸機場",P.airport]]}
    ],
    tips:[
     {k:"warn", ic:"⏰", b:"回程提提你", html:"航班 16:25，建議約 <b style=\"display:inline\">14:25</b> 前到達機場，並預留額外時間還租車。12:00 真南風之後唔好拖太耐。"}
@@ -803,14 +803,14 @@ var DINING = [
   {date:"2026-11-25", w:"三", meal:"午餐", time:"14:00–16:00", name:"婚禮午宴", loc:"Lazor Garden Alivila",
    status:"booked", statusLabel:"🎫 已訂", note:"婚禮日午餐（場地內）。",
    maps:[["Lazor Garden Alivila",P.lazor]], menus:[]},
-  {date:"2026-11-26", w:"四", meal:"午餐", time:"", name:"Ocean Blue Café", loc:"美麗海水族館內",
+  {date:"2026-11-26", w:"四", meal:"午餐", time:"約12:00", name:"Ocean Blue Café", loc:"美麗海水族館內",
    status:"self", statusLabel:"自理", note:"無法預約，最好分開坐。",
    maps:[["Ocean Blue Café",P.oceanblue]], menus:[]},
   {date:"2026-11-26", w:"四", meal:"晚餐", time:"18:30", name:"鐵板燒 Kise", loc:"The Ritz-Carlton Okinawa（3 樓）",
    status:"booked", statusLabel:"🎫 已訂", note:"已訂：21 大人 + 1 小朋友。Course：KISE／KEION／AKEMIO。",
    maps:[["The Ritz-Carlton Okinawa",P.ritz]],
    menus:[["Menu · 鐵板燒 Kise（KISE／KEION／AKEMIO）","menus/kise-teppanyaki.pdf"],["Menu · Ritz Kids（2–12歲）","menus/ritz-kids.pdf"]]},
-  {date:"2026-11-27", w:"五", meal:"午餐", time:"", name:"Busena Terrace", loc:"部瀨名／ザ・ブセナテラス",
+  {date:"2026-11-27", w:"五", meal:"午餐", time:"約12:30", name:"Busena Terrace", loc:"部瀨名／ザ・ブセナテラス",
    status:"plan", statusLabel:"尚未訂位", note:"尚未訂位；未指定酒店內特定餐廳。",
    maps:[["The Busena Terrace",P.busenaTerrace]], menus:[]},
   {date:"2026-11-27", w:"五", meal:"晚餐", time:"18:30", name:"Dining Gusuku", loc:"The Ritz-Carlton Okinawa",
