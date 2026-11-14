@@ -525,10 +525,10 @@ var MAP_DAYS = [
      {id:"lazor", kind:"stop", label:"11:30 到達 · 12:00 婚禮 · 14:00 午宴"},
      {id:"hoshinoya", kind:"hotel", label:"入住 Hoshinoya 星野"}
    ]},
-  {date:"2026-11-26", w:"四", title:"古宇利 · 美麗海", cap:"約09:30 古宇利大橋 → 約10:15 海洋塔 → 約12:00 Ocean Blue 午餐 → 約14:00 美麗海 → 18:30 鐵板燒 Kise",
+  {date:"2026-11-26", w:"四", title:"古宇利 · 美麗海", cap:"約09:30 古宇利大橋 → 約10:15 海洋塔 → 約12:00 Island Blue 午餐 → 約14:00 美麗海 → 18:30 鐵板燒 Kise",
    stops:[
      {id:"kouriBridge", kind:"stop", label:"約09:30 古宇利大橋"},
-     {id:"kouriTower", kind:"stop", label:"約10:15 古宇利海洋塔（約12:00 午餐）"},
+     {id:"kouriTower", kind:"stop", label:"約10:15 古宇利海洋塔（約12:00 Island Blue）"},
      {id:"churaumi", kind:"stop", label:"約14:00 美麗海水族館"},
      {id:"ritz", kind:"hotel", label:"約17:10 入住 Ritz-Carlton"},
      {id:"ritz", kind:"stop", label:"18:30 鐵板燒 Kise（酒店內）"}
@@ -590,8 +590,8 @@ var DAYS = [
  { date:"2026-11-26", w:"四", title:"古宇利島 · 美麗海水族館", hotel:"ritz",
    stops:[
     {t:"約09:30", h:"古宇利島（海上大橋）", p:"建議由星野約 08:00 出發。可先喺大橋南端觀景台打卡；橋上唔好臨停。", travel:["🚗 由星野約1小時25分鐘車程"], maps:[["古宇利島",P.kouri],["古宇利大橋",P.kouriBridge]]},
-    {t:"約10:15", h:"古宇利海洋塔 Kouri Ocean Tower", p:"通常 10:00–18:00（入園締切 17:30）。無人車、貝殼館、展望台大約 1–1.5 小時，之後喺塔內食午餐。", maps:[["古宇利海洋塔",P.kouriTower]]},
-    {t:"約12:00", h:"午餐 · Ocean Blue（古宇利海洋塔）", p:"海洋塔 1 樓餐廳，可望古宇利大橋。11:00–18:00（料理 L.O. 17:00）。同場仲有團體餐廳 Island Blue（11:00–15:00，L.O. 14:30），約 20 人建議先訂 Island Blue。時間為建議。", tags:["🍢 午餐","自理"], maps:[["Ocean Blue（古宇利海洋塔）",P.kouriTower]]},
+    {t:"約10:15", h:"古宇利海洋塔 Kouri Ocean Tower", p:"通常 10:00–18:00（入園締切 17:30）。無人車、貝殼館、展望台大約 1–1.5 小時，之後喺塔內 Island Blue 食午餐。", maps:[["古宇利海洋塔",P.kouriTower]]},
+    {t:"約12:00", h:"午餐 · Island Blue（古宇利海洋塔）", p:"海洋塔團體餐廳，全席海景。11:00–15:00（L.O. 14:30）。尚未訂位。官方團體訂位主要經旅行社系統；個人客人需向餐廳查詢／致電 0980-56-1616（平日 10:00–17:00）。時間為建議。", tags:["🍢 午餐","尚未訂位"], maps:[["Island Blue（古宇利海洋塔）",P.kouriTower]]},
     {t:"約14:00", h:"美麗海水族館 Churaumi Aquarium", p:"通常開館 8:30–18:30（入館締切 17:30）。由海洋塔約 25 分鐘。館內大約 1.5–2 小時，呢個時間趕得切 15:00 嘅鯨鯊餵食。", travel:["🚗 由古宇利海洋塔約25分鐘車程"], cls:"key", maps:[["美麗海水族館",P.churaumi]]},
     {t:"約16:30", h:"前往位於名護的酒店 · Ritz-Carlton", travel:["🚗 約40分鐘車程"], maps:[["The Ritz-Carlton Okinawa",P.ritz]]},
     {t:"18:30", h:"晚餐 · 鐵板燒 Kise（Teppanyaki Kise）", p:"The Ritz-Carlton Okinawa 酒店內（3 樓）。已訂：21 大人 + 1 小朋友。Course：KISE／KEION／AKEMIO。", cls:"key", tags:["🍽️ 晚餐","🎫 已訂"], maps:[["The Ritz-Carlton Okinawa",P.ritz]], menus:[["Menu · 鐵板燒 Kise（KISE／KEION／AKEMIO）","menus/kise-teppanyaki.pdf"],["Menu · Ritz Kids（2–12歲）","menus/ritz-kids.pdf"]]}
@@ -804,9 +804,9 @@ var DINING = [
   {date:"2026-11-25", w:"三", meal:"午餐", time:"14:00–16:00", name:"婚禮午宴", loc:"Lazor Garden Alivila",
    status:"booked", statusLabel:"🎫 已訂", note:"婚禮日午餐（場地內）。",
    maps:[["Lazor Garden Alivila",P.lazor]], menus:[]},
-  {date:"2026-11-26", w:"四", meal:"午餐", time:"約12:00", name:"Ocean Blue（古宇利海洋塔）", loc:"古宇利海洋塔 1 樓",
-   status:"self", statusLabel:"自理", note:"尚未訂位。11:00–18:00（料理 L.O. 17:00）。同場團體餐廳 Island Blue 11:00–15:00（L.O. 14:30），約 20 人建議先訂 Island Blue。",
-   maps:[["Ocean Blue（古宇利海洋塔）",P.kouriTower]], menus:[]},
+  {date:"2026-11-26", w:"四", meal:"午餐", time:"約12:00", name:"Island Blue（古宇利海洋塔）", loc:"古宇利海洋塔",
+   status:"plan", statusLabel:"尚未訂位", note:"尚未訂位。11:00–15:00（L.O. 14:30）。全席海景；團體套餐。官方電話 0980-56-1616（平日 10:00–17:00）。",
+   maps:[["Island Blue（古宇利海洋塔）",P.kouriTower]], menus:[]},
   {date:"2026-11-26", w:"四", meal:"晚餐", time:"18:30", name:"鐵板燒 Kise", loc:"The Ritz-Carlton Okinawa（3 樓）",
    status:"booked", statusLabel:"🎫 已訂", note:"已訂：21 大人 + 1 小朋友。Course：KISE／KEION／AKEMIO。",
    maps:[["The Ritz-Carlton Okinawa",P.ritz]],
