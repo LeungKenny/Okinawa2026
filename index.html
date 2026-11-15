@@ -240,6 +240,16 @@ button{font:inherit;color:inherit}
 .dining-summary .stat{font-size:13px;padding:6px 12px;border-radius:12px;background:#fff;border:1px solid var(--line);color:var(--muted)}
 .dining-summary .stat b{color:var(--ocean-700);font-family:var(--font-num)}
 
+
+/* ---------- Entry / tax refund ---------- */
+.info-card p{margin:8px 0;font-size:14.5px;line-height:1.65}
+.info-card ul{margin:6px 0 2px;padding-left:1.2em;font-size:14.5px;line-height:1.65}
+.info-card li{margin:3px 0}
+.info-card .sub{margin-top:4px}
+.info-links{display:flex;flex-wrap:wrap;gap:8px 14px;margin-top:10px}
+.info-link{display:inline-flex;align-items:center;gap:4px;font-size:13px;font-weight:500;text-decoration:none;color:var(--ocean-500)}
+.info-src{font-size:13px;color:var(--muted);margin:10px 2px 0;line-height:1.55}
+.info-src a{color:var(--ocean-500);text-decoration:none;font-weight:500}
 /* ---------- Notes / checklist ---------- */
 .card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:14px 16px;margin:12px 0}
 .progress{height:8px;background:var(--sand-100);border-radius:999px;overflow:hidden;margin:8px 0 4px}
@@ -402,6 +412,7 @@ footer{text-align:center;font-size:12px;color:#9ab0b8;padding:10px 16px 36px}
         <button class="tab" role="tab" id="tab-hotels" aria-controls="panel-hotels" aria-selected="false" data-tab="hotels" type="button">🏨 酒店</button>
         <button class="tab" role="tab" id="tab-dining" aria-controls="panel-dining" aria-selected="false" data-tab="dining" type="button">🍽️ 餐廳</button>
         <button class="tab" role="tab" id="tab-weather" aria-controls="panel-weather" aria-selected="false" data-tab="weather" type="button">🌤️ 天氣</button>
+        <button class="tab" role="tab" id="tab-entry" aria-controls="panel-entry" aria-selected="false" data-tab="entry" type="button">🛂 入境退稅</button>
         <button class="tab" role="tab" id="tab-notes" aria-controls="panel-notes" aria-selected="false" data-tab="notes" type="button">✅ 清單</button>
       </div>
       <div class="day-strip" id="dayStrip" role="group" aria-label="跳到某一日"></div>
@@ -413,6 +424,7 @@ footer{text-align:center;font-size:12px;color:#9ab0b8;padding:10px 16px 36px}
   <div class="panel wrap" id="panel-hotels" role="tabpanel" aria-labelledby="tab-hotels" hidden></div>
   <div class="panel wrap" id="panel-dining" role="tabpanel" aria-labelledby="tab-dining" hidden></div>
   <div class="panel wrap" id="panel-weather" role="tabpanel" aria-labelledby="tab-weather" hidden></div>
+  <div class="panel wrap" id="panel-entry" role="tabpanel" aria-labelledby="tab-entry" hidden></div>
   <div class="panel wrap" id="panel-notes" role="tabpanel" aria-labelledby="tab-notes" hidden></div>
 </main>
 
@@ -639,7 +651,8 @@ var CHECKLIST_DEFAULT = [
   {id:"tsubame", text:"11/24 午餐 燕食堂（牧志市場二樓 · 已訂）", done:true},
   {id:"bellezza", text:"11/24 Bellezza 晚餐（Hoshinoya · 已訂 20 人）", done:true},
   {id:"busenaBoat", text:"11/27 15:10 部瀨名玻璃底船（已訂實：20 位大人）", done:true},
-  {id:"plan1127", text:"11/27 午餐 Busena Terrace 訂位"}
+  {id:"plan1127", text:"11/27 午餐 Busena Terrace 訂位"},
+  {id:"vjw", text:"出發前填好 Visit Japan Web（入境＋海關申報）", done:false}
 ];
 
 /* ================= HELPERS ================= */
@@ -1441,7 +1454,109 @@ function loadWeather(){
 }
 
 /* ================= TABS & NAV ================= */
-var TABS=["itinerary","map","hotels","dining","weather","notes"];
+
+/* ================= RENDER: ENTRY / TAX REFUND ================= */
+function renderEntry(){
+  var h='';
+  h+='<div class="section-h"><h2>入境</h2><span>11/23 15:25 那霸</span></div>';
+  h+='<div class="card info-card">';
+  h+='<h3>Visit Japan Web</h3>';
+  h+='<p>日本政府免費網站，用嚟預先辦理<strong>入境審查</strong>同<strong>海關申報</strong>。填好之後喺機場出示二維碼，手續會順暢啲。出入國在留管理廳同日本海關都<strong>建議使用，但唔係強制</strong>；唔用都可以喺機場填紙本「外國人入境記錄」同「攜帶品・別送品申報書」。</p>';
+  h+='<p class="sub">出發前用電郵開戶，再登記以下資料：</p>';
+  h+='<ul>';
+  h+='<li>護照</li>';
+  h+='<li>航班（航空公司、航班號、出發地、到達日）</li>';
+  h+='<li>喺日本第一晚住宿（酒店名稱、地址、電話）</li>';
+  h+='<li>入境審查同海關申報內容</li>';
+  h+='</ul>';
+  h+='<ul>';
+  h+='<li>電腦都可以填，但機場要用手提電話或平板出示二維碼。</li>';
+  h+='<li>同行每一位都要各自有二維碼。官方「代理輸入」功能已於 2025年6月終止。</li>';
+  h+='<li>官方提醒：停留日數好多人填錯。短期觀光請喺日數欄填 <strong>90 日或以下</strong>。</li>';
+  h+='<li>二維碼可以截圖備用；如果之後改過資料，要重新產生二維碼。</li>';
+  h+='<li>請只用官方網站，唔好用收費或來路不明嘅 App。</li>';
+  h+='</ul>';
+  h+='<div class="info-links">';
+  h+='<a class="info-link" target="_blank" rel="noopener" href="https://www.vjw.digital.go.jp/">開始使用 Visit Japan Web</a>';
+  h+='<a class="info-link" target="_blank" rel="noopener" href="https://services.digital.go.jp/zh-cmn-hant/visit-japan-web/">官方說明（繁中）</a>';
+  h+='<a class="info-link" target="_blank" rel="noopener" href="https://www.moj.go.jp/isa/immigration/procedures/translation.html">入境記錄說明（入管廳）</a>';
+  h+='<a class="info-link" target="_blank" rel="noopener" href="https://www.customs.go.jp/kaigairyoko/shinkokusho.htm">海關申報說明</a>';
+  h+='</div></div>';
+
+  h+='<div class="card info-card">';
+  h+='<h3>簽證（香港特區護照）</h3>';
+  h+='<p>日本外務省列出，持<strong>香港特區護照</strong>，以觀光、商務、探親等短期逗留入境，一般<strong>免簽證，最長 90 日</strong>。呢次行程日數遠低於此。持有香港居留權嘅 BNO 護照亦包括在內。資料以官方名單為準。</p>';
+  h+='<div class="info-links">';
+  h+='<a class="info-link" target="_blank" rel="noopener" href="https://www.mofa.go.jp/j_info/visit/visa/short/novisa.html">外務省免簽名單</a>';
+  h+='</div></div>';
+
+  h+='<div class="card info-card">';
+  h+='<h3>那霸機場入境流程</h3>';
+  h+='<p>按那霸機場官方國際線到達步驟：</p>';
+  h+='<ul>';
+  h+='<li><strong>檢疫</strong>：先經過檢疫櫃檯；身體不適要向職員報備。</li>';
+  h+='<li><strong>入境審查</strong>：出示護照；有 Visit Japan Web 就一併出示二維碼。即使預先申報，仍須經入境審查官審查，並取得入境印。</li>';
+  h+='<li><strong>提取行李</strong>：喺行李轉盤取行李。冇託運行李就直接去海關。</li>';
+  h+='<li><strong>海關</strong>：所有人都要提交「攜帶品・別送品申報書」。用 Visit Japan Web 嘅話，可喺等行李期間用電子申報終端，再經電子申報閘離開（需要 IC 護照）。海關仍可能抽查行李。</li>';
+  h+='<li>之後就到到達大堂。</li>';
+  h+='</ul>';
+  h+='<div class="info-links">';
+  h+='<a class="info-link" target="_blank" rel="noopener" href="https://www.naha-airport.co.jp/flight/route/international_arrival/">那霸機場到達步驟</a>';
+  h+='<a class="info-link" target="_blank" rel="noopener" href="https://www.customs.go.jp/english/passenger/egate.htm">海關電子申報閘（那霸適用）</a>';
+  h+='</div></div>';
+
+  h+='<div class="section-h" style="margin-top:22px"><h2>退稅</h2><span>2026年11月1日起新制</span></div>';
+  h+='<div class="tip warn" style="margin:8px 2px"><div class="ic">⚠️</div><div><b>呢次行程已經用新制</b>由 2026年11月1日起，日本消費稅免稅改為「退稅方式」。11/23–11/29 喺免税店買嘅嘢，店舖會收<strong>含稅價</strong>，<strong>唔再係櫃檯即時扣稅</strong>。要喺出境時經海關確認貨物會帶離日本之後，先由店舖退回消費稅。</div></div>';
+
+  h+='<div class="card info-card">';
+  h+='<h3>購物時點樣先符合退稅</h3>';
+  h+='<ul>';
+  h+='<li>同一間店、同一日，<strong>稅前合計滿 5,000 日圓</strong>先至符合（一般物品同消耗品已合併計算）。</li>';
+  h+='<li>購物時按店舖指示出示護照等證件，並按指示登記退稅方法。</li>';
+  h+='<li>貨物要帶離日本。金、白金地金等，以及本身唔收消費稅嘅物品除外。</li>';
+  h+='<li>數量只限你出境時可以親自全部帶走。</li>';
+  h+='<li>消耗品（食物、飲品、化妝品等）唔使再封袋，但喺日本境內食咗或用咗，就唔可以退稅。</li>';
+  h+='<li>海關確認係按<strong>一張收據</strong>計算：同一張收據入面缺一件，整張都退唔到。請保管收據同店舖提供嘅購買資料，並帶齊該次購買嘅全部物品。</li>';
+  h+='<li>須於<strong>購買日起 90 日內</strong>出境並完成海關確認（呢團日程冇問題）。</li>';
+  h+='</ul>';
+  h+='<div class="info-links">';
+  h+='<a class="info-link" target="_blank" rel="noopener" href="https://www.mlit.go.jp/kankocho/tax-free/page01_000001_00028.html">觀光廳退稅說明（英文）</a>';
+  h+='<a class="info-link" target="_blank" rel="noopener" href="https://www.mlit.go.jp/kankocho/tax-free/content/002029078.pdf">觀光廳旅客單張（繁中 PDF）</a>';
+  h+='<a class="info-link" target="_blank" rel="noopener" href="https://www.customs.go.jp/kaigairyoko/taxrefund/refund_hantai.pdf">海關退稅手續指南（繁中 PDF）</a>';
+  h+='<a class="info-link" target="_blank" rel="noopener" href="https://www.nta.go.jp/publication/pamph/shohi/menzei/201805/format/002.htm">國稅廳リファンド方式</a>';
+  h+='</div></div>';
+
+  h+='<div class="card info-card">';
+  h+='<h3>11/29 喺那霸機場點退稅</h3>';
+  h+='<p><strong>一定要喺辦理登機、託運行李之前</strong>完成海關確認。託運之後唔可以為咗退稅拎返行李。未完成確認就退唔到稅。官方亦提醒：如果因為時間唔夠而中途放棄檢查，會當未完成手續，航空公司同海關都唔會賠償。</p>';
+  h+='<p>你哋航班 <strong>16:25</strong>，行程建議約 <strong>14:25</strong> 前到機場。有退稅嘅話，還完租車入到大堂，請<strong>先做海關確認</strong>，再 check-in 同託運行李。22 人一齊走，要再預留時間。</p>';
+  h+='<p>那霸機場官方流程：</p>';
+  h+='<ul>';
+  h+='<li>帶齊已買嘅免稅品、護照，同店舖提供嘅購買資料。</li>';
+  h+='<li>喺<strong>國際線 3 樓報到大廳</strong>，用海關 KIOSK，或用 Visit Japan Web（國際線出發大廳專用 Wi-Fi 範圍、安檢前）辦理。Visit Japan Web 出境退稅手續只適用短期滯在等資格，日本人唔可以用；搞唔定則改用 KIOSK。</li>';
+  h+='<li>畫面綠色：無需檢查，海關確認完成。畫面紅色：要去海關檢查處出示貨物。</li>';
+  h+='<li>完成後先至辦理航空公司報到同託運行李，再去安檢同出境審查。</li>';
+  h+='<li>之後按購物店指示領取退稅。退稅方法（信用卡、現金等）同會唔會收手續費，官方叫你問購物店，本頁唔臆測收費。</li>';
+  h+='</ul>';
+  h+='<p>那霸機場另有 <strong>Self Tax Refund 現金退稅機</strong>，喺<strong>國際線 2 樓出境後區域</strong>（過咗安檢／出境審查之後）。唔係所有免税店都適用呢部機，以購物店指示為準。</p>';
+  h+='<p class="sub">現金退稅機服務時間，官方頁面有出入：<a class="info-link" target="_blank" rel="noopener" href="https://www.naha-airport.co.jp/news/22570/">日文頁</a>同<a class="info-link" target="_blank" rel="noopener" href="https://www.naha-airport.co.jp/en/news/22577/">英文頁</a>寫 <strong>6:45–21:30</strong>，<a class="info-link" target="_blank" rel="noopener" href="https://www.naha-airport.co.jp/zh-hant/news/22579/">繁中頁</a>寫 <strong>6:00–21:00</strong>，兩邊都註明或會因航班調整。出發當日以現場為準。</p>';
+  h+='<div class="info-links">';
+  h+='<a class="info-link" target="_blank" rel="noopener" href="https://www.naha-airport.co.jp/zh-hant/news/22579/">那霸機場退稅說明（繁中）</a>';
+  h+='<a class="info-link" target="_blank" rel="noopener" href="https://www.customs.go.jp/kaigairyoko/taxrefund/map.htm">海關退稅機／檢查處地圖</a>';
+  h+='<a class="info-link" target="_blank" rel="noopener" href="https://www.naha-airport.co.jp/flight/route/international_departure/">那霸機場出發步驟</a>';
+  h+='</div></div>';
+
+  h+='<div class="card info-card">';
+  h+='<h3>同機場免稅店唔同</h3>';
+  h+='<p>上面講嘅係喺日本市內／免税店買嘢嘅<strong>消費稅退稅</strong>。過咗安檢、出境審查之後，喺機場禁區店舖買嘅嘢，係另一套機場免稅購物，唔好同上面嘅海關退稅手續撈亂。跟店舖標示即可。</p>';
+  h+='</div>';
+
+  h+='<p class="info-src">資料以官方最新公布為準：<a target="_blank" rel="noopener" href="https://www.vjw.digital.go.jp/">Visit Japan Web</a> · <a target="_blank" rel="noopener" href="https://www.mofa.go.jp/j_info/visit/visa/short/novisa.html">外務省</a> · <a target="_blank" rel="noopener" href="https://www.mlit.go.jp/kankocho/tax-free/page01_000001_00028.html">觀光廳</a> · <a target="_blank" rel="noopener" href="https://www.nta.go.jp/publication/pamph/shohi/menzei/201805/format/002.htm">國稅廳</a> · <a target="_blank" rel="noopener" href="https://www.customs.go.jp/kaigairyoko/taxrefund/refund_hantai.pdf">海關</a> · <a target="_blank" rel="noopener" href="https://www.naha-airport.co.jp/zh-hant/news/22579/">那霸機場</a></p>';
+
+  $("#panel-entry").innerHTML=h;
+}
+
+var TABS=["itinerary","map","hotels","dining","weather","entry","notes"];
 function showTab(name,noScroll){
   if(TABS.indexOf(name)<0) name="itinerary";
   TABS.forEach(function(t){
@@ -1492,7 +1607,7 @@ $("#shareBtn").addEventListener("click",function(){
 });
 
 /* ================= INIT ================= */
-renderItinerary(); renderMap(); renderHotels(); renderDining(); renderNotes(); renderWeather({loading:true}); loadWeather(); renderStatus();
+renderItinerary(); renderMap(); renderHotels(); renderDining(); renderEntry(); renderNotes(); renderWeather({loading:true}); loadWeather(); renderStatus();
 var hash=location.hash.replace("#","");
 if(TABS.indexOf(hash)>=0) showTab(hash,true);
 else if(hash.indexOf("day-")===0) setTimeout(function(){scrollToDay(hash);},60);
