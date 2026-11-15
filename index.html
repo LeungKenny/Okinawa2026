@@ -545,10 +545,10 @@ var MAP_DAYS = [
      {id:"ritz", kind:"hotel", label:"約17:10 入住 Ritz-Carlton"},
      {id:"ritz", kind:"stop", label:"18:30 鐵板燒 Kise（酒店內）"}
    ]},
-  {date:"2026-11-27", w:"五", title:"名護 · 部瀨名", cap:"約09:00 自己安排 → 約12:30 Busena Terrace 午餐（未訂）→ 15:10 部瀨名玻璃底船（已訂）→ 18:30 Gusuku",
+  {date:"2026-11-27", w:"五", title:"名護 · 部瀨名", cap:"約09:00 自己安排 → 12:30 La Tida 午餐（已訂）→ 15:10 部瀨名玻璃底船（已訂）→ 18:30 Gusuku",
    stops:[
      {id:"bluecave", kind:"opt", label:"約09:00 上晝 · 自己安排（可選青之洞窟）"},
-     {id:"busenaTerrace", kind:"stop", label:"約12:30 午餐 · Busena Terrace（未訂）"},
+     {id:"busenaTerrace", kind:"stop", label:"12:30 午餐 · La Tida（Busena Terrace · 已訂）"},
      {id:"busena", kind:"stop", label:"15:10 部瀨名玻璃底船（已訂）"},
      {id:"ritz", kind:"stop", label:"18:30 Dining Gusuku（酒店內）"},
      {id:"ritz", kind:"hotel", label:"入住 Ritz-Carlton"}
@@ -611,7 +611,7 @@ var DAYS = [
  { date:"2026-11-27", w:"五", title:"名護 · 部瀨名活動日", hotel:"ritz",
    stops:[
     {t:"約09:00", h:"上晝 · 自己安排", p:"原方案 A。上晝唔係全團訂團，大家自行安排。想去青之洞窟浮潛／坐船（真榮田岬）可以自己報；11 月常吹北風，隨時取消，通常臨出發先決定。坐船團成功率較高；要著全身 wetsuit，帶外套。", cls:"opt", tags:["opt:自己安排"], travel:["🚗 Ritz → 真榮田岬約 30–35 分鐘"], maps:[["青之洞窟（可選）",P.bluecave]]},
-    {t:"約12:30", h:"午餐 · Busena Terrace（部瀨名／ザ・ブセナテラス）", p:"建議約 12:30，以便趕 15:10 上船。尚未訂位；未指定酒店內某間餐廳名。", tags:["🍢 午餐","尚未訂位"], maps:[["The Busena Terrace",P.busenaTerrace]], travel:["🚗 Ritz → Busena Terrace 約 5 分鐘／步行約 15 分鐘"]},
+    {t:"12:30", h:"午餐 · La Tida（ザ・ブセナテラス）", p:"カフェテラス「ラ・ティーダ」，喺 The Busena Terrace 北塔 2 樓，唔係 Ritz 裡面。Ritz-Carlton Guest Relations 已代訂 12:30，21 人。取消收費 100%。午餐自助 12:00–15:00，之後趕得切 15:10 上船。", tags:["🍢 午餐","🎫 已訂"], maps:[["La Tida（The Busena Terrace）",P.busenaTerrace]], travel:["🚗 Ritz → Busena Terrace 約 5 分鐘／步行約 15 分鐘"]},
     {t:"15:10", h:"下午 · 部瀨名海中公園", p:"玻璃底船 15:10 上船，已訂實（20 位大人；公園已回覆確認）。海中展望塔 + 玻璃底船。就喺 Busena Terrace 旁邊。11/27（五）照常開。現場只收現金。冬天大風時玻璃底船會停航；展望塔一次最多 24 人。", cls:"key", tags:["🎫 已訂"], maps:[["部瀨名海中公園",P.busena]]},
     {t:"18:30", h:"全員集合 · Dining Gusuku（Ritz-Carlton）", p:"酒店內餐廳。已訂：21 大人 + 1 小朋友。Course 約 ¥12,000（Agu 豬／和牛可選）＋ a la carte。", cls:"key", tags:["🍽️ 全團晚餐","🎫 已訂"], maps:[["The Ritz-Carlton Okinawa",P.ritz]], menus:[["Menu · Dining Gusuku","menus/gusuku.pdf"],["Menu · Ritz Kids（2–12歲）","menus/ritz-kids.pdf"]]}
    ],
@@ -651,7 +651,7 @@ var CHECKLIST_DEFAULT = [
   {id:"tsubame", text:"11/24 午餐 燕食堂（牧志市場二樓 · 已訂）", done:true},
   {id:"bellezza", text:"11/24 Bellezza 晚餐（Hoshinoya · 已訂 20 人）", done:true},
   {id:"busenaBoat", text:"11/27 15:10 部瀨名玻璃底船（已訂實：20 位大人）", done:true},
-  {id:"plan1127", text:"11/27 午餐 Busena Terrace 訂位"},
+  {id:"plan1127", text:"11/27 12:30 午餐 La Tida（Busena Terrace 北塔 2 樓 · 已訂 21 人）", done:true},
   {id:"vjw", text:"出發前填好 Visit Japan Web（入境＋海關申報）", done:false}
 ];
 
@@ -824,9 +824,9 @@ var DINING = [
    status:"booked", statusLabel:"🎫 已訂", note:"已訂：21 大人 + 1 小朋友。Course：KISE／KEION／AKEMIO。",
    maps:[["The Ritz-Carlton Okinawa",P.ritz]],
    menus:[["Menu · 鐵板燒 Kise（KISE／KEION／AKEMIO）","menus/kise-teppanyaki.pdf"],["Menu · Ritz Kids（2–12歲）","menus/ritz-kids.pdf"]]},
-  {date:"2026-11-27", w:"五", meal:"午餐", time:"約12:30", name:"Busena Terrace", loc:"部瀨名／ザ・ブセナテラス",
-   status:"plan", statusLabel:"尚未訂位", note:"尚未訂位；未指定酒店內特定餐廳。",
-   maps:[["The Busena Terrace",P.busenaTerrace]], menus:[]},
+  {date:"2026-11-27", w:"五", meal:"午餐", time:"12:30", name:"La Tida（ラ・ティーダ）", loc:"The Busena Terrace 北塔 2 樓",
+   status:"booked", statusLabel:"🎫 已訂", note:"Ritz-Carlton Guest Relations 已代訂 12:30，21 人。喺部瀨名 The Busena Terrace 北塔 2 樓，唔係 Ritz 裡面。取消收費 100%。午餐自助 12:00–15:00。",
+   maps:[["La Tida（The Busena Terrace）",P.busenaTerrace]], menus:[]},
   {date:"2026-11-27", w:"五", meal:"晚餐", time:"18:30", name:"Dining Gusuku", loc:"The Ritz-Carlton Okinawa",
    status:"booked", statusLabel:"🎫 已訂", note:"已訂：21 大人 + 1 小朋友。Course 約 ¥12,000（Agu 豬／和牛可選）＋ a la carte。",
    maps:[["The Ritz-Carlton Okinawa",P.ritz]],
