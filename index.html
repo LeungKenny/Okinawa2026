@@ -512,12 +512,12 @@ var PLACES = {
 
 /* Day routes for map tab: stops in visit order. kind: stop|hotel|opt */
 var MAP_DAYS = [
-  {date:"2026-11-23", w:"一", title:"抵達那霸", cap:"15:25 機場 → 約16:15 Hotel Collective → 18:30 碧海庭",
+  {date:"2026-11-23", w:"一", title:"抵達那霸", cap:"15:25 機場 → 約16:15 Hotel Collective → 18:30 碧海庭（已訂）",
    stops:[
      {id:"airport", kind:"stop", label:"15:25 到達那霸機場"},
      {id:"collective", kind:"hotel", label:"約16:15 入住 Hotel Collective"},
      {id:"kokusai", kind:"stop", label:"約16:30 國際通（自由活動）"},
-     {id:"collective", kind:"stop", label:"18:30 碧海庭（酒店內）"},
+     {id:"collective", kind:"stop", label:"18:30 碧海庭（酒店內 · 已訂）"},
      {id:"senaga", kind:"opt", label:"約20:30 可選：瀨長島夜景"}
    ]},
   {date:"2026-11-24", w:"二", title:"那霸文化散策 → 讀谷", cap:"那霸 → 中部 Hoshinoya",
@@ -577,7 +577,7 @@ var DAYS = [
     {t:"15:25", h:"到達沖繩那霸國際機場", cls:"key", maps:[["那霸機場",P.airport]], tags:["✈️ 抵達"]},
     {t:"約16:15", h:"前往那霸市區酒店 Hotel Collective", travel:["🚗 約12分鐘車程"], maps:[["Hotel Collective",P.collective]]},
     {t:"約16:30", h:"Check in 後自由活動", p:"酒店外便是國際通商店街，應有盡有。", maps:[["國際通 Kokusai-dori",P.kokusai]]},
-    {t:"18:30", h:"晚餐 · 碧海庭（Hotel Collective）", p:"酒店內餐廳。可揀會席 course：アカバナー／サンダンカ／デイゴ。", cls:"key", tags:["🍽️ 晚餐"], maps:[["Hotel Collective",P.collective]], menus:[["Menu · アカバナー ¥7,000","menus/hekikaitei-akabana.pdf"],["Menu · サンダンカ ¥9,000","menus/hekikaitei-sandanka.pdf"],["Menu · デイゴ ¥12,000","menus/hekikaitei-deigo.pdf"]]},
+    {t:"18:30", h:"晚餐 · 碧海庭（Hotel Collective）", p:"酒店內餐廳。可揀會席 course：アカバナー／サンダンカ／デイゴ。已訂。", cls:"key", tags:["🍽️ 晚餐","🎫 已訂"], maps:[["Hotel Collective",P.collective]], menus:[["Menu · アカバナー ¥7,000","menus/hekikaitei-akabana.pdf"],["Menu · サンダンカ ¥9,000","menus/hekikaitei-sandanka.pdf"],["Menu · デイゴ ¥12,000","menus/hekikaitei-deigo.pdf"]]},
     {t:"約20:30", h:"可考慮去瀨長島 Senaga Island 看夜景", p:"晚餐後可選。一望那霸夜景。", cls:"opt", tags:["opt:可選"], maps:[["瀨長島 Senaga Island",P.senaga]]}
    ]},
  { date:"2026-11-24", w:"二", title:"那霸文化散策 → 讀谷", hotel:"hoshinoya",
@@ -643,6 +643,7 @@ var DAYS = [
 var CHECKLIST_DEFAULT = [
   {id:"shuri", text:"首里城正殿門票（已買）", done:true},
   {id:"fireworks", text:"11/28 北谷煙花（行程唔包括）", done:true},
+  {id:"hekikaitei", text:"11/23 18:30 晚餐 碧海庭（Hotel Collective · 已訂）", done:true},
   {id:"mahae", text:"11/29 12:00 午餐 真南風 Mahae（那霸 · 已訂）", done:true},
   {id:"nomix", text:"11/28 12:00 午餐 NÔMIX（美國村 · 已訂：21 大人 + 1 小朋友）", done:true},
   {id:"echizen", text:"11/28 18:30 晚餐 越前（おもろまち · Google 已訂）", done:true},
@@ -803,7 +804,7 @@ function renderHotels(){
 /* ================= DINING ================= */
 var DINING = [
   {date:"2026-11-23", w:"一", meal:"晚餐", time:"18:30", name:"碧海庭", loc:"Hotel Collective（那霸）",
-   status:"plan", statusLabel:"計劃中", note:"酒店內會席。Course：アカバナー／サンダンカ／デイゴ。行程未標已訂。",
+   status:"booked", statusLabel:"🎫 已訂", note:"酒店內會席。Course：アカバナー／サンダンカ／デイゴ。已訂。",
    maps:[["Hotel Collective",P.collective]],
    menus:[["Menu · アカバナー ¥7,000","menus/hekikaitei-akabana.pdf"],["Menu · サンダンカ ¥9,000","menus/hekikaitei-sandanka.pdf"],["Menu · デイゴ ¥12,000","menus/hekikaitei-deigo.pdf"]]},
   {date:"2026-11-24", w:"二", meal:"午餐", time:"12:00", name:"燕食堂", loc:"第一牧志公設市場2F（那霸）",
