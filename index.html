@@ -326,12 +326,15 @@ footer{text-align:center;font-size:12px;color:#9ab0b8;padding:10px 16px 36px}
 
 /* ---------- Map tab ---------- */
 .tab{font-size:12px;padding:8px 2px;gap:2px}
-#overviewMap{height:240px;width:100%;border-radius:var(--radius);border:1px solid rgba(6,52,74,.08);box-shadow:var(--shadow);margin:0 0 6px;z-index:1;background:#dbe8ec;touch-action:pan-x pan-y}
+#overviewMap{height:300px;width:100%;border-radius:var(--radius);border:1px solid rgba(6,52,74,.08);box-shadow:var(--shadow);margin:0 0 6px;z-index:1;background:#dbe8ec;touch-action:pan-x pan-y}
+@media (min-width:720px){#overviewMap{height:380px}}
 .map-legend{display:flex;flex-wrap:wrap;gap:8px 12px;font-size:12px;color:var(--muted);margin:0 2px 12px}
 .map-legend span{display:inline-flex;align-items:center;gap:5px}
 .map-legend i{width:12px;height:12px;border-radius:50%;display:inline-block;flex:0 0 auto}
 .map-legend i.opt{border:2px dashed #94a3b8;background:transparent;box-sizing:border-box}
 .map-legend i.hotel{border-radius:3px}
+.map-legend i.route{width:18px;height:4px;border-radius:2px;background:var(--ocean-700)}
+.map-legend i.route-dash{width:18px;height:0;border-radius:0;background:transparent;border-top:3px dashed #0f7fa0}
 .route-day{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);margin:12px 0;overflow:hidden;border:1px solid rgba(6,52,74,.05)}
 .route-day-h{display:flex;gap:12px;align-items:center;padding:14px 14px 10px;border-bottom:1px dashed var(--line)}
 .route-day-h .date-badge{width:52px;height:56px}
@@ -959,6 +962,8 @@ function renderStatus(){
 
 /* ================= RENDER: MAP ================= */
 var mapObj=null, mapInited=false, mapMarkers={}, mapActiveDay=0, mapActiveKey=null, mapLayerGroup=null;
+/* Daily route polylines: OSRM road path when available, else straight lines between verified PLACES coords. */
+var mapRouteCache={}, mapRouteGen=0, mapRouteLine=null, mapRouteFallback=null;
 
 function dirsUrl(stopIds){
   var pts=stopIds.map(function(id){var p=PLACES[id];return p? (p.lat+","+p.lng):null;}).filter(Boolean);
@@ -999,14 +1004,14 @@ function listBadgeClass(item){
 }
 
 function renderMap(){
-  var h='<div class="section-h"><h2>路線地圖</h2><span>撳下面地點會喺地圖標示</span></div>';
+  var h='<div class="section-h"><h2>路線地圖</h2><span>每日行走路線 · 撳地點會喺地圖標示</span></div>';
   h+='<div class="map-toolbar"><div class="map-day-chips" id="mapDayChips" role="toolbar" aria-label="選擇行程日">';
   MAP_DAYS.forEach(function(d,i){
     h+='<button type="button" data-map-day="'+i+'" aria-pressed="'+(i===0?"true":"false")+'">'+md(d.date)+'</button>';
   });
   h+='</div></div>';
-  h+='<div id="overviewMap" role="img" aria-label="沖繩行程路線地圖"></div>';
-  h+='<div class="map-legend"><span><i style="background:#0b5470"></i>停靠編號</span><span><i class="hotel" style="background:#d4a24c"></i>當晚酒店</span><span><i class="opt"></i>可選／二選一</span></div>';
+  h+='<div id="overviewMap" role="img" aria-label="沖繩行程每日行走路線地圖"></div>';
+  h+='<div class="map-legend"><span><i style="background:#0b5470"></i>停靠編號</span><span><i class="hotel" style="background:#d4a24c"></i>當晚酒店</span><span><i class="opt"></i>可選／二選一</span><span><i class="route"></i>當日路線</span><span><i class="route-dash"></i>直線後備</span></div>';
   h+='<p id="mapHint" class="map-legend" style="margin-top:-4px">載入地圖中…</p>';
   MAP_DAYS.forEach(function(d,i){
     var items=numberDayStops(d);
@@ -1041,7 +1046,7 @@ function renderMap(){
   $("#panel-map").innerHTML=h;
   // reset map instance (DOM node was replaced)
   if(mapObj){ try{ mapObj.remove(); }catch(e){} }
-  mapObj=null; mapInited=false; mapMarkers={}; mapActiveKey=null; mapLayerGroup=null; mapActiveDay=0;
+  mapObj=null; mapInited=false; mapMarkers={}; mapActiveKey=null; mapLayerGroup=null; mapActiveDay=0; mapRouteLine=null; mapRouteFallback=null; mapRouteGen++;
   wireMapPanelHandlers();
 }
 
@@ -1137,10 +1142,161 @@ function setMapDay(di, keepFocus){
   });
 }
 
+/* Build ordered latlngs for the day's main path (skip opt / missing PLACES; collapse consecutive duplicates). Uses verified PLACES lat/lng only — do not invent. */
+function dayRoutePoints(day){
+  var pts=[], ids=[], skipped=[];
+  if(!day || !day.stops) return {pts:pts, ids:ids, skipped:skipped};
+  day.stops.forEach(function(s){
+    var kind=s.kind||"stop";
+    if(kind==="opt") return;
+    var p=PLACES[s.id];
+    if(!p || typeof p.lat!=="number" || typeof p.lng!=="number"){
+      skipped.push(s.id);
+      return;
+    }
+    var latlng=[p.lat, p.lng];
+    var last=pts[pts.length-1];
+    if(last && last[0]===latlng[0] && last[1]===latlng[1]) return;
+    pts.push(latlng);
+    ids.push(s.id);
+  });
+  return {pts:pts, ids:ids, skipped:skipped};
+}
+
+function routeCacheKey(pts){
+  return pts.map(function(ll){return ll[0].toFixed(5)+","+ll[1].toFixed(5);}).join(";");
+}
+
+function clearRouteLayers(){
+  mapRouteLine=null;
+  mapRouteFallback=null;
+}
+
+function addStraightRoute(pts, asFallback){
+  if(!mapLayerGroup || !pts || pts.length<2 || typeof L==="undefined") return null;
+  var line=L.polyline(pts,{
+    color: asFallback ? "#0f7fa0" : "#0b5470",
+    weight: asFallback ? 3 : 4,
+    opacity: asFallback ? 0.7 : 0.85,
+    dashArray: asFallback ? "8 8" : null,
+    lineJoin:"round",
+    lineCap:"round",
+    interactive:false
+  });
+  mapLayerGroup.addLayer(line);
+  return line;
+}
+
+function addOsrmRoute(latlngs){
+  if(!mapLayerGroup || !latlngs || latlngs.length<2 || typeof L==="undefined") return null;
+  var line=L.polyline(latlngs,{
+    color:"#0b5470",
+    weight:4,
+    opacity:0.88,
+    lineJoin:"round",
+    lineCap:"round",
+    interactive:false
+  });
+  mapLayerGroup.addLayer(line);
+  return line;
+}
+
+function fitRouteBounds(bounds){
+  if(!mapObj || !bounds || !bounds.length) return;
+  try{ mapObj.fitBounds(bounds,{padding:[36,36], maxZoom:14}); }catch(e){}
+}
+
+function fetchOsrmDriving(pts, cb){
+  // Public OSRM demo — no API key. lng,lat order. Fallback handled by caller.
+  if(!pts || pts.length<2){ cb(null); return; }
+  var path=pts.map(function(ll){return ll[1]+","+ll[0];}).join(";");
+  var url="https://router.project-osrm.org/route/v1/driving/"+path+"?overview=full&geometries=geojson";
+  var done=false;
+  function finish(coords){ if(done) return; done=true; cb(coords); }
+  var timer=setTimeout(function(){ finish(null); }, 8000);
+  try{
+    fetch(url,{method:"GET", mode:"cors"}).then(function(res){
+      if(!res || !res.ok) throw new Error("osrm http");
+      return res.json();
+    }).then(function(data){
+      clearTimeout(timer);
+      if(!data || data.code!=="Ok" || !data.routes || !data.routes[0] || !data.routes[0].geometry){
+        finish(null); return;
+      }
+      var coords=data.routes[0].geometry.coordinates || [];
+      // GeoJSON is [lng,lat] → Leaflet [lat,lng]
+      var latlngs=coords.map(function(c){return [c[1], c[0]];});
+      finish(latlngs.length>=2 ? latlngs : null);
+    }).catch(function(){
+      clearTimeout(timer);
+      finish(null);
+    });
+  }catch(e){
+    clearTimeout(timer);
+    finish(null);
+  }
+}
+
+function drawDayRoute(dayIdx, bounds){
+  var d=MAP_DAYS[dayIdx];
+  if(!d || !mapLayerGroup) return;
+  var info=dayRoutePoints(d);
+  var pts=info.pts;
+  var hint=$("#mapHint");
+  if(pts.length<2){
+    if(hint){
+      hint.textContent=pts.length===1
+        ? "呢日淨係一個已定位停靠點；撳列表或標記可標示"
+        : "撳下面列表或地圖標記，會標示該地點";
+    }
+    return;
+  }
+  var key=routeCacheKey(pts);
+  var gen=++mapRouteGen;
+  // Immediate straight-line fallback so a route is always visible
+  mapRouteFallback=addStraightRoute(pts, true);
+  if(bounds && bounds.length) fitRouteBounds(bounds.concat(pts));
+  if(hint) hint.textContent="顯示當日路線（載入道路路徑中…）· 撳列表或標記可標示";
+
+  function applyRoad(latlngs){
+    if(gen!==mapRouteGen || mapActiveDay!==dayIdx) return;
+    if(mapRouteFallback && mapLayerGroup){
+      try{ mapLayerGroup.removeLayer(mapRouteFallback); }catch(e){}
+      mapRouteFallback=null;
+    }
+    mapRouteLine=addOsrmRoute(latlngs);
+    var all=bounds ? bounds.slice() : [];
+    latlngs.forEach(function(ll){ all.push(ll); });
+    fitRouteBounds(all);
+    if(hint) hint.textContent="顯示當日行走路線（沿路）· 撳列表或標記可標示";
+  }
+  function keepFallback(){
+    if(gen!==mapRouteGen || mapActiveDay!==dayIdx) return;
+    if(mapRouteFallback){
+      // Restyle fallback as the visible route (already dashed)
+      if(hint) hint.textContent="顯示當日行走路線（直線後備）· 撳列表或標記可標示";
+    }
+  }
+
+  if(mapRouteCache[key]){
+    applyRoad(mapRouteCache[key]);
+    return;
+  }
+  fetchOsrmDriving(pts, function(latlngs){
+    if(latlngs){
+      mapRouteCache[key]=latlngs;
+      applyRoad(latlngs);
+    } else {
+      keepFallback();
+    }
+  });
+}
+
 function rebuildDayMarkers(keepFocus){
   if(!mapObj || typeof L==="undefined") return;
   if(mapLayerGroup){ mapLayerGroup.clearLayers(); }
   else { mapLayerGroup=L.layerGroup().addTo(mapObj); }
+  clearRouteLayers();
   mapMarkers={};
   var d=MAP_DAYS[mapActiveDay];
   if(!d) return;
@@ -1151,19 +1307,22 @@ function rebuildDayMarkers(keepFocus){
     var key=stopKey(mapActiveDay, it.si);
     var latlng=[p.lat, p.lng];
     var popup="<b>"+esc(it.label)+". "+esc(stopLabel(it.s))+"</b><br><span style=\"color:#5f7682;font-size:12px\">"+esc(p.name)+"</span>";
-    var marker=L.marker(latlng,{icon:pinIcon(it.label, it.pinCls, false), riseOnHover:true, keyboard:true});
+    var marker=L.marker(latlng,{icon:pinIcon(it.label, it.pinCls, false), riseOnHover:true, keyboard:true, interactive:true});
     marker.bindPopup(popup);
     marker.on("click", function(ev){
       if(ev && ev.originalEvent){ ev.originalEvent.stopPropagation(); }
       focusStop(key, true);
     });
+    // Some mobile browsers fire touch on the icon div; also bind tap via Leaflet
+    marker.on("keydown", function(){});
     mapLayerGroup.addLayer(marker);
     mapMarkers[key]={marker:marker, label:it.label, pinCls:it.pinCls, latlng:latlng, placeId:it.s.id};
     bounds.push(latlng);
   });
   if(bounds.length){
-    try{ mapObj.fitBounds(bounds,{padding:[36,36], maxZoom:14}); }catch(e){}
+    fitRouteBounds(bounds);
   }
+  drawDayRoute(mapActiveDay, bounds);
   if(keepFocus && mapActiveKey && mapMarkers[mapActiveKey]){
     var ent=mapMarkers[mapActiveKey];
     ent.marker.setIcon(pinIcon(ent.label, ent.pinCls, true));
@@ -1172,8 +1331,6 @@ function rebuildDayMarkers(keepFocus){
     mapActiveKey=null;
     document.querySelectorAll("#panel-map .route-stops li.active").forEach(function(el){el.classList.remove("active");});
   }
-  var hint=$("#mapHint");
-  if(hint) hint.textContent="撳下面列表或地圖標記，會標示該地點";
 }
 
 function refreshMapSize(){
@@ -1214,7 +1371,7 @@ function initLeafletMap(){
       setTimeout(refreshMapSize, 50);
       setTimeout(refreshMapSize, 250);
     });
-    if(hint) hint.textContent="撳下面列表或地圖標記，會標示該地點";
+    if(hint) hint.textContent="顯示當日行走路線 · 撳列表或標記可標示";
     return true;
   }catch(err){
     if(hint) hint.textContent="地圖初始化失敗："+(err && err.message?err.message:"error");
