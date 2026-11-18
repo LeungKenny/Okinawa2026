@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#0b5470">
-<meta name="description" content="沖繩之旅 2026 · 11/23 – 11/29 行程、餐廳、路線地圖、酒店、天氣及清單">
+<meta name="description" content="沖繩之旅 2026 · 11/23 – 11/29 行程、餐廳、路線地圖、酒店、天氣、匯率、聯絡及清單">
 <title>沖繩之旅 2026 · Okinawa Trip</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -274,6 +274,42 @@ textarea{width:100%;min-height:140px;border:1px solid var(--line);border-radius:
 .card h3{margin:0;font-size:17px}
 .card .sub{font-size:13px;color:var(--muted)}
 
+
+/* ---------- Tools / 實用 ---------- */
+.fx-grid{display:grid;gap:12px;margin-top:8px}
+.fx-row{display:grid;grid-template-columns:1fr auto 1fr;gap:8px;align-items:end}
+@media (max-width:520px){.fx-row{grid-template-columns:1fr;}}
+.fx-field label{display:block;font-size:12px;color:var(--muted);margin-bottom:4px;font-weight:500}
+.fx-field input{width:100%;border:1px solid var(--line);border-radius:12px;padding:12px 12px;font:inherit;font-size:18px;font-family:var(--font-num);background:var(--sand-50)}
+.fx-swap{border:1px solid var(--line);background:#fff;border-radius:12px;width:44px;height:44px;cursor:pointer;display:grid;place-content:center;font-size:18px;margin-bottom:2px}
+.fx-presets{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
+.fx-presets button{border:1px solid var(--line);background:#fff;border-radius:999px;padding:6px 10px;font-size:13px;cursor:pointer;font-family:var(--font-num);color:var(--ocean-700)}
+.fx-presets button:active{transform:scale(.97)}
+.fx-meta{font-size:13px;color:var(--muted);line-height:1.55;margin-top:6px}
+.fx-meta b{color:var(--ocean-700);font-family:var(--font-num);font-weight:600}
+.contact-list{display:grid;gap:10px;margin-top:8px}
+.contact{padding:12px 14px;border-radius:14px;background:var(--sand-50);border:1px solid var(--line)}
+.contact b{display:block;font-size:15px;margin-bottom:2px}
+.contact .c-sub{font-size:13px;color:var(--muted);margin:0 0 6px}
+.contact .c-rows{display:grid;gap:4px;font-size:14px}
+.contact a.tel{color:var(--ocean-500);text-decoration:none;font-weight:600;font-family:var(--font-num)}
+.contact .src{font-size:11px;color:#9ab0b8;margin-top:6px}
+.phrase{display:grid;gap:2px;padding:10px 0;border-bottom:1px solid #eef3f5}
+.phrase:last-child{border-bottom:0}
+.phrase .zh{font-size:14px;font-weight:600}
+.phrase .jp{font-size:16px;letter-spacing:.02em}
+.phrase .romaji{font-size:12.5px;color:var(--muted);font-family:var(--font-num)}
+.flight-form{display:grid;gap:10px;margin-top:8px}
+.flight-form .pair{display:grid;gap:8px}
+.flight-form label{display:block;font-size:12px;color:var(--muted);margin-bottom:4px}
+.flight-form input{width:100%;border:1px solid var(--line);border-radius:12px;padding:10px 12px;font:inherit;font-size:16px;background:var(--sand-50)}
+.flight-form .known{font-size:13px;color:var(--muted);margin:0}
+.tax-quick{display:grid;gap:8px;margin:8px 0 4px}
+.tax-quick .tq{display:flex;gap:10px;padding:10px 12px;border-radius:14px;background:var(--teal-50);border:1px solid var(--teal-100);font-size:14px;line-height:1.55;color:#0d4f5c}
+.tax-quick .tq .ic{flex:0 0 auto;font-size:18px}
+.tools-nav{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 4px}
+.tools-nav a{font-size:13px;padding:5px 10px;border-radius:999px;background:#fff;border:1px solid var(--line);text-decoration:none;color:var(--ocean-700);font-weight:500}
+
 footer{text-align:center;font-size:12px;color:#9ab0b8;padding:10px 16px 36px}
 .toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom));transform:translate(-50%,20px);background:var(--ocean-900);color:#fff;padding:10px 16px;border-radius:999px;font-size:14px;opacity:0;pointer-events:none;transition:.25s;z-index:50}
 .toast.show{opacity:1;transform:translate(-50%,0)}
@@ -430,6 +466,7 @@ footer{text-align:center;font-size:12px;color:#9ab0b8;padding:10px 16px 36px}
         <button class="tab" role="tab" id="tab-dining" aria-controls="panel-dining" aria-selected="false" data-tab="dining" type="button">🍽️ 餐廳</button>
         <button class="tab" role="tab" id="tab-weather" aria-controls="panel-weather" aria-selected="false" data-tab="weather" type="button">🌤️ 天氣</button>
         <button class="tab" role="tab" id="tab-entry" aria-controls="panel-entry" aria-selected="false" data-tab="entry" type="button">🛂 入境退稅</button>
+        <button class="tab" role="tab" id="tab-tools" aria-controls="panel-tools" aria-selected="false" data-tab="tools" type="button">🧰 實用</button>
         <button class="tab" role="tab" id="tab-notes" aria-controls="panel-notes" aria-selected="false" data-tab="notes" type="button">✅ 清單</button>
       </div>
       <div class="day-strip" id="dayStrip" role="group" aria-label="跳到某一日"></div>
@@ -442,6 +479,7 @@ footer{text-align:center;font-size:12px;color:#9ab0b8;padding:10px 16px 36px}
   <div class="panel wrap" id="panel-dining" role="tabpanel" aria-labelledby="tab-dining" hidden></div>
   <div class="panel wrap" id="panel-weather" role="tabpanel" aria-labelledby="tab-weather" hidden></div>
   <div class="panel wrap" id="panel-entry" role="tabpanel" aria-labelledby="tab-entry" hidden></div>
+  <div class="panel wrap" id="panel-tools" role="tabpanel" aria-labelledby="tab-tools" hidden></div>
   <div class="panel wrap" id="panel-notes" role="tabpanel" aria-labelledby="tab-notes" hidden></div>
 </main>
 
@@ -1888,6 +1926,11 @@ function renderEntry(){
   h+='</div></div>';
 
   h+='<div class="section-h" style="margin-top:22px"><h2>退稅</h2><span>2026年11月1日起新制</span></div>';
+  h+='<div class="tax-quick" aria-label="退稅速查">';
+  h+='<div class="tq"><span class="ic" aria-hidden="true">🧾</span><div><b>退稅速查</b>同一間店、同一日，<strong>稅前合計滿 ¥5,000</strong> 先合資格。由 2026/11/1 起用退稅方式：店舖收<strong>含稅價</strong>，出境經海關確認貨物會帶離日本之後，先退消費稅。</div></div>';
+  h+='<div class="tq"><span class="ic" aria-hidden="true">✈️</span><div><b>那霸機場（11/29）</b>先喺<strong>國際線 3F 報到大廳</strong>做海關確認（KIOSK 或 Visit Japan Web），<strong>之後先 check-in／託運</strong>。現金 Self Tax Refund 機喺<strong>國際線 2F 出境後區域</strong>（安檢／出境審查後）。</div></div>';
+  h+='<div class="tq"><span class="ic" aria-hidden="true">🕒</span><div><b>現金退稅機時間（官方有出入）</b>日文／英文頁寫 <strong>6:45–21:30</strong>；繁中頁寫 <strong>6:00–21:00</strong>；兩邊都註明或會因航班調整。以現場為準。</div></div>';
+  h+='</div>';
   h+='<div class="tip warn" style="margin:8px 2px"><div class="ic">⚠️</div><div><b>呢次行程已經用新制</b>由 2026年11月1日起，日本消費稅免稅改為「退稅方式」。11/23–11/29 喺免税店買嘅嘢，店舖會收<strong>含稅價</strong>，<strong>唔再係櫃檯即時扣稅</strong>。要喺出境時經海關確認貨物會帶離日本之後，先由店舖退回消費稅。</div></div>';
 
   h+='<div class="card info-card">';
@@ -1938,7 +1981,268 @@ function renderEntry(){
   $("#panel-entry").innerHTML=h;
 }
 
-var TABS=["itinerary","map","hotels","dining","weather","entry","notes"];
+
+/* ================= RENDER: TOOLS (實用) ================= */
+var FX_CACHE_KEY = "okinawa2026_fx_hkdjpy_v1";
+var FX_SEED = {rate:20.302, date:"2026-11-17", source:"Frankfurter", fetchedAt:"2026-11-18T02:08:28Z"};
+var FLIGHT_KEY = "okinawa2026_flights_v1";
+
+function fxLoadCache(){
+  try{
+    var raw = localStorage.getItem(FX_CACHE_KEY);
+    if(!raw) return null;
+    var o = JSON.parse(raw);
+    if(!o || typeof o.rate !== "number" || !(o.rate>0)) return null;
+    return o;
+  }catch(e){ return null; }
+}
+function fxSaveCache(o){
+  try{ localStorage.setItem(FX_CACHE_KEY, JSON.stringify(o)); }catch(e){}
+}
+function fxFmt(n, digits){
+  if(!isFinite(n)) return "—";
+  var d = digits==null ? (Math.abs(n)>=100 ? 0 : (Math.abs(n)>=10 ? 1 : 2)) : digits;
+  return n.toLocaleString("en-US", {maximumFractionDigits:d, minimumFractionDigits:0});
+}
+function renderTools(){
+  var h = '';
+  h += '<div class="section-h"><h2>實用工具</h2><span>匯率 · 聯絡 · 日語 · 航班</span></div>';
+  h += '<nav class="tools-nav" aria-label="實用小節">';
+  h += '<a href="#tools-fx">匯率</a><a href="#tools-contacts">電話地址</a><a href="#tools-jp">簡易日語</a><a href="#tools-flights">航班資料</a>';
+  h += '</nav>';
+
+  /* FX */
+  h += '<div class="card" id="tools-fx">';
+  h += '<h3>匯率計算機</h3>';
+  h += '<div class="sub">港幣 ⇄ 日圓 · 瀏覽器讀公開匯率（唔使 API key）</div>';
+  h += '<div class="fx-grid">';
+  h += '<div class="fx-row">';
+  h += '<div class="fx-field"><label for="fxHkd">港幣 HKD</label><input id="fxHkd" inputmode="decimal" type="text" value="100" autocomplete="off"></div>';
+  h += '<button type="button" class="fx-swap" id="fxSwap" title="對調" aria-label="對調貨幣">⇄</button>';
+  h += '<div class="fx-field"><label for="fxJpy">日圓 JPY</label><input id="fxJpy" inputmode="decimal" type="text" value="" autocomplete="off"></div>';
+  h += '</div>';
+  h += '<div class="fx-presets" id="fxPresets">';
+  h += '<button type="button" data-side="jpy" data-amt="1000">¥1,000</button>';
+  h += '<button type="button" data-side="jpy" data-amt="5000">¥5,000</button>';
+  h += '<button type="button" data-side="jpy" data-amt="10000">¥10,000</button>';
+  h += '<button type="button" data-side="hkd" data-amt="100">HK$100</button>';
+  h += '<button type="button" data-side="hkd" data-amt="500">HK$500</button>';
+  h += '</div>';
+  h += '<div class="fx-meta" id="fxMeta">讀緊匯率…</div>';
+  h += '</div></div>';
+
+  /* Contacts */
+  h += '<div class="card" id="tools-contacts">';
+  h += '<h3>常用電話同地址</h3>';
+  h += '<div class="sub">只列已核對嘅官方／行程頁已有號碼；冇核對過嘅唔會自製</div>';
+  h += '<div class="contact-list">';
+
+  h += '<div class="contact"><b>🚨 日本緊急</b><div class="c-sub">全國通用</div><div class="c-rows">';
+  h += '<div>警察 <a class="tel" href="tel:110">110</a></div>';
+  h += '<div>消防／救護 <a class="tel" href="tel:119">119</a></div>';
+  h += '</div><div class="src">日本官方緊急電話</div></div>';
+
+  h += '<div class="contact"><b>🇭🇰 香港居民求助</b><div class="c-sub">入境處 Assisting Hong Kong Residents Unit</div><div class="c-rows">';
+  h += '<div>24 小時熱線 <a class="tel" href="tel:+8521868">+852 1868</a></div>';
+  h += '<div>駐東京經貿辦（辦公） <a class="tel" href="tel:+81335568980">+81-3-3556-8980</a></div>';
+  h += '<div>地址：東京都千代田區三番町 30-1</div>';
+  h += '</div><div class="src">來源：hketotyo.gov.hk Contact Us（2026-10-26 更新）</div></div>';
+
+  h += '<div class="contact"><b>Hotel Collective</b><div class="c-sub">11/23、11/28 晚 · 那霸國際通</div><div class="c-rows">';
+  h += '<div>〒900-0014 沖縄県那覇市松尾 2-5-7</div>';
+  h += '<div>電話 <a class="tel" href="tel:+81988608366">098-860-8366</a></div>';
+  h += '<div>館內：碧海庭（11/23 18:30 已訂）</div>';
+  h += '</div><div class="src">來源：hotelcollective.jp 頁尾</div></div>';
+
+  h += '<div class="contact"><b>Hoshinoya 星野（虹夕諾雅 沖繩）</b><div class="c-sub">11/24–11/25 · 讀谷</div><div class="c-rows">';
+  h += '<div>〒904-0327 沖縄県中頭郡読谷村儀間 474</div>';
+  h += '<div>夜間／緊急 <a class="tel" href="tel:+81989216800">098-921-6800</a></div>';
+  h += '<div>預約 <a class="tel" href="tel:+815031348096">+81-50-3134-8096</a>（9:30–18:00）</div>';
+  h += '<div>館內：Bellezza（11/24 已訂）</div>';
+  h += '</div><div class="src">來源：hoshinoresorts.com 聯繫我們</div></div>';
+
+  h += '<div class="contact"><b>The Ritz-Carlton Okinawa</b><div class="c-sub">11/26–11/27 · 名護喜瀬</div><div class="c-rows">';
+  h += '<div>〒905-0026 沖縄県名護市喜瀬 1343-1</div>';
+  h += '<div>電話 <a class="tel" href="tel:+81980435555">0980-43-5555</a></div>';
+  h += '<div>館內：鐵板燒 Kise（11/26 已訂）</div>';
+  h += '</div><div class="src">來源：ritzcarlton.com hotel overview</div></div>';
+
+  h += '<div class="contact"><b>ザ・ナハテラス（Hotel Terrace Naha）</b><div class="c-sub">真南風所在酒店 · 唔係住宿晚</div><div class="c-rows">';
+  h += '<div>〒900-0006 沖縄県那覇市おもろまち 2-14-1</div>';
+  h += '<div>電話 <a class="tel" href="tel:+81988641111">098-864-1111</a></div>';
+  h += '<div>真南風 Mahae（11/29 12:00 已訂）可用酒店電話</div>';
+  h += '</div><div class="src">來源：terrace.co.jp/naha ホテル概要</div></div>';
+
+  h += '<div class="contact"><b>The Busena Terrace（部瀨名）</b><div class="c-sub">La Tida 午餐地點 · 唔係 Ritz 裡面</div><div class="c-rows">';
+  h += '<div>〒905-0026 沖縄県名護市喜瀬 1808</div>';
+  h += '<div>電話 <a class="tel" href="tel:+81980511333">0980-51-1333</a></div>';
+  h += '<div>La Tida（11/27 12:30 已訂）</div>';
+  h += '</div><div class="src">來源：terrace.co.jp ザ・ブセナテラス お問い合わせ／概要</div></div>';
+
+  h += '<div class="contact"><b>越前 Echizen</b><div class="c-sub">11/28 18:30 已訂 · おもろまち</div><div class="c-rows">';
+  h += '<div>那覇市おもろまち 4-11-1 おもろシティコート GINOZA 1F</div>';
+  h += '<div>電話 <a class="tel" href="tel:+81988698888">098-869-8888</a></div>';
+  h += '</div><div class="src">來源：本站行程已載電話（echizen.restaurant）</div></div>';
+
+  h += '<div class="contact"><b>其他已訂餐廳</b><div class="c-sub">Ocean Blue／NÔMIX</div><div class="c-rows">';
+  h += '<div>Ocean Blue（古宇利海洋塔 1F）：未有獨立核對電話；請向海洋塔／酒店查詢。</div>';
+  h += '<div>NÔMIX（美國村）：未有獨立核對電話。</div>';
+  h += '</div><div class="src">唔臆測號碼</div></div>';
+
+  h += '<div class="contact"><b>租車</b><div class="c-sub">行程清單有「租車還車時間」</div><div class="c-rows">';
+  h += '<div>網站未有租車公司名稱或電話，唔會自製訂位資料。請喺清單／備註自行填寫。</div>';
+  h += '</div></div>';
+
+  h += '</div></div>';
+
+  /* Japanese */
+  h += '<div class="card" id="tools-jp">';
+  h += '<h3>簡易日語</h3>';
+  h += '<div class="sub">短句夠用 · 日文＋讀音＋意思</div>';
+  var phrases = [
+    ["叫的士去…","〜までお願いします。","… made onegaishimasu."],
+    ["停喺呢度","ここで降りてください。","Koko de orite kudasai."],
+    ["睇吓菜單","メニューを見せてください。","Menyuu o misete kudasai."],
+    ["呢個唔辣得唔得？","辛くないものはありますか？","Karakunai mono wa arimasu ka?"],
+    ["埋單","お会計お願いします。","Okaikei onegaishimasu."],
+    ["洗手間喺邊？","トイレはどこですか？","Toire wa doko desu ka?"],
+    ["有同行長者","高齢の同行者がいます。","Koureino doukousha ga imasu."],
+    ["有輪椅使用者","車椅子の方がいます。","Kurumaisu no kata ga imasu."],
+    ["請慢慢講","ゆっくり話してください。","Yukkuri hanashite kudasai."],
+    ["幫吓手／救命","助けてください。","Tasukete kudasai."],
+    ["聽唔明","わかりません。","Wakarimasen."],
+    ["多謝","ありがとうございます。","Arigatou gozaimasu."]
+  ];
+  phrases.forEach(function(p){
+    h += '<div class="phrase"><div class="zh">'+esc(p[0])+'</div><div class="jp">'+esc(p[1])+'</div><div class="romaji">'+esc(p[2])+'</div></div>';
+  });
+  h += '</div>';
+
+  /* Flights */
+  h += '<div class="card" id="tools-flights">';
+  h += '<h3>航班資料欄</h3>';
+  h += '<div class="sub">自行填寫航空公司同航班號；會儲喺呢部手機（localStorage）。方便之後填 Visit Japan Web。唔會自製航班號。</div>';
+  h += '<div class="flight-form">';
+  h += '<div class="pair"><p class="known">🛬 去程到達：<b>11/23（一）15:25</b> 那霸（當地時間）</p>';
+  h += '<label for="fltOutAirline">去程航空公司</label><input id="fltOutAirline" placeholder="例如：Cathay Pacific／HK Express…" autocomplete="off">';
+  h += '<label for="fltOutNum">去程航班號</label><input id="fltOutNum" placeholder="例如：CX5xx" autocomplete="off"></div>';
+  h += '<div class="pair"><p class="known">🛫 回程起飛：<b>11/29（日）16:25</b> 那霸 → 香港（當地時間）；建議約 14:25 前到機場</p>';
+  h += '<label for="fltInAirline">回程航空公司</label><input id="fltInAirline" placeholder="例如：Cathay Pacific／HK Express…" autocomplete="off">';
+  h += '<label for="fltInNum">回程航班號</label><input id="fltInNum" placeholder="例如：CX5xx" autocomplete="off"></div>';
+  h += '<div class="saved" id="fltSaved"></div>';
+  h += '</div></div>';
+
+  h += '<p class="info-src">匯率來源：<a target="_blank" rel="noopener" href="https://www.frankfurter.app/docs/">Frankfurter</a>（ECB 參考）。聯絡來源見各項註腳。</p>';
+
+  $("#panel-tools").innerHTML = h;
+  wireFx();
+  wireFlights();
+}
+
+function wireFlights(){
+  var fields = ["fltOutAirline","fltOutNum","fltInAirline","fltInNum"];
+  var saved = store(FLIGHT_KEY) || {};
+  fields.forEach(function(id){
+    var el = $("#"+id); if(!el) return;
+    if(saved[id]) el.value = saved[id];
+    el.addEventListener("input", function(){
+      var o = store(FLIGHT_KEY) || {};
+      o[id] = el.value;
+      store(FLIGHT_KEY, o);
+      var msg = $("#fltSaved"); if(msg){ msg.textContent = "已儲存喺呢部裝置"; setTimeout(function(){ if(msg.textContent==="已儲存喺呢部裝置") msg.textContent=""; }, 1500); }
+    });
+  });
+}
+
+function wireFx(){
+  var hkd = $("#fxHkd"), jpy = $("#fxJpy"), meta = $("#fxMeta");
+  var state = { rate: null, editing: "hkd" };
+  var cache = fxLoadCache() || FX_SEED;
+  function applyRate(rate, info){
+    state.rate = rate;
+    if(state.editing === "hkd"){
+      var v = parseFloat(String(hkd.value).replace(/,/g,""));
+      if(isFinite(v)) jpy.value = fxFmt(v * rate, 0);
+    } else {
+      var v2 = parseFloat(String(jpy.value).replace(/,/g,""));
+      if(isFinite(v2)) hkd.value = fxFmt(v2 / rate, 2);
+    }
+    var when = info.date || "";
+    var note = info.fromCache ? "（暫存／上次成功）" : "";
+    var src = info.source || "Frankfurter";
+    meta.innerHTML = "1 HKD ≈ <b>¥"+fxFmt(rate,3)+"</b>　·　1 JPY ≈ <b>HK$"+fxFmt(1/rate,4)+"</b><br>來源："+esc(src)+"　·　匯率日期 "+esc(when)+" "+note;
+  }
+  applyRate(cache.rate, {date: cache.date, source: cache.source || "Frankfurter", fromCache:true});
+
+  function onHkd(){
+    state.editing = "hkd";
+    if(!state.rate) return;
+    var v = parseFloat(String(hkd.value).replace(/,/g,""));
+    jpy.value = isFinite(v) ? fxFmt(v * state.rate, 0) : "";
+  }
+  function onJpy(){
+    state.editing = "jpy";
+    if(!state.rate) return;
+    var v = parseFloat(String(jpy.value).replace(/,/g,""));
+    hkd.value = isFinite(v) ? fxFmt(v / state.rate, 2) : "";
+  }
+  hkd.addEventListener("input", onHkd);
+  jpy.addEventListener("input", onJpy);
+  $("#fxSwap").addEventListener("click", function(){
+    var a = hkd.value, b = jpy.value; hkd.value = b; jpy.value = a;
+    state.editing = state.editing === "hkd" ? "jpy" : "hkd";
+  });
+  $("#fxPresets").addEventListener("click", function(e){
+    var btn = e.target.closest("button[data-amt]"); if(!btn) return;
+    var side = btn.getAttribute("data-side");
+    var amt = btn.getAttribute("data-amt");
+    if(side === "hkd"){ hkd.value = amt; onHkd(); }
+    else { jpy.value = amt; onJpy(); }
+  });
+
+  var ctrl = (typeof AbortController !== "undefined") ? new AbortController() : null;
+  var timedOut = false;
+  var timer = setTimeout(function(){
+    timedOut = true;
+    if(ctrl) try{ ctrl.abort(); }catch(e){}
+    meta.innerHTML = meta.innerHTML.replace("讀緊匯率…","") ;
+    // keep cached display; add note if still showing loading remnant
+    if(!state.rate && cache && cache.rate){
+      applyRate(cache.rate, {date: cache.date, source: cache.source || "Frankfurter", fromCache:true});
+    } else if(state.rate){
+      meta.innerHTML += "<br>即時更新逾時，繼續用暫存匯率。";
+    } else {
+      meta.textContent = "暫時讀唔到匯率，請稍後再試。唔會顯示臆測數字。";
+    }
+  }, 8000);
+
+  var url = "https://api.frankfurter.dev/v1/latest?from=HKD&to=JPY";
+  var opts = ctrl ? {signal: ctrl.signal} : {};
+  fetch(url, opts).then(function(r){
+    if(!r.ok) throw new Error("HTTP "+r.status);
+    return r.json();
+  }).then(function(data){
+    clearTimeout(timer);
+    if(timedOut) return;
+    var rate = data && data.rates && data.rates.JPY;
+    if(typeof rate !== "number" || !(rate>0)) throw new Error("bad rate");
+    var pack = {rate: rate, date: data.date || "", source: "Frankfurter", fetchedAt: new Date().toISOString()};
+    fxSaveCache(pack);
+    applyRate(rate, {date: pack.date, source: pack.source, fromCache:false});
+  }).catch(function(){
+    clearTimeout(timer);
+    if(timedOut) return;
+    if(cache && cache.rate){
+      applyRate(cache.rate, {date: cache.date, source: cache.source || "Frankfurter", fromCache:true});
+      meta.innerHTML += "<br>即時更新失敗，顯示暫存匯率。";
+    } else {
+      meta.textContent = "暫時讀唔到匯率，請稍後再試。唔會顯示臆測數字。";
+    }
+  });
+}
+
+
+var TABS=["itinerary","map","hotels","dining","weather","entry","tools","notes"];
 function showTab(name,noScroll){
   if(TABS.indexOf(name)<0) name="itinerary";
   TABS.forEach(function(t){
@@ -1989,7 +2293,7 @@ $("#shareBtn").addEventListener("click",function(){
 });
 
 /* ================= INIT ================= */
-renderItinerary(); renderMap(); renderHotels(); renderDining(); renderEntry(); renderNotes(); loadWeather(); renderStatus();
+renderItinerary(); renderMap(); renderHotels(); renderDining(); renderEntry(); renderTools(); renderNotes(); loadWeather(); renderStatus();
 var hash=location.hash.replace("#","");
 if(TABS.indexOf(hash)>=0) showTab(hash,true);
 else if(hash.indexOf("day-")===0) setTimeout(function(){scrollToDay(hash);},60);
