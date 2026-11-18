@@ -323,6 +323,20 @@ footer{text-align:center;font-size:12px;color:#9ab0b8;padding:10px 16px 36px}
 .wx-credit{font-size:11px;color:#9ab0b8;text-align:center;margin:14px 0 4px}
 .wx-credit a{color:var(--ocean-500);text-decoration:none}
 .wx-loading{text-align:center;padding:18px;color:var(--muted);font-size:14px}
+.wx-hour-chips{display:flex;gap:8px;overflow-x:auto;padding:2px 0 10px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.wx-hour-chips::-webkit-scrollbar{display:none}
+.wx-hour-chip{flex:0 0 auto;border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:999px;padding:7px 12px;font-size:13px;font-weight:600;cursor:pointer;line-height:1.2;white-space:nowrap}
+.wx-hour-chip[aria-pressed="true"]{background:var(--ocean-700);border-color:var(--ocean-700);color:#fff}
+.wx-hour-strip{display:flex;gap:8px;overflow-x:auto;padding:2px 0 8px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.wx-hour-strip::-webkit-scrollbar{display:none}
+.wx-hour{flex:0 0 auto;min-width:78px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px 8px 8px;text-align:center;box-shadow:0 1px 3px rgba(6,52,74,.05)}
+.wx-hour .wx-h{font-family:var(--font-num);font-size:12px;color:var(--muted);font-weight:600}
+.wx-hour .wx-ic{font-size:22px;line-height:1.2;margin:3px 0 2px}
+.wx-hour .wx-t{font-family:var(--font-num);font-size:15px;font-weight:700;color:var(--ink);font-variant-numeric:tabular-nums}
+.wx-hour .wx-p{font-size:11px;color:var(--ocean-500);margin-top:2px}
+.wx-hour .wx-w{font-size:10.5px;color:var(--muted);margin-top:2px}
+.wx-hour.now{border-color:var(--teal-400);background:linear-gradient(180deg,var(--teal-50),#fff)}
+.wx-hour-empty{font-size:13px;color:var(--muted);padding:8px 2px}
 
 /* ---------- Map tab ---------- */
 .tab{font-size:12px;padding:8px 2px;gap:2px}
@@ -1573,6 +1587,11 @@ function renderWeather(state){
   }
   var idx = state.idx || {};
   var near = state.nearDates || [];
+  var hourlyByDay = state.hourlyByDay || {};
+  WX_VIEW.idx = idx;
+  WX_VIEW.nearDates = near;
+  WX_VIEW.hourlyByDay = hourlyByDay;
+  WX_VIEW.error = state.error || null;
   // Near-term live strip
   body += '<div class="section-h" style="margin-top:18px"><h2>近日預報</h2><span>未來約兩星期</span></div>';
   if(near.length){
@@ -1594,9 +1613,12 @@ function renderWeather(state){
     body += wxTripRow(day, d || null);
   });
   body += '</div>';
+  // Hourly detail
+  body += wxHourlySection(hourlyByDay);
   $("#panel-weather").innerHTML = wxShell(body, state.error || null);
+  wxBindHourlyChips();
 }
-var WX_CACHE_KEY = "okinawa2026_wx_forecast_v1";
+var WX_CACHE_KEY = "okinawa2026_wx_forecast_v2";
 var WX_CACHE_TTL_MS = 3 * 60 * 60 * 1000; /* 3 hours */
 var WX_FETCH_TIMEOUT_MS = 8000;
 var WX_ERR_NO_DATA = "暫時讀唔到預報，請稍後再開天氣頁。氣候平均仍然可以用嚟執行李。";
@@ -1604,9 +1626,11 @@ var WX_ERR_STALE = "最新預報暫時讀唔到，以下係稍早前嘅暫存預
 var WX_ERR_SNAPSHOT = "以下係網站發布時寫入嘅預報快照（可能略舊）；連到 Open-Meteo 之後會自動換成最新。";
 /* Baked at publish from Open-Meteo; numbers are the live API response at publish, not invented. */
 var WX_PUBLISH_SNAPSHOT = {
-  publishedAt: "2026-11-18T10:04:00+08:00",
-  daily: {"time":["2026-11-18","2026-11-19","2026-11-20","2026-11-21","2026-11-22","2026-11-23","2026-11-24","2026-11-25","2026-11-26","2026-11-27","2026-11-28","2026-11-29","2026-11-30","2026-12-01","2026-12-02","2026-12-03"],"weather_code":[53,51,3,3,2,3,82,55,51,81,2,3,3,51,95,51],"temperature_2m_max":[25.0,21.5,19.7,20.2,21.3,23.1,24.2,21.0,22.9,24.2,25.1,22.6,24.9,26.2,26.5,22.6],"temperature_2m_min":[20.8,18.3,17.4,16.0,16.1,17.9,19.1,18.5,18.4,20.5,19.9,19.1,20.9,22.6,18.0,18.6],"precipitation_probability_max":[86,67,16,10,0,8,63,53,43,39,25,11,19,43,43,35]}
+  publishedAt: "2026-11-18T10:05:00+08:00",
+  daily: {"time":["2026-11-18","2026-11-19","2026-11-20","2026-11-21","2026-11-22","2026-11-23","2026-11-24","2026-11-25","2026-11-26","2026-11-27","2026-11-28","2026-11-29","2026-11-30","2026-12-01","2026-12-02","2026-12-03"],"weather_code":[53,51,3,3,2,3,82,55,51,81,2,3,3,51,95,51],"temperature_2m_max":[25.0,21.5,19.7,20.2,21.3,23.1,24.2,21.0,22.9,24.2,25.1,22.6,24.9,26.2,26.5,22.6],"temperature_2m_min":[20.8,18.3,17.4,16.0,16.1,17.9,19.1,18.5,18.4,20.5,19.9,19.1,20.9,22.6,18.0,18.6],"precipitation_probability_max":[86,67,16,10,0,8,63,53,43,39,25,11,19,43,43,35]},
+  hourly: {"time":["2026-11-18T00:00","2026-11-18T01:00","2026-11-18T02:00","2026-11-18T03:00","2026-11-18T04:00","2026-11-18T05:00","2026-11-18T06:00","2026-11-18T07:00","2026-11-18T08:00","2026-11-18T09:00","2026-11-18T10:00","2026-11-18T11:00","2026-11-18T12:00","2026-11-18T13:00","2026-11-18T14:00","2026-11-18T15:00","2026-11-18T16:00","2026-11-18T17:00","2026-11-18T18:00","2026-11-18T19:00","2026-11-18T20:00","2026-11-18T21:00","2026-11-18T22:00","2026-11-18T23:00","2026-11-19T00:00","2026-11-19T01:00","2026-11-19T02:00","2026-11-19T03:00","2026-11-19T04:00","2026-11-19T05:00","2026-11-19T06:00","2026-11-19T07:00","2026-11-19T08:00","2026-11-19T09:00","2026-11-19T10:00","2026-11-19T11:00","2026-11-19T12:00","2026-11-19T13:00","2026-11-19T14:00","2026-11-19T15:00","2026-11-19T16:00","2026-11-19T17:00","2026-11-19T18:00","2026-11-19T19:00","2026-11-19T20:00","2026-11-19T21:00","2026-11-19T22:00","2026-11-19T23:00","2026-11-20T00:00","2026-11-20T01:00","2026-11-20T02:00","2026-11-20T03:00","2026-11-20T04:00","2026-11-20T05:00","2026-11-20T06:00","2026-11-20T07:00","2026-11-20T08:00","2026-11-20T09:00","2026-11-20T10:00","2026-11-20T11:00","2026-11-20T12:00","2026-11-20T13:00","2026-11-20T14:00","2026-11-20T15:00","2026-11-20T16:00","2026-11-20T17:00","2026-11-20T18:00","2026-11-20T19:00","2026-11-20T20:00","2026-11-20T21:00","2026-11-20T22:00","2026-11-20T23:00","2026-11-21T00:00","2026-11-21T01:00","2026-11-21T02:00","2026-11-21T03:00","2026-11-21T04:00","2026-11-21T05:00","2026-11-21T06:00","2026-11-21T07:00","2026-11-21T08:00","2026-11-21T09:00","2026-11-21T10:00","2026-11-21T11:00","2026-11-21T12:00","2026-11-21T13:00","2026-11-21T14:00","2026-11-21T15:00","2026-11-21T16:00","2026-11-21T17:00","2026-11-21T18:00","2026-11-21T19:00","2026-11-21T20:00","2026-11-21T21:00","2026-11-21T22:00","2026-11-21T23:00","2026-11-22T00:00","2026-11-22T01:00","2026-11-22T02:00","2026-11-22T03:00","2026-11-22T04:00","2026-11-22T05:00","2026-11-22T06:00","2026-11-22T07:00","2026-11-22T08:00","2026-11-22T09:00","2026-11-22T10:00","2026-11-22T11:00","2026-11-22T12:00","2026-11-22T13:00","2026-11-22T14:00","2026-11-22T15:00","2026-11-22T16:00","2026-11-22T17:00","2026-11-22T18:00","2026-11-22T19:00","2026-11-22T20:00","2026-11-22T21:00","2026-11-22T22:00","2026-11-22T23:00","2026-11-23T00:00","2026-11-23T01:00","2026-11-23T02:00","2026-11-23T03:00","2026-11-23T04:00","2026-11-23T05:00","2026-11-23T06:00","2026-11-23T07:00","2026-11-23T08:00","2026-11-23T09:00","2026-11-23T10:00","2026-11-23T11:00","2026-11-23T12:00","2026-11-23T13:00","2026-11-23T14:00","2026-11-23T15:00","2026-11-23T16:00","2026-11-23T17:00","2026-11-23T18:00","2026-11-23T19:00","2026-11-23T20:00","2026-11-23T21:00","2026-11-23T22:00","2026-11-23T23:00","2026-11-24T00:00","2026-11-24T01:00","2026-11-24T02:00","2026-11-24T03:00","2026-11-24T04:00","2026-11-24T05:00","2026-11-24T06:00","2026-11-24T07:00","2026-11-24T08:00","2026-11-24T09:00","2026-11-24T10:00","2026-11-24T11:00","2026-11-24T12:00","2026-11-24T13:00","2026-11-24T14:00","2026-11-24T15:00","2026-11-24T16:00","2026-11-24T17:00","2026-11-24T18:00","2026-11-24T19:00","2026-11-24T20:00","2026-11-24T21:00","2026-11-24T22:00","2026-11-24T23:00","2026-11-25T00:00","2026-11-25T01:00","2026-11-25T02:00","2026-11-25T03:00","2026-11-25T04:00","2026-11-25T05:00","2026-11-25T06:00","2026-11-25T07:00","2026-11-25T08:00","2026-11-25T09:00","2026-11-25T10:00","2026-11-25T11:00","2026-11-25T12:00","2026-11-25T13:00","2026-11-25T14:00","2026-11-25T15:00","2026-11-25T16:00","2026-11-25T17:00","2026-11-25T18:00","2026-11-25T19:00","2026-11-25T20:00","2026-11-25T21:00","2026-11-25T22:00","2026-11-25T23:00","2026-11-26T00:00","2026-11-26T01:00","2026-11-26T02:00","2026-11-26T03:00","2026-11-26T04:00","2026-11-26T05:00","2026-11-26T06:00","2026-11-26T07:00","2026-11-26T08:00","2026-11-26T09:00","2026-11-26T10:00","2026-11-26T11:00","2026-11-26T12:00","2026-11-26T13:00","2026-11-26T14:00","2026-11-26T15:00","2026-11-26T16:00","2026-11-26T17:00","2026-11-26T18:00","2026-11-26T19:00","2026-11-26T20:00","2026-11-26T21:00","2026-11-26T22:00","2026-11-26T23:00","2026-11-27T00:00","2026-11-27T01:00","2026-11-27T02:00","2026-11-27T03:00","2026-11-27T04:00","2026-11-27T05:00","2026-11-27T06:00","2026-11-27T07:00","2026-11-27T08:00","2026-11-27T09:00","2026-11-27T10:00","2026-11-27T11:00","2026-11-27T12:00","2026-11-27T13:00","2026-11-27T14:00","2026-11-27T15:00","2026-11-27T16:00","2026-11-27T17:00","2026-11-27T18:00","2026-11-27T19:00","2026-11-27T20:00","2026-11-27T21:00","2026-11-27T22:00","2026-11-27T23:00","2026-11-28T00:00","2026-11-28T01:00","2026-11-28T02:00","2026-11-28T03:00","2026-11-28T04:00","2026-11-28T05:00","2026-11-28T06:00","2026-11-28T07:00","2026-11-28T08:00","2026-11-28T09:00","2026-11-28T10:00","2026-11-28T11:00","2026-11-28T12:00","2026-11-28T13:00","2026-11-28T14:00","2026-11-28T15:00","2026-11-28T16:00","2026-11-28T17:00","2026-11-28T18:00","2026-11-28T19:00","2026-11-28T20:00","2026-11-28T21:00","2026-11-28T22:00","2026-11-28T23:00","2026-11-29T00:00","2026-11-29T01:00","2026-11-29T02:00","2026-11-29T03:00","2026-11-29T04:00","2026-11-29T05:00","2026-11-29T06:00","2026-11-29T07:00","2026-11-29T08:00","2026-11-29T09:00","2026-11-29T10:00","2026-11-29T11:00","2026-11-29T12:00","2026-11-29T13:00","2026-11-29T14:00","2026-11-29T15:00","2026-11-29T16:00","2026-11-29T17:00","2026-11-29T18:00","2026-11-29T19:00","2026-11-29T20:00","2026-11-29T21:00","2026-11-29T22:00","2026-11-29T23:00","2026-11-30T00:00","2026-11-30T01:00","2026-11-30T02:00","2026-11-30T03:00","2026-11-30T04:00","2026-11-30T05:00","2026-11-30T06:00","2026-11-30T07:00","2026-11-30T08:00","2026-11-30T09:00","2026-11-30T10:00","2026-11-30T11:00","2026-11-30T12:00","2026-11-30T13:00","2026-11-30T14:00","2026-11-30T15:00","2026-11-30T16:00","2026-11-30T17:00","2026-11-30T18:00","2026-11-30T19:00","2026-11-30T20:00","2026-11-30T21:00","2026-11-30T22:00","2026-11-30T23:00","2026-12-01T00:00","2026-12-01T01:00","2026-12-01T02:00","2026-12-01T03:00","2026-12-01T04:00","2026-12-01T05:00","2026-12-01T06:00","2026-12-01T07:00","2026-12-01T08:00","2026-12-01T09:00","2026-12-01T10:00","2026-12-01T11:00","2026-12-01T12:00","2026-12-01T13:00","2026-12-01T14:00","2026-12-01T15:00","2026-12-01T16:00","2026-12-01T17:00","2026-12-01T18:00","2026-12-01T19:00","2026-12-01T20:00","2026-12-01T21:00","2026-12-01T22:00","2026-12-01T23:00","2026-12-02T00:00","2026-12-02T01:00","2026-12-02T02:00","2026-12-02T03:00","2026-12-02T04:00","2026-12-02T05:00","2026-12-02T06:00","2026-12-02T07:00","2026-12-02T08:00","2026-12-02T09:00","2026-12-02T10:00","2026-12-02T11:00","2026-12-02T12:00","2026-12-02T13:00","2026-12-02T14:00","2026-12-02T15:00","2026-12-02T16:00","2026-12-02T17:00","2026-12-02T18:00","2026-12-02T19:00","2026-12-02T20:00","2026-12-02T21:00","2026-12-02T22:00","2026-12-02T23:00","2026-12-03T00:00","2026-12-03T01:00","2026-12-03T02:00","2026-12-03T03:00","2026-12-03T04:00","2026-12-03T05:00","2026-12-03T06:00","2026-12-03T07:00","2026-12-03T08:00","2026-12-03T09:00","2026-12-03T10:00","2026-12-03T11:00","2026-12-03T12:00","2026-12-03T13:00","2026-12-03T14:00","2026-12-03T15:00","2026-12-03T16:00","2026-12-03T17:00","2026-12-03T18:00","2026-12-03T19:00","2026-12-03T20:00","2026-12-03T21:00","2026-12-03T22:00","2026-12-03T23:00"],"temperature_2m":[22.0,21.7,21.5,21.5,21.2,21.1,21.2,21.0,22.4,23.4,24.2,24.8,24.9,24.6,24.4,24.2,23.9,23.2,22.0,21.7,21.5,21.3,21.0,20.8,20.9,20.8,20.5,19.9,20.1,20.0,20.0,20.4,20.3,20.5,20.8,21.1,20.9,21.4,21.1,20.6,20.2,19.7,19.1,19.0,18.6,18.5,18.4,18.4,18.3,18.5,18.3,18.0,18.0,17.9,17.7,17.9,18.5,18.9,19.5,19.7,19.4,19.3,19.0,18.8,18.5,17.9,18.0,18.2,18.1,18.2,18.0,17.7,17.4,17.8,17.9,18.0,17.7,17.6,17.7,17.2,17.7,18.8,19.5,19.6,19.5,20.1,20.0,19.9,19.2,18.5,17.7,17.3,17.2,16.9,16.7,16.5,16.4,16.3,16.3,16.4,16.3,16.2,16.5,17.4,18.6,19.7,20.3,20.7,21.0,21.2,21.3,21.0,20.3,19.4,18.6,18.1,17.7,17.5,17.7,18.0,18.3,18.2,18.0,17.9,17.8,17.8,18.1,18.9,20.1,21.1,21.9,22.6,23.1,23.3,23.2,23.0,22.4,21.7,21.2,21.0,21.0,21.1,21.1,21.2,21.3,21.5,21.7,21.9,23.1,22.9,22.6,22.4,22.2,22.2,22.4,22.9,23.4,23.8,24.1,24.1,23.8,23.1,22.3,21.4,20.6,20.1,19.7,19.5,19.4,19.3,19.3,19.2,19.2,19.3,19.4,19.5,19.6,19.6,19.6,19.7,19.6,19.6,19.6,19.5,19.4,19.3,19.1,19.0,18.9,18.8,18.7,18.7,18.7,18.8,18.9,19.0,19.1,19.3,19.5,19.8,20.1,20.3,20.7,21.0,21.5,21.8,22.1,22.3,22.3,22.1,21.9,21.6,21.4,21.2,21.1,21.1,21.1,21.1,21.1,21.2,21.3,21.5,21.7,21.9,22.1,22.2,22.4,22.6,22.7,22.9,22.9,22.9,22.8,22.5,22.2,21.9,21.6,21.4,21.3,21.1,21.0,20.9,20.9,21.0,21.2,21.6,22.0,22.5,22.9,23.3,23.6,24.0,24.3,24.6,24.7,24.6,24.2,23.6,22.8,22.0,21.3,20.8,20.4,20.2,20.1,20.0,19.9,19.9,20.0,20.1,20.2,20.4,20.6,20.8,21.0,21.2,21.5,21.7,21.9,22.0,21.9,21.8,21.6,21.4,21.3,21.2,21.1,21.1,21.1,21.2,21.3,21.4,21.7,22.0,22.4,22.8,23.1,23.4,23.7,23.9,24.1,24.2,24.3,24.3,24.3,24.1,23.9,23.7,23.5,23.3,23.2,23.2,23.1,23.1,23.2,23.3,23.5,23.7,24.0,24.3,24.6,24.8,25.0,25.3,25.5,25.6,25.7,25.6,25.3,24.8,24.2,23.5,23.0,22.7,22.5,22.4,22.5,22.6,22.7,22.9,23.1,23.5,23.9,24.3,24.6,24.9,25.0,25.0,25.0,25.0,24.9,24.8,24.6,24.4,24.1,22.2,20.6,19.4,18.3,18.8,19.0,18.9,18.7,18.6,19.1,19.8,20.3,20.4,20.3,20.4,20.7,21.1,21.5,22.0,22.5,22.5,21.9,20.8,20.0,19.8,19.9,20.0,20.2,20.4],"weather_code":[1,1,0,0,0,1,1,2,1,1,0,0,1,0,1,3,3,51,53,51,51,51,51,51,51,3,2,51,51,51,3,3,3,2,3,3,2,2,2,2,2,3,3,3,3,2,2,3,2,2,1,2,3,1,3,2,3,3,3,3,3,3,3,3,3,3,3,3,3,3,2,2,3,3,3,3,3,3,1,2,2,2,1,2,1,1,0,3,1,1,2,2,2,2,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,1,1,0,0,0,0,0,0,0,0,1,1,1,0,0,0,1,2,2,1,1,2,3,3,3,2,2,2,2,2,2,1,1,1,2,2,2,3,3,81,81,81,81,81,81,82,82,82,82,82,82,55,55,55,55,55,55,55,55,55,55,55,55,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,51,51,51,51,51,51,2,2,2,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,2,2,51,51,51,51,51,51,81,81,81,81,81,81,3,2,2,1,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,2,2,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,2,2,1,1,1,51,51,51,51,51,51,1,1,1,1,0,0,0,1,1,1,1,2,2,2,2,1,1,1,80,80,80,80,80,80,55,95,95,95,95,95,0,1,1,1,0,0,51,51,51,2,2,1,2,3,3,3,3,3,3,3,3,51,51,51,3,3],"precipitation_probability":[0,0,1,2,2,2,2,1,1,0,0,0,0,0,0,4,18,38,55,69,81,86,79,66,57,59,65,67,62,54,45,33,20,12,12,17,20,20,20,18,15,10,6,3,1,0,0,0,0,1,3,4,4,3,2,1,0,0,2,4,6,6,5,6,9,14,16,13,8,4,3,4,4,4,4,4,4,5,6,8,9,10,8,5,2,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,2,2,2,1,0,0,0,0,1,3,4,3,2,2,4,6,8,8,7,6,7,8,10,12,14,16,18,20,22,24,27,31,36,43,49,55,60,63,63,61,59,56,53,51,50,49,49,49,49,49,50,50,51,52,52,53,53,53,53,53,52,51,50,49,48,47,46,45,44,44,43,42,42,41,39,38,36,35,33,33,34,36,37,38,39,39,37,34,31,28,24,22,21,21,21,21,22,22,22,21,21,21,21,22,24,28,31,34,37,39,39,38,36,34,31,29,27,26,25,24,23,22,21,20,20,20,20,20,20,21,21,21,22,22,22,21,20,19,17,16,14,13,11,9,7,6,5,4,4,4,4,4,5,5,6,7,7,8,9,9,10,10,10,10,9,9,8,7,6,6,7,8,9,10,11,12,13,13,14,15,15,16,16,17,17,17,18,18,19,19,20,21,21,22,22,23,23,23,24,25,28,32,35,38,41,43,43,43,42,41,39,37,36,35,34,33,32,31,31,31,31,31,32,33,35,38,40,42,43,43,40,36,31,26,20,22,25,29,31,30,29,29,30,31,32,33,34,35,35,35,34,33,33,32,31,29,28,27,26,26,27,28],"wind_speed_10m":[8.5,8.7,7.4,6.2,5.5,5.9,7.2,5.9,6.4,7.4,6.4,6.9,10.0,12.2,11.3,11.7,11.1,11.2,19.0,19.4,19.2,21.1,23.2,21.6,23.2,23.4,25.6,24.0,26.5,26.7,25.1,22.0,21.7,24.6,23.6,24.8,25.0,25.4,24.5,24.6,21.8,19.9,17.1,15.8,16.0,15.7,14.3,14.5,15.7,17.8,20.2,21.5,20.5,21.4,19.4,17.3,18.9,19.6,19.7,20.9,21.1,21.2,21.0,19.9,21.1,18.9,17.2,15.1,14.9,15.5,14.8,13.2,12.2,12.2,13.7,15.7,16.5,15.5,15.0,19.4,17.3,18.4,18.1,19.3,17.1,18.4,17.1,19.6,17.9,17.8,15.7,15.0,14.7,15.0,13.3,11.4,10.4,9.7,9.0,8.9,9.5,10.5,11.4,12.0,12.3,12.7,13.1,13.6,13.7,13.3,12.7,12.3,12.8,13.8,14.1,12.8,11.0,9.7,10.0,11.0,11.6,10.9,9.7,9.4,10.9,13.3,14.5,13.7,13.4,14.6,16.0,17.5,18.1,17.5,16.0,14.3,12.3,10.3,9.1,9.1,9.6,9.5,8.7,7.6,7.0,6.6,6.4,6.1,17.4,15.5,13.0,9.9,6.5,3.1,1.8,7.0,12.9,18.3,22.6,24.9,25.0,24.2,23.7,24.2,25.9,27.7,28.7,29.0,28.7,28.1,27.4,26.7,26.1,25.4,24.7,23.8,22.9,22.0,20.8,19.6,18.2,16.9,15.6,14.7,14.2,13.7,13.4,13.3,13.1,13.0,12.8,12.6,12.4,12.3,12.4,12.5,12.9,13.4,14.0,14.7,15.1,15.5,15.4,15.3,15.0,15.1,15.1,14.9,14.7,14.3,13.8,13.2,12.8,12.4,12.0,11.7,11.5,11.3,11.3,11.6,12.2,12.8,13.9,14.8,15.7,16.4,16.8,17.5,18.0,18.3,18.7,18.6,18.1,17.4,16.4,15.4,14.4,13.5,12.5,11.4,10.2,9.3,9.1,9.0,9.5,10.2,11.2,12.4,13.4,14.2,15.1,16.0,16.9,17.6,18.0,17.9,16.9,15.3,13.4,11.6,10.3,9.6,9.4,9.5,9.8,10.3,10.8,11.5,12.2,13.4,14.5,15.8,16.9,17.7,18.2,18.8,19.5,19.8,20.3,20.5,20.6,20.5,20.3,19.9,19.5,19.1,18.6,18.1,17.4,16.9,16.7,16.5,16.8,17.3,18.0,18.9,19.5,20.1,20.2,20.3,20.2,20.0,19.5,19.0,18.2,17.1,15.6,14.4,13.4,12.7,12.6,12.7,13.2,13.7,14.2,14.3,14.2,14.2,14.0,13.5,13.4,13.2,13.1,13.0,13.0,12.9,12.8,12.3,11.6,10.6,9.5,8.7,8.3,8.3,8.5,8.6,9.2,9.6,10.3,10.8,11.7,12.9,14.3,15.7,16.8,17.7,18.5,19.4,20.4,21.1,21.6,21.3,20.2,18.9,18.4,18.7,19.5,19.6,19.3,20.5,20.9,18.4,14.6,12.7,14.6,18.7,21.0,20.1,17.7,15.8,15.1,14.8,14.1,13.1,12.1,11.0,10.1,9.4,8.7,8.3,7.9,7.6,6.8,6.1]}
 };
+var WX_VIEW = {idx:{}, nearDates:[], hourlyByDay:{}, error:null, hourMode:"upcoming"};
 
 function wxReadCache(opts){
   opts = opts || {};
@@ -1617,23 +1641,137 @@ function wxReadCache(opts){
     if(!obj || !obj.savedAt || !obj.daily) return null;
     var age = Date.now() - Number(obj.savedAt);
     if(isNaN(age) || age < 0) return null;
-    /* Soft TTL: prefer cache younger than 3h; allow older only when explicitly requested as last-resort fallback. */
     if(!opts.allowExpired && age > WX_CACHE_TTL_MS) return null;
-    if(opts.allowExpired && age > (WX_CACHE_TTL_MS * 8)) return null; /* drop very old (>24h) */
+    if(opts.allowExpired && age > (WX_CACHE_TTL_MS * 8)) return null;
     return obj;
   }catch(e){
     return null;
   }
 }
-function wxWriteCache(daily){
+function wxWriteCache(payload){
   try{
-    localStorage.setItem(WX_CACHE_KEY, JSON.stringify({savedAt:Date.now(), daily:daily}));
+    localStorage.setItem(WX_CACHE_KEY, JSON.stringify({
+      savedAt:Date.now(),
+      daily:payload.daily,
+      hourly:payload.hourly || null
+    }));
   }catch(e){}
 }
-function wxApplyForecast(daily, errMsg){
+function wxBuildHourlyByDay(hourly){
+  var by = {};
+  if(!hourly || !hourly.time) return by;
+  for(var i=0;i<hourly.time.length;i++){
+    var t = hourly.time[i];
+    var date = String(t).slice(0,10);
+    var hh = String(t).slice(11,16);
+    if(!by[date]) by[date] = [];
+    by[date].push({
+      time:t,
+      hour:hh,
+      temp: hourly.temperature_2m ? hourly.temperature_2m[i] : null,
+      code: hourly.weather_code ? hourly.weather_code[i] : null,
+      pop: hourly.precipitation_probability ? hourly.precipitation_probability[i] : null,
+      wind: hourly.wind_speed_10m ? hourly.wind_speed_10m[i] : null
+    });
+  }
+  return by;
+}
+function wxTokyoNowStamp(){
+  /* sv-SE locale gives YYYY-MM-DD HH:mm:ss in the chosen zone */
+  var s = new Date().toLocaleString("sv-SE", {timeZone:"Asia/Tokyo"});
+  return {date:s.slice(0,10), hour:s.slice(11,13)+":00", stamp:s.slice(0,10)+"T"+s.slice(11,13)+":00"};
+}
+function wxUpcomingHours(hourlyByDay, limit){
+  limit = limit || 24;
+  var now = wxTokyoNowStamp();
+  var dates = Object.keys(hourlyByDay).sort();
+  var out = [];
+  for(var di=0; di<dates.length; di++){
+    var day = dates[di];
+    var rows = hourlyByDay[day] || [];
+    for(var i=0;i<rows.length;i++){
+      var row = rows[i];
+      var stamp = day + "T" + row.hour;
+      if(stamp < now.stamp) continue;
+      out.push(row);
+      if(out.length >= limit) return out;
+    }
+  }
+  return out;
+}
+function wxHourCard(row, opts){
+  opts = opts || {};
+  var info = wxCodeInfo(row.code);
+  var pop = row.pop!=null ? ("降水 "+wxRound(row.pop)+"%") : "";
+  var wind = row.wind!=null ? ("風 "+wxRound(row.wind)+" km/h") : "";
+  var label = row.hour;
+  if(opts.showDate){
+    var parts = wxIsoParts(String(row.time).slice(0,10));
+    label = parts.md + " " + row.hour;
+  }
+  return '<div class="wx-hour'+(opts.now?" now":"")+'" title="'+esc(info.t)+'">'
+    + '<div class="wx-h">'+esc(label)+'</div>'
+    + '<div class="wx-ic">'+info.ic+'</div>'
+    + '<div class="wx-t">'+wxRound(row.temp)+'°</div>'
+    + (pop?'<div class="wx-p">'+pop+'</div>':'')
+    + (wind?'<div class="wx-w">'+wind+'</div>':'')
+    + '</div>';
+}
+function wxHourlySection(hourlyByDay){
+  var mode = WX_VIEW.hourMode || "upcoming";
+  var h = '<div class="section-h" style="margin-top:18px"><h2>每小時預報</h2><span>那霸 · 東京時間</span></div>';
+  h += '<div class="wx-hour-chips" role="tablist" aria-label="每小時預報日期">';
+  var upcomingPressed = mode==="upcoming" ? "true" : "false";
+  h += '<button type="button" class="wx-hour-chip" data-wx-hour-mode="upcoming" aria-pressed="'+upcomingPressed+'">即將 24 小時</button>';
+  WX_TRIP_DAYS.forEach(function(day){
+    var has = !!(hourlyByDay && hourlyByDay[day.date] && hourlyByDay[day.date].length);
+    if(!has) return;
+    var parts = wxIsoParts(day.date);
+    var pressed = mode===day.date ? "true" : "false";
+    h += '<button type="button" class="wx-hour-chip" data-wx-hour-mode="'+esc(day.date)+'" aria-pressed="'+pressed+'">'
+      + esc(parts.md)+' ·週'+esc(day.w)+'</button>';
+  });
+  h += '</div>';
+  var rows = [];
+  var showDate = false;
+  if(mode==="upcoming"){
+    rows = wxUpcomingHours(hourlyByDay, 24);
+    showDate = true;
+  }else if(hourlyByDay[mode]){
+    rows = hourlyByDay[mode];
+  }
+  if(!rows.length){
+    h += '<p class="wx-hour-empty">呢一日暫時未有每小時預報（可能未入預報窗口）。</p>';
+  }else{
+    var nowStamp = wxTokyoNowStamp().stamp;
+    h += '<div class="wx-hour-strip" role="list">';
+    rows.forEach(function(row){
+      var stamp = String(row.time).slice(0,10)+"T"+row.hour;
+      h += wxHourCard(row, {showDate:showDate, now: stamp===nowStamp});
+    });
+    h += '</div>';
+    h += '<p class="wx-note">顯示氣溫、天氣、降水機率同風速（km/h）。時間以亞洲／東京為準。</p>';
+  }
+  return h;
+}
+function wxBindHourlyChips(){
+  var panel = $("#panel-weather");
+  if(!panel || panel._wxHourBound) return;
+  panel._wxHourBound = true;
+  panel.addEventListener("click", function(ev){
+    var btn = ev.target.closest ? ev.target.closest("[data-wx-hour-mode]") : null;
+    if(!btn || !panel.contains(btn)) return;
+    var mode = btn.getAttribute("data-wx-hour-mode");
+    if(!mode || mode===WX_VIEW.hourMode) return;
+    WX_VIEW.hourMode = mode;
+    renderWeather({loading:false, idx:WX_VIEW.idx, nearDates:WX_VIEW.nearDates, hourlyByDay:WX_VIEW.hourlyByDay, error:WX_VIEW.error});
+  });
+}
+function wxApplyForecast(daily, hourly, errMsg){
   var idx = wxBuildIndex(daily);
   var near = (daily && daily.time) ? daily.time.slice() : [];
-  renderWeather({loading:false, idx:idx, nearDates:near, error:errMsg || null});
+  var hourlyByDay = wxBuildHourlyByDay(hourly);
+  renderWeather({loading:false, idx:idx, nearDates:near, hourlyByDay:hourlyByDay, error:errMsg || null});
 }
 function wxFetchForecast(url, timeoutMs){
   /* Promise.race so the timer ALWAYS rejects even if AbortController does not settle a wedged iOS fetch. */
@@ -1643,7 +1781,7 @@ function wxFetchForecast(url, timeoutMs){
     return r.json();
   }).then(function(json){
     if(!json || !json.daily) throw new Error("bad payload");
-    return json.daily;
+    return {daily:json.daily, hourly:json.hourly || null};
   });
   var timeoutPromise = new Promise(function(_, reject){
     setTimeout(function(){
@@ -1653,11 +1791,13 @@ function wxFetchForecast(url, timeoutMs){
   });
   return Promise.race([fetchPromise, timeoutPromise]);
 }
-function wxBestOfflineDaily(){
+function wxBestOfflinePayload(){
   var cached = wxReadCache({allowExpired:true}) || wxReadCache();
-  if(cached && cached.daily) return {daily:cached.daily, note:WX_ERR_STALE, from:"cache"};
+  if(cached && cached.daily){
+    return {daily:cached.daily, hourly:cached.hourly || null, note:WX_ERR_STALE, from:"cache"};
+  }
   if(WX_PUBLISH_SNAPSHOT && WX_PUBLISH_SNAPSHOT.daily){
-    return {daily:WX_PUBLISH_SNAPSHOT.daily, note:WX_ERR_SNAPSHOT, from:"snapshot"};
+    return {daily:WX_PUBLISH_SNAPSHOT.daily, hourly:WX_PUBLISH_SNAPSHOT.hourly || null, note:WX_ERR_SNAPSHOT, from:"snapshot"};
   }
   return null;
 }
@@ -1665,32 +1805,32 @@ function loadWeather(){
   var url = "https://api.open-meteo.com/v1/forecast"
     + "?latitude="+WX_LAT+"&longitude="+WX_LNG
     + "&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max"
+    + "&hourly=temperature_2m,weather_code,precipitation_probability,wind_speed_10m"
     + "&timezone=Asia%2FTokyo&forecast_days=16";
   /* Never leave the tab on 「讀緊預報…」: paint snapshot/cache first. */
-  var offline = wxBestOfflineDaily();
+  var offline = wxBestOfflinePayload();
   if(offline){
-    wxApplyForecast(offline.daily, offline.note);
+    wxApplyForecast(offline.daily, offline.hourly, offline.note);
   }else{
     renderWeather({loading:true});
   }
   function failToOfflineOrError(){
-    var again = wxBestOfflineDaily();
+    var again = wxBestOfflinePayload();
     if(again){
-      wxApplyForecast(again.daily, again.note);
+      wxApplyForecast(again.daily, again.hourly, again.note);
     }else{
-      renderWeather({loading:false, idx:{}, nearDates:[], error:WX_ERR_NO_DATA});
+      renderWeather({loading:false, idx:{}, nearDates:[], hourlyByDay:{}, error:WX_ERR_NO_DATA});
     }
   }
-  wxFetchForecast(url, WX_FETCH_TIMEOUT_MS).then(function(daily){
-    wxWriteCache(daily);
-    wxApplyForecast(daily, null);
+  wxFetchForecast(url, WX_FETCH_TIMEOUT_MS).then(function(payload){
+    wxWriteCache(payload);
+    wxApplyForecast(payload.daily, payload.hourly, null);
   }).catch(function(){
-    /* one short retry for flaky mobile networks */
     return new Promise(function(resolve){ setTimeout(resolve, 700); }).then(function(){
       return wxFetchForecast(url, WX_FETCH_TIMEOUT_MS);
-    }).then(function(daily){
-      wxWriteCache(daily);
-      wxApplyForecast(daily, null);
+    }).then(function(payload){
+      wxWriteCache(payload);
+      wxApplyForecast(payload.daily, payload.hourly, null);
     }).catch(failToOfflineOrError);
   });
 }
