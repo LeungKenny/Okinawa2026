@@ -1601,6 +1601,12 @@ var WX_CACHE_TTL_MS = 3 * 60 * 60 * 1000; /* 3 hours */
 var WX_FETCH_TIMEOUT_MS = 8000;
 var WX_ERR_NO_DATA = "暫時讀唔到預報，請稍後再開天氣頁。氣候平均仍然可以用嚟執行李。";
 var WX_ERR_STALE = "最新預報暫時讀唔到，以下係稍早前嘅暫存預報，可能略舊，氣候平均仍然可以用嚟執行李。";
+var WX_ERR_SNAPSHOT = "以下係網站發布時寫入嘅預報快照（可能略舊）；連到 Open-Meteo 之後會自動換成最新。";
+/* Baked at publish from Open-Meteo; numbers are the live API response at publish, not invented. */
+var WX_PUBLISH_SNAPSHOT = {
+  publishedAt: "2026-11-18T10:04:00+08:00",
+  daily: {"time":["2026-11-18","2026-11-19","2026-11-20","2026-11-21","2026-11-22","2026-11-23","2026-11-24","2026-11-25","2026-11-26","2026-11-27","2026-11-28","2026-11-29","2026-11-30","2026-12-01","2026-12-02","2026-12-03"],"weather_code":[53,51,3,3,2,3,82,55,51,81,2,3,3,51,95,51],"temperature_2m_max":[25.0,21.5,19.7,20.2,21.3,23.1,24.2,21.0,22.9,24.2,25.1,22.6,24.9,26.2,26.5,22.6],"temperature_2m_min":[20.8,18.3,17.4,16.0,16.1,17.9,19.1,18.5,18.4,20.5,19.9,19.1,20.9,22.6,18.0,18.6],"precipitation_probability_max":[86,67,16,10,0,8,63,53,43,39,25,11,19,43,43,35]}
+};
 
 function wxReadCache(opts){
   opts = opts || {};
@@ -1630,30 +1636,47 @@ function wxApplyForecast(daily, errMsg){
   renderWeather({loading:false, idx:idx, nearDates:near, error:errMsg || null});
 }
 function wxFetchForecast(url, timeoutMs){
-  var ctrl = new AbortController();
-  var timer = setTimeout(function(){ try{ ctrl.abort(); }catch(e){} }, timeoutMs);
-  return fetch(url, {signal:ctrl.signal}).then(function(r){
+  /* Promise.race so the timer ALWAYS rejects even if AbortController does not settle a wedged iOS fetch. */
+  var ctrl = typeof AbortController !== "undefined" ? new AbortController() : null;
+  var fetchPromise = fetch(url, ctrl ? {signal:ctrl.signal} : undefined).then(function(r){
     if(!r.ok) throw new Error("HTTP "+r.status);
     return r.json();
   }).then(function(json){
-    clearTimeout(timer);
     if(!json || !json.daily) throw new Error("bad payload");
     return json.daily;
-  }).catch(function(err){
-    clearTimeout(timer);
-    throw err;
   });
+  var timeoutPromise = new Promise(function(_, reject){
+    setTimeout(function(){
+      if(ctrl){ try{ ctrl.abort(); }catch(e){} }
+      reject(new Error("timeout"));
+    }, timeoutMs);
+  });
+  return Promise.race([fetchPromise, timeoutPromise]);
+}
+function wxBestOfflineDaily(){
+  var cached = wxReadCache({allowExpired:true}) || wxReadCache();
+  if(cached && cached.daily) return {daily:cached.daily, note:WX_ERR_STALE, from:"cache"};
+  if(WX_PUBLISH_SNAPSHOT && WX_PUBLISH_SNAPSHOT.daily){
+    return {daily:WX_PUBLISH_SNAPSHOT.daily, note:WX_ERR_SNAPSHOT, from:"snapshot"};
+  }
+  return null;
 }
 function loadWeather(){
-  renderWeather({loading:true});
   var url = "https://api.open-meteo.com/v1/forecast"
     + "?latitude="+WX_LAT+"&longitude="+WX_LNG
     + "&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max"
     + "&timezone=Asia%2FTokyo&forecast_days=16";
-  function failToCacheOrError(){
-    var cached = wxReadCache({allowExpired:true}) || wxReadCache();
-    if(cached && cached.daily){
-      wxApplyForecast(cached.daily, WX_ERR_STALE);
+  /* Never leave the tab on 「讀緊預報…」: paint snapshot/cache first. */
+  var offline = wxBestOfflineDaily();
+  if(offline){
+    wxApplyForecast(offline.daily, offline.note);
+  }else{
+    renderWeather({loading:true});
+  }
+  function failToOfflineOrError(){
+    var again = wxBestOfflineDaily();
+    if(again){
+      wxApplyForecast(again.daily, again.note);
     }else{
       renderWeather({loading:false, idx:{}, nearDates:[], error:WX_ERR_NO_DATA});
     }
@@ -1668,7 +1691,7 @@ function loadWeather(){
     }).then(function(daily){
       wxWriteCache(daily);
       wxApplyForecast(daily, null);
-    }).catch(failToCacheOrError);
+    }).catch(failToOfflineOrError);
   });
 }
 
@@ -1826,7 +1849,7 @@ $("#shareBtn").addEventListener("click",function(){
 });
 
 /* ================= INIT ================= */
-renderItinerary(); renderMap(); renderHotels(); renderDining(); renderEntry(); renderNotes(); renderWeather({loading:true}); loadWeather(); renderStatus();
+renderItinerary(); renderMap(); renderHotels(); renderDining(); renderEntry(); renderNotes(); loadWeather(); renderStatus();
 var hash=location.hash.replace("#","");
 if(TABS.indexOf(hash)>=0) showTab(hash,true);
 else if(hash.indexOf("day-")===0) setTimeout(function(){scrollToDay(hash);},60);
