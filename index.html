@@ -1602,12 +1602,18 @@ var WX_FETCH_TIMEOUT_MS = 8000;
 var WX_ERR_NO_DATA = "暫時讀唔到預報，請稍後再開天氣頁。氣候平均仍然可以用嚟執行李。";
 var WX_ERR_STALE = "最新預報暫時讀唔到，以下係稍早前嘅暫存預報，可能略舊，氣候平均仍然可以用嚟執行李。";
 
-function wxReadCache(){
+function wxReadCache(opts){
+  opts = opts || {};
   try{
     var raw = localStorage.getItem(WX_CACHE_KEY);
     if(!raw) return null;
     var obj = JSON.parse(raw);
     if(!obj || !obj.savedAt || !obj.daily) return null;
+    var age = Date.now() - Number(obj.savedAt);
+    if(isNaN(age) || age < 0) return null;
+    /* Soft TTL: prefer cache younger than 3h; allow older only when explicitly requested as last-resort fallback. */
+    if(!opts.allowExpired && age > WX_CACHE_TTL_MS) return null;
+    if(opts.allowExpired && age > (WX_CACHE_TTL_MS * 8)) return null; /* drop very old (>24h) */
     return obj;
   }catch(e){
     return null;
@@ -1645,7 +1651,7 @@ function loadWeather(){
     + "&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max"
     + "&timezone=Asia%2FTokyo&forecast_days=16";
   function failToCacheOrError(){
-    var cached = wxReadCache();
+    var cached = wxReadCache({allowExpired:true}) || wxReadCache();
     if(cached && cached.daily){
       wxApplyForecast(cached.daily, WX_ERR_STALE);
     }else{
