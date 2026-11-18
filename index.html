@@ -1596,21 +1596,73 @@ function renderWeather(state){
   body += '</div>';
   $("#panel-weather").innerHTML = wxShell(body, state.error || null);
 }
+var WX_CACHE_KEY = "okinawa2026_wx_forecast_v1";
+var WX_CACHE_TTL_MS = 3 * 60 * 60 * 1000; /* 3 hours */
+var WX_FETCH_TIMEOUT_MS = 8000;
+var WX_ERR_NO_DATA = "暫時讀唔到預報，請稍後再開天氣頁。氣候平均仍然可以用嚟執行李。";
+var WX_ERR_STALE = "最新預報暫時讀唔到，以下係稍早前嘅暫存預報，可能略舊，氣候平均仍然可以用嚟執行李。";
+
+function wxReadCache(){
+  try{
+    var raw = localStorage.getItem(WX_CACHE_KEY);
+    if(!raw) return null;
+    var obj = JSON.parse(raw);
+    if(!obj || !obj.savedAt || !obj.daily) return null;
+    return obj;
+  }catch(e){
+    return null;
+  }
+}
+function wxWriteCache(daily){
+  try{
+    localStorage.setItem(WX_CACHE_KEY, JSON.stringify({savedAt:Date.now(), daily:daily}));
+  }catch(e){}
+}
+function wxApplyForecast(daily, errMsg){
+  var idx = wxBuildIndex(daily);
+  var near = (daily && daily.time) ? daily.time.slice() : [];
+  renderWeather({loading:false, idx:idx, nearDates:near, error:errMsg || null});
+}
+function wxFetchForecast(url, timeoutMs){
+  var ctrl = new AbortController();
+  var timer = setTimeout(function(){ try{ ctrl.abort(); }catch(e){} }, timeoutMs);
+  return fetch(url, {signal:ctrl.signal}).then(function(r){
+    if(!r.ok) throw new Error("HTTP "+r.status);
+    return r.json();
+  }).then(function(json){
+    clearTimeout(timer);
+    if(!json || !json.daily) throw new Error("bad payload");
+    return json.daily;
+  }).catch(function(err){
+    clearTimeout(timer);
+    throw err;
+  });
+}
 function loadWeather(){
   renderWeather({loading:true});
   var url = "https://api.open-meteo.com/v1/forecast"
     + "?latitude="+WX_LAT+"&longitude="+WX_LNG
     + "&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max"
     + "&timezone=Asia%2FTokyo&forecast_days=16";
-  fetch(url).then(function(r){
-    if(!r.ok) throw new Error("HTTP "+r.status);
-    return r.json();
-  }).then(function(json){
-    var idx = wxBuildIndex(json.daily);
-    var near = (json.daily && json.daily.time) ? json.daily.time.slice() : [];
-    renderWeather({loading:false, idx:idx, nearDates:near, error:null});
+  function failToCacheOrError(){
+    var cached = wxReadCache();
+    if(cached && cached.daily){
+      wxApplyForecast(cached.daily, WX_ERR_STALE);
+    }else{
+      renderWeather({loading:false, idx:{}, nearDates:[], error:WX_ERR_NO_DATA});
+    }
+  }
+  wxFetchForecast(url, WX_FETCH_TIMEOUT_MS).then(function(daily){
+    wxWriteCache(daily);
+    wxApplyForecast(daily, null);
   }).catch(function(){
-    renderWeather({loading:false, idx:{}, nearDates:[], error:"暫時讀唔到預報，請稍後再開天氣頁。氣候平均仍然可以用嚟執行李。"});
+    /* one short retry for flaky mobile networks */
+    return new Promise(function(resolve){ setTimeout(resolve, 700); }).then(function(){
+      return wxFetchForecast(url, WX_FETCH_TIMEOUT_MS);
+    }).then(function(daily){
+      wxWriteCache(daily);
+      wxApplyForecast(daily, null);
+    }).catch(failToCacheOrError);
   });
 }
 
